@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <style type="text/css">
+        .ui-paginator a {
+            margin-right: 5px;
+        }
+    </style>
+    <h:body>
+        <f:metadata>
+            <f:viewParam name="id" value="#{postCheckBean.id}" />
+            <f:viewParam name="admin" value="#{postCheckBean.admin}" />
+            <f:viewAction action="#{postCheckBean.load()}" />
+
+        </f:metadata>
+        <ui:composition template="/template/template.xhtml">
+            <ui:define name="content">
+                <h1>災害投稿情報確認</h1>
+                <div id="map" style="width:100%;height:500px;"/>
+                <h:form id="frm">
+                    <p:growl id="growl" life="20000" />
+                    <p:growl id="message" showDetail="true"/>
+                    <h:inputHidden id="latitude" value="#{postCheckBean.postInformation.latitude}" />
+                    <h:inputHidden id="longitude" value="#{postCheckBean.postInformation.longitude}" />
+                    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+                        <p:outputLabel for="picture" value="写真" />
+                        <p:graphicImage id="picture" value="#{postCheckBean.picture}" stream="false" width="600px"/>
+                        <p:outputLabel for="information" value="投稿メッセージ" />
+                        <p:inputTextarea id="information" value="#{postCheckBean.postInformation.information}" rows="6" cols="50" counter="display" maxlength="255" counterTemplate="{0} characters remaining" />
+                        <h:outputText id="display" />
+                    </h:panelGrid>
+                    <p:accordionPanel>
+                        <p:tab title="管理者メニュー" rendered="#{postCheckBean.admin}">
+                            <h:commandButton value="更新" id="confirm" action="#{postCheckBean.confirm()}" style="margin-right:20px;" />
+                            <h:commandButton value="削除" id="delete" action="#{postCheckBean.delete()}" style="margin-right:20px;" />
+                        </p:tab>
+                    </p:accordionPanel>
+                </h:form>
+                <hr />
+                <h:link outcome="index" value="戻る"/>
+
+                <link rel='stylesheet' href='https://unpkg.com/leaflet@1.7.1/dist/leaflet.css' />
+                <script src='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js' />
+                <h:outputScript name="js/map/script_leaflet.js" />
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

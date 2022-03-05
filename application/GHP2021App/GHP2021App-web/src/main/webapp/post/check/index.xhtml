@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <style type="text/css">
+        .ui-paginator a {
+            margin-right: 5px;
+        }
+    </style>
+    <h:body>
+        <ui:composition template="/template/template.xhtml">
+            <ui:define name="content">
+                <h1>災害投稿情報(未承認投稿一覧)</h1>
+                <f:metadata>
+                    <f:viewAction action="#{listUncheckedBean.load()}" />
+                </f:metadata>
+                <h:form>
+                    <p:dataTable id="tbl" var="information" value="#{listUncheckedBean.postedInformation}"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                                 paginator="true" rows="50" style="margin-bottom:20px" sortMode="multiple">
+                        <p:column sortBy="#{information.id}">
+                            <f:facet name="header">
+                                <h:outputText value="ID" />
+                            </f:facet>
+                            <h:link outcome="check" value="#{information.id}">
+                                <f:param name="id" value="#{information.id}" />
+                            </h:link>
+                        </p:column>
+
+                        <p:column sortBy="#{information.time}">
+                            <f:facet name="header">
+                                <h:outputText value="投稿時刻" />
+                            </f:facet>
+                            <h:outputText value="#{information.time}">
+                                <f:convertDateTime type="date" pattern="yyyy/MM/dd HH:mm" timeZone="Asia/Tokyo"/>
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column sortBy="#{information.information}">
+                            <f:facet name="header">
+                                <h:outputText value="投稿内容" />
+                            </f:facet>
+                            <h:outputText value="#{information.information}" />
+                        </p:column>
+
+                    </p:dataTable>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

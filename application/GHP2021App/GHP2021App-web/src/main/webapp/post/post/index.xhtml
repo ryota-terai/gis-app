@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <style type="text/css">
+        .ui-paginator a {
+            margin-right: 5px;
+        }
+    </style>
+    <h:body>
+        <ui:composition template="/template/template.xhtml">
+            <ui:define name="content">
+                <p:growl id="messages" showDetail="true"/>
+                <h1>災害情報投稿画面</h1>
+                災害を見かけましたら、情報提供にご協力をお願いします。
+                <hr />
+                <div id="map" style="width:100%;height:500px;"/>
+                <h:form id="frm" enctype="multipart/form-data">
+                    <p:growl id="growl" life="20000" />
+                    <h:inputHidden id="latitude" value="#{postBean.latitude}" />
+                    <h:inputHidden id="longitude" value="#{postBean.longitude}" />
+                    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+                        <p:outputLabel for="file" value="写真" />
+                        <p:fileUpload id="file" value="#{postBean.file}" mode="simple" skinSimple="true"
+                                      allowTypes="/(\.|\/)jpe?g$/"
+                                      validateContentType="true" accept=".jpg,.jpeg"
+                                      />
+                        <p:outputLabel for="information" value="投稿メッセージ" />
+                        <p:inputTextarea id="information" value="#{postBean.information}" rows="6" cols="50" counter="display" maxlength="255" counterTemplate="{0} characters remaining" />
+                        <h:outputText id="display" />
+                    </h:panelGrid>
+                    <h:commandButton value="投稿" id="post" action="#{postBean.postDisaster()}" style="margin-right:20px;" />
+                </h:form>
+
+                <link rel='stylesheet' href='https://unpkg.com/maplibre-gl@2.1.6/dist/maplibre-gl.css' />
+                <script src='https://unpkg.com/maplibre-gl@2.1.6/dist/maplibre-gl.js' />
+                <h:outputScript name="js/map/script.js" />
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

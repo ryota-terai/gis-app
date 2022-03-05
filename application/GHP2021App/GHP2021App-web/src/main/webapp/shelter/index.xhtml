@@ -1,0 +1,200 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <style type="text/css">
+        .ui-paginator a {
+            margin-right: 5px;
+        }
+    </style>
+    <h:body>
+        <ui:composition template="/template/template.xhtml">
+            <ui:define name="content">
+                <p:growl id="messages" showDetail="true"/>
+                <h1>避難所一覧</h1>
+                <h:form id="frm">
+                    <p:accordionPanel>
+                        <p:tab title="検索項目">
+                            <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+                                <p:outputLabel for="code" value="行政区域コード" />
+                                <p:keyboard id="code" value="#{shelterSearchBean.administrativeAreaCode}" keypadOnly="true"/>
+                            </h:panelGrid>
+                        </p:tab>
+                        <p:tab title="災害分類">
+                            <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+                                <p:outputLabel for="p20_007" value="地震災害" />
+                                <p:selectBooleanButton id="p20_007" value="#{shelterSearchBean.p20_007}" onLabel="Yes" offLabel="No" style="width:60px" />
+
+                                <p:outputLabel for="p20_008" value="津波災害" />
+                                <p:selectBooleanButton id="p20_008" value="#{shelterSearchBean.p20_008}" onLabel="Yes" offLabel="No" style="width:60px" />
+
+                                <p:outputLabel for="p20_009" value="水害" />
+                                <p:selectBooleanButton id="p20_009" value="#{shelterSearchBean.p20_009}" onLabel="Yes" offLabel="No" style="width:60px" />
+
+                                <p:outputLabel for="p20_010" value="火山災害" />
+                                <p:selectBooleanButton id="p20_010" value="#{shelterSearchBean.p20_010}" onLabel="Yes" offLabel="No" style="width:60px" />
+
+                                <p:outputLabel for="p20_011" value="その他" />
+                                <p:selectBooleanButton id="p20_011" value="#{shelterSearchBean.p20_011}" onLabel="Yes" offLabel="No" style="width:60px" />
+                            </h:panelGrid>
+                        </p:tab>
+                    </p:accordionPanel>
+                    <h:commandButton value="検索" id="search" action="#{shelterSearchBean.search()}" style="margin-right:20px;" />
+                </h:form>
+                <hr/>
+                <h:form id="form2">
+                    <p:dataTable id="tbl" var="shelter" value="#{shelterSearchBean.shelters}"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                                 paginator="true" rows="50" style="margin-bottom:20px" sortMode="multiple">
+
+                        <p:column sortBy="#{shelter.name}">
+                            <f:facet name="header">
+                                <h:outputText value="名称" />
+                            </f:facet>
+                            <a href="#{request.contextPath}/index.html?areaCode=#{shelterSearchBean.administrativeAreaCode}#15/#{shelter.latitude}/#{shelter.longitude}/0/30"><h:outputText value="#{shelter.name}" /></a>
+                        </p:column>
+
+                        <p:column sortBy="#{shelter.address}">
+                            <f:facet name="header">
+                                <h:outputText value="住所" />
+                            </f:facet>
+                            <h:outputText value="#{shelter.address}" />
+                        </p:column>
+
+                        <p:column sortBy="#{shelter.type}">
+                            <f:facet name="header">
+                                <h:outputText value="施設の種類" />
+                            </f:facet>
+                            <h:outputText value="#{shelter.type}" />
+                        </p:column>
+
+<!--                        <p:column sortBy="#{shelter.numberOfEvacuus}">
+                            <f:facet name="header">
+                                <h:outputText value="避難済み人数" />
+                            </f:facet>
+                            <h:outputText value="#{shelter.numberOfEvacuus}" />
+                        </p:column>
+
+                        <p:column sortBy="#{shelter.numberOfNonEvacuees}">
+                            <f:facet name="header">
+                                <h:outputText value="未避難済みの人数" />
+                            </f:facet>
+                            <h:outputText value="#{shelter.numberOfNonEvacuees}" />
+                        </p:column>-->
+
+                        <p:column sortBy="#{shelter.p20007}">
+                            <f:facet name="header">
+                                <h:outputText value="地震災害" />
+                            </f:facet>
+                            <p:selectBooleanCheckbox value="#{shelter.p20007}" disabled="true"/>
+                        </p:column>
+
+                        <p:column sortBy="#{shelter.p20008}">
+                            <f:facet name="header">
+                                <h:outputText value="津波災害" />
+                            </f:facet>
+                            <p:selectBooleanCheckbox value="#{shelter.p20008}" disabled="true"/>
+                        </p:column>
+
+                        <p:column sortBy="#{shelter.p20009}">
+                            <f:facet name="header">
+                                <h:outputText value="水害" />
+                            </f:facet>
+                            <p:selectBooleanCheckbox value="#{shelter.p20009}" disabled="true"/>
+                        </p:column>
+
+                        <p:column sortBy="#{shelter.p20010}">
+                            <f:facet name="header">
+                                <h:outputText value="火山災害" />
+                            </f:facet>
+                            <p:selectBooleanCheckbox value="#{shelter.p20010}" disabled="true"/>
+                        </p:column>
+
+                        <p:column sortBy="#{shelter.p20011}">
+                            <f:facet name="header">
+                                <h:outputText value="その他" />
+                            </f:facet>
+                            <p:selectBooleanCheckbox value="#{shelter.p20011}" disabled="true"/>
+                        </p:column>
+
+                        <p:column sortBy="#{shelter.p20012}">
+                            <f:facet name="header">
+                                <h:outputText value="指定なし" />
+                            </f:facet>
+                            <p:selectBooleanCheckbox value="#{shelter.p20012}" disabled="true"/>
+                        </p:column>
+
+                        <p:column sortBy="#{shelter.open}">
+                            <f:facet name="header">
+                                <h:outputText value="開設中" />
+                            </f:facet>
+                            <p:selectBooleanCheckbox value="#{shelter.open}" disabled="true"/>
+                        </p:column>
+
+                        <p:column sortBy="#{shelter.comment}">
+                            <f:facet name="header">
+                                <h:outputText value="備考" />
+                            </f:facet>
+                            <h:outputText value="#{shelter.comment}" />
+                        </p:column>
+
+                        <p:column exportable="false">
+                            <p:commandButton icon="pi pi-pencil" update=":form2:manage-shelter-content"
+                                             oncomplete="PF('manageShelterDialog').show()"
+                                             styleClass="edit-button rounded-button ui-button-success" process="@this">
+                                <f:setPropertyActionListener value="#{shelter}" target="#{shelterSearchBean.selectedShelter}"/>
+                                <p:resetInput target=":form2:manage-shelter-content"/>
+                            </p:commandButton>
+                        </p:column>
+
+                    </p:dataTable>
+                    <!--
+                                <p:commandButton value="Export as Excel" ajax="false">
+                                    <p:dataExporter type="xlsx" target="tbl" fileName="results"/>
+                                </p:commandButton>
+                                <p:commandButton value="Export as PDF" ajax="false" >
+                                    <p:dataExporter type="pdf" target="tbl" fileName="results"/>
+                                </p:commandButton>
+                    
+                                <p:commandButton value="Export as CSV" ajax="false" >
+                                    <p:dataExporter type="csv" target="tbl" fileName="results"/>
+                                </p:commandButton>
+                    -->
+
+                    <p:dialog header="避難所情報" showEffect="fade" modal="true"
+                              widgetVar="manageShelterDialog" responsive="true">
+                        <p:outputPanel id="manage-shelter-content" class="ui-fluid">
+                            <p:outputPanel rendered="#{not empty shelterSearchBean.selectedShelter}">
+                                <div class="p-field">
+                                    <p:outputLabel for="name">名称:</p:outputLabel>
+                                    <h:outputText id="name" value="#{shelterSearchBean.selectedShelter.name}" />
+                                </div>
+                                <div class="p-field">
+                                    <p:outputLabel for="open">開設中</p:outputLabel>
+                                    <p:selectBooleanCheckbox id="open" value="#{shelterSearchBean.selectedShelter.open}" required="true"/>
+                                </div>
+                                <div class="p-field">
+                                    <p:outputLabel for="comment">備考</p:outputLabel>
+                                    <p:inputTextarea id="comment" value="#{shelterSearchBean.selectedShelter.comment}" rows="6" cols="50" counter="display" maxlength="255" counterTemplate="{0} characters remaining" />
+                                    <h:outputText id="display" />
+                                </div>
+                            </p:outputPanel>
+                        </p:outputPanel>
+
+                        <f:facet name="footer">
+                            <p:commandButton value="保存" icon="pi pi-check" actionListener="#{shelterSearchBean.saveShelter()}"
+                                             update="manage-shelter-content" process="manage-shelter-content @this"/>
+                            <p:commandButton value="キャンセル" icon="pi pi-times" onclick="PF('manageShelterDialog').hide()"
+                                             class="ui-button-secondary"/>
+                        </f:facet>
+                    </p:dialog>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+
+    </h:body>
+</html>
+

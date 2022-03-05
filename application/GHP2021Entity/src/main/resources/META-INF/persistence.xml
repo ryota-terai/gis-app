@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="GHP2021Entity" transaction-type="JTA">
+    <jta-data-source>jdbc/GHP2021</jta-data-source>
+    <class>ghp2021.ghp2021entity.ShelterInformation</class>
+    <class>ghp2021.ghp2021entity.PostInformation</class>
+    <class>ghp2021.ghp2021entity.File</class>
+    <class>ghp2021.ghp2021entity.ShelterInformationExt</class>
+  </persistence-unit>
+</persistence>
