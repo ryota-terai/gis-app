@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.r_terai.gisapp.shelter;
+package com.r_terai.gisapp.faces.shelter;
 
 import com.r_terai.gisapp.ejb.ShelterInformationEJB;
 import java.io.IOException;

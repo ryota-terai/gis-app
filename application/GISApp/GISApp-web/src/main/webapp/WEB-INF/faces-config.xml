@@ -31,46 +31,46 @@
     </application>
     <managed-bean>
         <managed-bean-name>topPageBean</managed-bean-name>
-        <managed-bean-class>com.r_terai.gisapp.topPageBean</managed-bean-class>
+        <managed-bean-class>com.r_terai.gisapp.faces.topPageBean</managed-bean-class>
     
         <managed-bean-scope>view</managed-bean-scope></managed-bean>
     <!-- /post/check -->
     <managed-bean>
         <managed-bean-name>postCheckBean</managed-bean-name>
-        <managed-bean-class>com.r_terai.gisapp.post.check.CheckBean</managed-bean-class>
+        <managed-bean-class>com.r_terai.gisapp.faces.post.check.CheckBean</managed-bean-class>
     
         <managed-bean-scope>view</managed-bean-scope></managed-bean>
     <managed-bean>
         <managed-bean-name>listUncheckedBean</managed-bean-name>
-        <managed-bean-class>com.r_terai.gisapp.post.check.ListUncheckedBean</managed-bean-class>
+        <managed-bean-class>com.r_terai.gisapp.faces.post.check.ListUncheckedBean</managed-bean-class>
     
         <managed-bean-scope>request</managed-bean-scope></managed-bean>
     <!-- /post/post -->
     <managed-bean>
         <managed-bean-name>postBean</managed-bean-name>
-        <managed-bean-class>com.r_terai.gisapp.post.post.PostBean</managed-bean-class>
+        <managed-bean-class>com.r_terai.gisapp.faces.post.post.PostBean</managed-bean-class>
     
         <managed-bean-scope>request</managed-bean-scope></managed-bean>
     <!-- /post/view -->
     <managed-bean>
         <managed-bean-name>listCheckedBean</managed-bean-name>
-        <managed-bean-class>com.r_terai.gisapp.post.view.ListCheckedBean</managed-bean-class>
+        <managed-bean-class>com.r_terai.gisapp.faces.post.view.ListCheckedBean</managed-bean-class>
     
         <managed-bean-scope>request</managed-bean-scope></managed-bean>
     <managed-bean>
         <managed-bean-name>pictureBean</managed-bean-name>
-        <managed-bean-class>com.r_terai.gisapp.post.view.PictureBean</managed-bean-class>
+        <managed-bean-class>com.r_terai.gisapp.faces.post.view.PictureBean</managed-bean-class>
     
         <managed-bean-scope>view</managed-bean-scope></managed-bean>
     <!-- /shelter -->
     <managed-bean>
         <managed-bean-name>shelterSetupBean</managed-bean-name>
-        <managed-bean-class>com.r_terai.gisapp.shelter.ShelterSetupBean</managed-bean-class>
+        <managed-bean-class>com.r_terai.gisapp.faces.shelter.ShelterSetupBean</managed-bean-class>
     
         <managed-bean-scope>request</managed-bean-scope></managed-bean>
     <managed-bean>
         <managed-bean-name>shelterSearchBean</managed-bean-name>
-        <managed-bean-class>com.r_terai.gisapp.shelter.ShelterSearchBean</managed-bean-class>
+        <managed-bean-class>com.r_terai.gisapp.faces.shelter.ShelterSearchBean</managed-bean-class>
     
         <managed-bean-scope>view</managed-bean-scope></managed-bean>
 </faces-config>

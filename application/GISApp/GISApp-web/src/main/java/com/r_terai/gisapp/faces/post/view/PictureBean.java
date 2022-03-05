@@ -3,35 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.r_terai.gisapp.post.check;
+package com.r_terai.gisapp.faces.post.view;
 
 import com.r_terai.gisapp.ejb.PostInformationEJB;
-import com.r_terai.gisapp.entity.PostInformation;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.Date;
 import javax.inject.Inject;
 
 /**
  *
  * @author r-terai
  */
-public class CheckBean implements Serializable {
+public class PictureBean implements Serializable {
 
     private long id;
-
-    private boolean admin;
-
-    private PostInformation postInformation;
-
     @Inject
     private PostInformationEJB postInformationEJB;
 
     /**
-     * Creates a new instance of CheckDisasterInformationBean
+     * Creates a new instance of PictureBean
      */
-    public CheckBean() {
+    public PictureBean() {
     }
 
     public long getId() {
@@ -40,22 +33,6 @@ public class CheckBean implements Serializable {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public boolean isAdmin() {
-        return admin;
-    }
-
-    public void setAdmin(boolean admin) {
-        this.admin = admin;
-    }
-
-    public PostInformation getPostInformation() {
-        return postInformation;
-    }
-
-    public void load() {
-        this.postInformation = postInformationEJB.getPostInformation(id);
     }
 
     public byte[] getPicture() throws IOException {
@@ -69,17 +46,4 @@ public class CheckBean implements Serializable {
         return array;
     }
 
-    public String confirm() {
-        postInformation.setTime(new Date());
-
-        postInformationEJB.confirm(postInformation);
-
-        return "/post/check/index?faces-redirect=true";
-    }
-
-    public String delete() {
-        postInformationEJB.delete(id);
-
-        return "/post/check/index?faces-redirect=true";
-    }
 }

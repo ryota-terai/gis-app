@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.r_terai.gisapp.post.check;
+package com.r_terai.gisapp.faces.post.check;
 
 import com.r_terai.gisapp.ejb.PostInformationEJB;
 import com.r_terai.gisapp.entity.PostInformation;
