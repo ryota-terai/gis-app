@@ -2,15 +2,15 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>ghp2021</groupId>
-        <artifactId>GHP2021App</artifactId>
+        <groupId>com.r-terai.gis-app</groupId>
+        <artifactId>GISApp</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <groupId>ghp2021</groupId>
-    <artifactId>GHP2021App-ear</artifactId>
+    <groupId>com.r-terai.gis-app</groupId>
+    <artifactId>GISApp-ejb</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>ear</packaging>
-    <name>GHP2021App</name>
+    <packaging>ejb</packaging>
+    <name>GISApp-ejb</name>
     
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -23,16 +23,21 @@
     
     <dependencies>
         <dependency>
-            <groupId>ghp2021</groupId>
-            <artifactId>GHP2021App-ejb</artifactId>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>GISAppEntity</artifactId>
             <version>${project.version}</version>
-            <type>ejb</type>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.mapbox.mapboxsdk/mapbox-sdk-geojson -->
+        <dependency>
+            <groupId>com.mapbox.mapboxsdk</groupId>
+            <artifactId>mapbox-sdk-geojson</artifactId>
+            <version>5.8.0</version>
         </dependency>
         <dependency>
-            <groupId>ghp2021</groupId>
-            <artifactId>GHP2021App-web</artifactId>
-            <version>${project.version}</version>
-            <type>war</type>
+            <groupId>androidx.annotation</groupId>
+            <artifactId>annotation</artifactId>
+            <version>1.3.0</version>
+            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>javax</groupId>
@@ -41,7 +46,13 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
-    
+    <repositories>
+        <repository>
+            <id>Google</id>
+            <url>https://maven.google.com/</url>
+        </repository>
+    </repositories>
+
     <build>
         <plugins>
             <plugin>
@@ -88,33 +99,6 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-ear-plugin</artifactId>
-                <version>2.10.1</version>
-                <configuration>
-                    <!--<version>8</version>-->
-                    <finalName>GHP2021App</finalName>
-                    <defaultLibBundleDir>lib</defaultLibBundleDir>
-                    <archive>
-                        <manifest>
-                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
-                        </manifest>
-                    </archive>
-                    <modules>
-                        <ejbModule>
-                            <groupId>ghp2021</groupId>
-                            <artifactId>GHP2021App-ejb</artifactId>
-                        </ejbModule>
-                        <webModule>
-                            <groupId>ghp2021</groupId>
-                            <artifactId>GHP2021App-web</artifactId>
-                            <contextRoot>/GHP2021App</contextRoot>
-                        </webModule>
-                    </modules>
-                </configuration>
             </plugin>
         </plugins>
     </build>

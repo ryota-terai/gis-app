@@ -21,3 +21,8 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+/application/GISAppEntity/target/
+/application/GISApp/target/
+/application/GISApp/GISApp-ejb/target/
+/application/GISApp/GISApp-web/target/
+/application/GISApp/GISApp-ear/target/

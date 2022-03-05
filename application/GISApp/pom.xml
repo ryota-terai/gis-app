@@ -1,11 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>ghp2021</groupId>
-    <artifactId>GHP2021App</artifactId>
+    <groupId>com.r-terai.gis-app</groupId>
+    <artifactId>GISApp</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>GHP2021App</name>
+    <name>GISApp</name>
     
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -80,9 +80,9 @@
         </plugins>
     </build>
     <modules>
-        <module>GHP2021App-ear</module>
-        <module>GHP2021App-ejb</module>
-        <module>GHP2021App-web</module>
-        <module>../GHP2021Entity</module>
+        <module>GISApp-ear</module>
+        <module>GISApp-ejb</module>
+        <module>GISApp-web</module>
+        <module>../GISAppEntity</module>
     </modules>
 </project>

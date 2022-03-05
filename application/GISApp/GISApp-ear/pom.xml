@@ -2,15 +2,15 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>ghp2021</groupId>
-        <artifactId>GHP2021App</artifactId>
+        <groupId>com.r-terai.gis-app</groupId>
+        <artifactId>GISApp</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <groupId>ghp2021</groupId>
-    <artifactId>GHP2021App-web</artifactId>
+    <groupId>com.r-terai.gis-app</groupId>
+    <artifactId>GISApp-ear</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>war</packaging>
-    <name>GHP2021App-web</name>
+    <packaging>ear</packaging>
+    <name>GISAppApp</name>
     
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -23,65 +23,22 @@
     
     <dependencies>
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>GHP2021App-ejb</artifactId>
+            <groupId>com.r-terai.gis-app</groupId>
+            <artifactId>GISApp-ejb</artifactId>
             <version>${project.version}</version>
-            <scope>provided</scope>
+            <type>ejb</type>
         </dependency>
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>GHP2021Entity</artifactId>
+            <groupId>com.r-terai.gis-app</groupId>
+            <artifactId>GISApp-web</artifactId>
             <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.primefaces.extensions</groupId>
-            <artifactId>all-themes</artifactId>
-            <version>1.0.8</version>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>font-awesome</artifactId>
-            <version>5.12.0</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-fileupload</groupId>
-            <artifactId>commons-fileupload</artifactId>
-            <version>1.4</version>
+            <type>war</type>
         </dependency>
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
             <version>${jakartaee}</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.primefaces</groupId>
-            <artifactId>primefaces</artifactId>
-            <version>11.0.0</version>
-            <type>jar</type>
-        </dependency>
-<!--         https://mvnrepository.com/artifact/com.lowagie/itext 
-        <dependency>
-            <groupId>com.lowagie</groupId>
-            <artifactId>itext</artifactId>
-            <version>2.1.7</version>
-        </dependency>
-         https://mvnrepository.com/artifact/org.apache.poi/poi 
-        <dependency>
-            <groupId>org.apache.poi</groupId>
-            <artifactId>poi</artifactId>
-            <version>4.1.2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.poi</groupId>
-            <artifactId>poi-ooxml</artifactId>
-            <version>4.1.2</version>
-            <type>jar</type>
-        </dependency>-->
-        <dependency>
-            <groupId>org.glassfish</groupId>
-            <artifactId>javax.faces</artifactId>
-            <version>2.3.9</version>
         </dependency>
     </dependencies>
     
@@ -131,6 +88,33 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-ear-plugin</artifactId>
+                <version>2.10.1</version>
+                <configuration>
+                    <!--<version>8</version>-->
+                    <finalName>GISApp</finalName>
+                    <defaultLibBundleDir>lib</defaultLibBundleDir>
+                    <archive>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                        </manifest>
+                    </archive>
+                    <modules>
+                        <ejbModule>
+                            <groupId>com.r-terai.gis-app</groupId>
+                            <artifactId>GISApp-ejb</artifactId>
+                        </ejbModule>
+                        <webModule>
+                            <groupId>com.r-terai.gis-app</groupId>
+                            <artifactId>GISApp-web</artifactId>
+                            <contextRoot>/GISApp1App</contextRoot>
+                        </webModule>
+                    </modules>
+                </configuration>
             </plugin>
         </plugins>
     </build>
