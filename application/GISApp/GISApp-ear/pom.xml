@@ -111,7 +111,7 @@
                         <webModule>
                             <groupId>com.r-terai.gis-app</groupId>
                             <artifactId>GISApp-web</artifactId>
-                            <contextRoot>/GISApp1App</contextRoot>
+                            <contextRoot>/GISApp</contextRoot>
                         </webModule>
                     </modules>
                 </configuration>

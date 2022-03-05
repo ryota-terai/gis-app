@@ -9,7 +9,7 @@
         <param-value>saga</param-value>
     </context-param>
     <context-param>
-        <param-name>GHP2021App_areaCode</param-name>
+        <param-name>GISApp_areaCode</param-name>
         <param-value>42212</param-value>
     </context-param>
     <servlet>

@@ -32,7 +32,7 @@ map.on('load', function () {
     // 避難所情報レイヤを追加
     map.addSource('shelter_point', {
         type: 'geojson',
-        data: '/GHP2021App/webresources/rest/shelterInfo?areaCode=' + areaCode + '&P20_007=true&P20_008=true&P20_009=true&P20_010=true&P20_011=true&open=false'
+        data: '/GISApp/webresources/rest/shelterInfo?areaCode=' + areaCode + '&P20_007=true&P20_008=true&P20_009=true&P20_010=true&P20_011=true&open=false'
     });
     map.loadImage(
             './img/shelter.png',
@@ -55,7 +55,7 @@ map.on('load', function () {
 
     map.addSource('shelter_open_point', {
         type: 'geojson',
-        data: '/GHP2021App/webresources/rest/shelterInfo?areaCode=' + areaCode + '&P20_007=true&P20_008=true&P20_009=true&P20_010=true&P20_011=true&open=true'
+        data: '/GISApp/webresources/rest/shelterInfo?areaCode=' + areaCode + '&P20_007=true&P20_008=true&P20_009=true&P20_010=true&P20_011=true&open=true'
     });
     map.loadImage(
             './img/shelter_open.png',
@@ -79,7 +79,7 @@ map.on('load', function () {
     // 避難所情報レイヤを追加
     map.addSource('disaster', {
         type: 'geojson',
-        data: '/GHP2021App/webresources/rest/disasterInfo'
+        data: '/GISApp/webresources/rest/disasterInfo'
     });
 
     map.loadImage(
@@ -176,8 +176,8 @@ map.on('click', 'disaster', function (e) {
         comment = comment.replace('\n', '<br>');
     }
     if (picture === true) {
-        comment += '<br><iframe src=\"/GHP2021App/faces/post/view/picture.xhtml?id=' + id + '\" width="200" height="150"></iframe>';
-        comment += '<br><a href=\"/GHP2021App/faces/post/view/view.xhtml?id=' + id + '\" target=\"_blank\">投稿情報画面で確認</a>';
+        comment += '<br><iframe src=\"/GISApp/faces/post/view/picture.xhtml?id=' + id + '\" width="200" height="150"></iframe>';
+        comment += '<br><a href=\"/GISApp/faces/post/view/view.xhtml?id=' + id + '\" target=\"_blank\">投稿情報画面で確認</a>';
     }
      
     while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {

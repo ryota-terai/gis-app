@@ -26,7 +26,7 @@ import javax.persistence.PersistenceContext;
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class PostInformationEJB implements PostInformationEJBLocal {
 
-    @PersistenceContext(unitName = "GHP2021Entity")
+    @PersistenceContext(unitName = "GISAppEntity")
     private EntityManager em;
 
     private static final Logger LOG = Logger.getLogger(PostInformationEJB.class.getName());

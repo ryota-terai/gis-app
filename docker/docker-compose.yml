@@ -25,8 +25,8 @@ services:
     image:  mysql:8.0.22
     environment:
       MYSQL_ROOT_PASSWORD: foobar
-      MYSQL_DATABASE: GHP2021
-      MYSQL_USER: ghp2021
+      MYSQL_DATABASE: GISApp
+      MYSQL_USER: gisapp
       MYSQL_PASSWORD: foobar
     volumes:
       - ./mysql_init:/docker-entrypoint-initdb.d

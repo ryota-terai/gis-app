@@ -35,7 +35,7 @@ import javax.persistence.PersistenceContext;
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class ShelterInformationEJB implements ShelterInformationEJBLocal {
 
-    @PersistenceContext(unitName = "GHP2021Entity")
+    @PersistenceContext(unitName = "GISAppEntity")
     private EntityManager em;
 
     private static final Logger LOG = Logger.getLogger(ShelterInformationEJB.class.getName());

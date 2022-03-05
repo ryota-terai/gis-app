@@ -72,7 +72,7 @@ public class ShelterSearchBean implements Serializable {
     public ShelterSearchBean() {
         FacesContext context = FacesContext.getCurrentInstance();
         ExternalContext exContext = context.getExternalContext();
-        administrativeAreaCode = exContext.getInitParameter("GHP2021App_areaCode");
+        administrativeAreaCode = exContext.getInitParameter("GISApp_areaCode");
         this.p20_007 = true;
         this.p20_008 = true;
         this.p20_009 = true;

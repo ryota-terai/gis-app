@@ -29,7 +29,7 @@ import javax.persistence.PersistenceContext;
 @TransactionAttribute(TransactionAttributeType.MANDATORY)
 public class PostInformationGeoJsonBean {
 
-    @PersistenceContext(unitName = "GHP2021Entity")
+    @PersistenceContext(unitName = "GISAppEntity")
     private EntityManager em;
 
     private static final Logger LOG = Logger.getLogger(PostInformationGeoJsonBean.class.getName());
