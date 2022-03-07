@@ -101,7 +101,7 @@ public class File implements Serializable {
 
     @Override
     public String toString() {
-        return "ghp2021.ghp2021entity.File[ id=" + id + " ]";
+        return "com.r_terai.gisapp.entity.File[ id=" + id + " ]";
     }
     
 }

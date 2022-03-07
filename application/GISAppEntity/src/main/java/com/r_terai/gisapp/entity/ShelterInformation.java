@@ -242,7 +242,7 @@ public class ShelterInformation implements Serializable {
 
     @Override
     public String toString() {
-        return "ghp2021.ghp2021entity.ShelterInformation[ geom=" + geom + " ]";
+        return "com.r_terai.gisapp.entity.ShelterInformation[ geom=" + geom + " ]";
     }
     
 }

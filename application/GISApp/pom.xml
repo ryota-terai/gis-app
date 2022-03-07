@@ -84,5 +84,6 @@
         <module>GISApp-ejb</module>
         <module>GISApp-web</module>
         <module>../GISAppEntity</module>
+        <module>../../lib/Util</module>
     </modules>
 </project>

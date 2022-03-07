@@ -149,7 +149,7 @@ public class PostInformation implements Serializable {
 
     @Override
     public String toString() {
-        return "ghp2021.ghp2021entity.PostInformation[ id=" + id + " ]";
+        return "com.r_terai.gisapp.entity.PostInformation[ id=" + id + " ]";
     }
     
 }

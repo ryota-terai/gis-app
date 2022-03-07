@@ -6,5 +6,8 @@
     <class>com.r_terai.gisapp.entity.ShelterInformationExt</class>
     <class>com.r_terai.gisapp.entity.PostInformation</class>
     <class>com.r_terai.gisapp.entity.ShelterInformation</class>
+    <class>com.r_terai.gisapp.entity.Point</class>
+    <class>com.r_terai.gisapp.entity.PointInformation</class>
+    <class>com.r_terai.gisapp.entity.ShelterInformationView</class>
   </persistence-unit>
 </persistence>

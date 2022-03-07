@@ -26,3 +26,4 @@ hs_err_pid*
 /application/GISApp/GISApp-ejb/target/
 /application/GISApp/GISApp-web/target/
 /application/GISApp/GISApp-ear/target/
+/lib/Util/target/

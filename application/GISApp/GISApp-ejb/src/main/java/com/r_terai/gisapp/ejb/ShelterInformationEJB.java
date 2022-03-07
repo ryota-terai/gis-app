@@ -5,16 +5,20 @@
  */
 package com.r_terai.gisapp.ejb;
 
+import com.google.gson.JsonPrimitive;
 import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.FeatureCollection;
 import com.mapbox.geojson.Geometry;
 import com.mapbox.geojson.Point;
+import com.r_terai.gisapp.entity.PointInformation;
 import com.r_terai.gisapp.entity.ShelterInformation;
 import com.r_terai.gisapp.entity.ShelterInformationExt;
+import com.rterai.java.util.Util;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -49,22 +53,38 @@ public class ShelterInformationEJB implements ShelterInformationEJBLocal {
         FeatureCollection featureCollection = FeatureCollection.fromJson(streamToString);
 
         for (Feature feature : featureCollection.features()) {
-            ShelterInformation shelterInformation = new ShelterInformation();
-            shelterInformation.setAdministrativeAreaCode(feature.getStringProperty("P20_001"));
-            shelterInformation.setName(feature.getStringProperty("P20_002"));
-            shelterInformation.setAddress(feature.getStringProperty("P20_003"));
-            shelterInformation.setType(feature.getStringProperty("P20_004"));
+            com.r_terai.gisapp.entity.Point point = new com.r_terai.gisapp.entity.Point();
+            point.setPointId(Util.makeId(32, true));
+            point.setPrivate1((short) 0);
             Geometry geometry = feature.geometry();
-            shelterInformation.setLatitude(((Point) geometry).latitude());
-            shelterInformation.setLongitude(((Point) geometry).longitude());
-            shelterInformation.setGeom("Point(" + shelterInformation.getLongitude() + " " + shelterInformation.getLatitude() + ")");
-            shelterInformation.setP20007(feature.getNumberProperty("P20_007").shortValue());
-            shelterInformation.setP20008(feature.getNumberProperty("P20_008").shortValue());
-            shelterInformation.setP20009(feature.getNumberProperty("P20_009").shortValue());
-            shelterInformation.setP20010(feature.getNumberProperty("P20_010").shortValue());
-            shelterInformation.setP20011(feature.getNumberProperty("P20_011").shortValue());
-            shelterInformation.setP20012(feature.getNumberProperty("P20_012").shortValue());
-            em.persist(shelterInformation);
+            point.setX(((Point) geometry).longitude());
+            point.setY(((Point) geometry).latitude());
+            point.setUpdateTime(new Date());
+            em.persist(point);
+
+            for (String key : feature.properties().keySet()) {
+                if (!feature.getProperty(key).isJsonNull()) {
+                    PointInformation info = new PointInformation(point.getPointId(), key);
+                    JsonPrimitive property = feature.getProperty(key).getAsJsonPrimitive();
+                    info.setUpdateTime(new Date());
+
+                    if (property.isString()) {
+                        info.setType("String");
+                        info.setString((String) feature.getStringProperty(key));
+                        em.persist(info);
+                    } else if (property.isNumber()) {
+                        info.setType("Number");
+                        info.setNumber(feature.getNumberProperty(key).doubleValue());
+                        em.persist(info);
+                    } else if (property.isBoolean()) {
+                        info.setType("Boolean");
+                        info.setBoolean1(feature.getBooleanProperty(key) ? (short) 1 : (short) 0);
+                        em.persist(info);
+                    } else {
+                        System.out.println("Type=" + property.getClass().toGenericString());
+                    }
+                }
+            }
         }
     }
 
