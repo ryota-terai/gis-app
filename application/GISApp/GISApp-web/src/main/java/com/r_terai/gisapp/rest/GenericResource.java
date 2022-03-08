@@ -9,9 +9,8 @@ import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.FeatureCollection;
 import com.mapbox.geojson.Point;
 import com.r_terai.gisapp.ejb.PostInformationGeoJsonBean;
-import com.r_terai.gisapp.ejb.ShelterInformationEJB;
-import com.r_terai.gisapp.entity.ShelterInformation;
-import com.r_terai.gisapp.entity.ShelterInformationExt;
+import com.r_terai.gisapp.ejb.PointInformationEJB;
+import com.r_terai.gisapp.entity.PointInformationView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -55,7 +54,7 @@ public class GenericResource {
     PostInformationGeoJsonBean postInformationGeoJsonBean;
 
     @EJB(name = "ShelterInformationEJB")
-    ShelterInformationEJB shelterInformationGeoJsonBean;
+    PointInformationEJB shelterInformationGeoJsonBean;
 
     private static final Logger LOG = Logger.getLogger(GenericResource.class.getName());
 
@@ -108,7 +107,7 @@ public class GenericResource {
         FeatureCollection geoJson = null;
         try {
             tx.begin();
-            List<ShelterInformation> shelters = shelterInformationGeoJsonBean.search(administrativeAreaCode, p20_007, p20_008, p20_009, p20_010, p20_011, open);
+            List<PointInformationView> shelters = shelterInformationGeoJsonBean.search(administrativeAreaCode, "shelter", p20_007, p20_008, p20_009, p20_010, p20_011, open);
 
             geoJson = convertToGeoJSON(shelters);
             tx.commit();
@@ -126,32 +125,27 @@ public class GenericResource {
         return geoJson != null ? geoJson.toJson() : null;
     }
 
-    private FeatureCollection convertToGeoJSON(List<ShelterInformation> shelters) {
+    private FeatureCollection convertToGeoJSON(List<PointInformationView> shelters) {
         FeatureCollection geoJson;
         List<Feature> features = new ArrayList();
-        for (ShelterInformation shelter : shelters) {
-            Point point = Point.fromLngLat(shelter.getLongitude(), shelter.getLatitude());
+        for (PointInformationView shelter : shelters) {
+            Point point = Point.fromLngLat(shelter.getX(), shelter.getY());
             Feature feature = Feature.fromGeometry(point);
-            feature.addStringProperty("GEOM", shelter.getGeom());
-            feature.addStringProperty("P20_001", shelter.getAdministrativeAreaCode());
-            feature.addStringProperty("P20_002", shelter.getName());
-            feature.addStringProperty("P20_003", shelter.getAddress());
-            feature.addStringProperty("P20_004", shelter.getType());
-            feature.addStringProperty("P20_004", shelter.getType());
+            feature.addStringProperty("P20_001", shelter.getP20001());
+            feature.addStringProperty("P20_002", shelter.getP20002());
+            feature.addStringProperty("P20_003", shelter.getP20003());
+            feature.addStringProperty("P20_004", shelter.getP20004());
+            feature.addNumberProperty("P20_005", shelter.getP20005());
+            feature.addNumberProperty("P20_006", shelter.getP20006());
             feature.addNumberProperty("P20_007", shelter.getP20007());
             feature.addNumberProperty("P20_008", shelter.getP20008());
             feature.addNumberProperty("P20_009", shelter.getP20009());
             feature.addNumberProperty("P20_010", shelter.getP20010());
             feature.addNumberProperty("P20_011", shelter.getP20011());
             feature.addNumberProperty("P20_012", shelter.getP20012());
-            
-            ShelterInformationExt ext = shelter.getShelterInformationExt();
-            if (ext != null) {
-                feature.addBooleanProperty("open", ext.getOpen() != 0);
-                feature.addStringProperty("comment", ext.getComment());
-            } else {
-                feature.addBooleanProperty("open", false);
-            }
+            feature.addBooleanProperty("open", shelter.getOpen() != null ? shelter.getOpen() != 0 : false);
+            feature.addStringProperty("comment", shelter.getComment());
+
             features.add(feature);
         }
         geoJson = FeatureCollection.fromFeatures(features);

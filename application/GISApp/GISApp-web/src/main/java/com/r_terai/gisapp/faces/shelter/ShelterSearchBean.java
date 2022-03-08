@@ -5,9 +5,8 @@
  */
 package com.r_terai.gisapp.faces.shelter;
 
-import com.r_terai.gisapp.ejb.ShelterInformationEJB;
-import com.r_terai.gisapp.entity.ShelterInformation;
-import com.r_terai.gisapp.entity.ShelterInformationExt;
+import com.r_terai.gisapp.ejb.PointInformationEJB;
+import com.r_terai.gisapp.entity.PointInformationView;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +63,7 @@ public class ShelterSearchBean implements Serializable {
     private ShelterSearchResult selectedShelter;
 
     @Inject
-    private ShelterInformationEJB searchEJB;
+    private PointInformationEJB searchEJB;
 
     /**
      * Creates a new instance of ShelterSearchBean
@@ -155,34 +154,34 @@ public class ShelterSearchBean implements Serializable {
     }
 
     public void search() {
-        List<ShelterInformation> shelterInformationList = searchEJB.search(administrativeAreaCode, p20_007, p20_008, p20_009, p20_010, p20_011, null);
+        List<PointInformationView> shelterInformationList = searchEJB.search(administrativeAreaCode, "shelter", p20_007, p20_008, p20_009, p20_010, p20_011, null);
         shelters.clear();
-        for (ShelterInformation shelterInformation : shelterInformationList) {
-            ShelterInformationExt ext = shelterInformation.getShelterInformationExt();
-            ShelterSearchResult result = new ShelterSearchResult(shelterInformation.getGeom(),
-                    shelterInformation.getAdministrativeAreaCode(),
-                    shelterInformation.getName(),
-                    shelterInformation.getAddress(),
-                    shelterInformation.getType(),
-                    shelterInformation.getLatitude(),
-                    shelterInformation.getLongitude(),
+        for (PointInformationView shelterInformation : shelterInformationList) {
+            ShelterSearchResult result = new ShelterSearchResult(
+                    shelterInformation.getPointId(),
+                    shelterInformation.getP20001(),
+                    shelterInformation.getP20002(),
+                    shelterInformation.getP20003(),
+                    shelterInformation.getP20004(),
+                    shelterInformation.getY(),
+                    shelterInformation.getX(),
                     shelterInformation.getP20007() != 0,
                     shelterInformation.getP20008() != 0,
                     shelterInformation.getP20009() != 0,
                     shelterInformation.getP20010() != 0,
                     shelterInformation.getP20011() != 0,
                     shelterInformation.getP20012() != 0,
-                    (int) Math.ceil(Math.random() * 100),
-                    (int) Math.ceil(Math.random() * 100),
-                    ext != null ? ext.getOpen() == 1 : false,
-                    ext != null ? ext.getComment() : null);
+                    shelterInformation.getP20005().intValue(),
+                    shelterInformation.getP20006().intValue(),
+                    shelterInformation.getOpen() != null ? shelterInformation.getOpen() != 0 : false,
+                    shelterInformation.getComment());
 
             shelters.add(result);
         }
     }
 
     public void saveShelter() {
-        searchEJB.upateShelterInformationExt(selectedShelter.getGeom(), selectedShelter.isOpen(), selectedShelter.getComment());
+        searchEJB.upatePointInformation(selectedShelter.getKey(), selectedShelter.isOpen(), selectedShelter.getComment());
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("避難所情報を更新しました"));
 
         PrimeFaces.current().executeScript("PF('manageShelterDialog').hide()");

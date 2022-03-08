@@ -5,7 +5,7 @@
  */
 package com.r_terai.gisapp.ejb;
 
-import com.r_terai.gisapp.entity.ShelterInformation;
+import com.r_terai.gisapp.entity.PointInformationView;
 import java.io.InputStream;
 import java.util.List;
 import javax.ejb.Local;
@@ -15,17 +15,17 @@ import javax.ejb.Local;
  * @author Ryota-Terai
  */
 @Local
-public interface ShelterInformationEJBLocal {
+public interface PointrInformationEJBLocal {
 
     /**
-     * 避難所セットアップ
+     * セットアップ
      *
-     * @param stream 避難所情報(GeoJSON形式)
+     * @param stream 地点情報(GeoJSON形式)
      */
-    void setup(InputStream stream);
+    void setup(InputStream stream, boolean _private, String type);
 
     /**
-     * 避難所一覧を検索
+     * 一覧を検索
      *
      * @param administrativeAreaCode 行政区域コード
      * @param p20_007 地震災害
@@ -35,15 +35,15 @@ public interface ShelterInformationEJBLocal {
      * @param p20_011 その他
      * @return 避難所一覧
      */
-    List<ShelterInformation> search(String administrativeAreaCode, boolean p20_007, boolean p20_008, boolean p20_009, boolean p20_010, boolean p20_011, Boolean open);
+    List<PointInformationView> search(String administrativeAreaCode, String type, boolean p20_007, boolean p20_008, boolean p20_009, boolean p20_010, boolean p20_011, Boolean open);
 
     /**
-     * 避難所情報更新
+     * 情報更新
      *
-     * @param geom 位置(主キー)
+     * @param pointId 主キー
      * @param open 開設中
      * @param comment 備考
      */
-    void upateShelterInformationExt(String geom, boolean open, String comment);
+    void upatePointInformation(String pointId, boolean open, String comment);
 
 }

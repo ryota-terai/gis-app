@@ -85,5 +85,6 @@
         <module>GISApp-web</module>
         <module>../GISAppEntity</module>
         <module>../../lib/Util</module>
+        <module>../GISAppEntityUtil</module>
     </modules>
 </project>

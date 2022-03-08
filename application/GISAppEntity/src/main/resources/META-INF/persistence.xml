@@ -9,5 +9,6 @@
     <class>com.r_terai.gisapp.entity.Point</class>
     <class>com.r_terai.gisapp.entity.PointInformation</class>
     <class>com.r_terai.gisapp.entity.ShelterInformationView</class>
+    <class>com.r_terai.gisapp.entity.PointInformationView</class>
   </persistence-unit>
 </persistence>

@@ -29,6 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Point.findAll", query = "SELECT p FROM Point p"),
     @NamedQuery(name = "Point.findByPointId", query = "SELECT p FROM Point p WHERE p.pointId = :pointId"),
     @NamedQuery(name = "Point.findByPrivate1", query = "SELECT p FROM Point p WHERE p.private1 = :private1"),
+    @NamedQuery(name = "Point.findByType", query = "SELECT p FROM Point p WHERE p.type = :type"),
     @NamedQuery(name = "Point.findByX", query = "SELECT p FROM Point p WHERE p.x = :x"),
     @NamedQuery(name = "Point.findByY", query = "SELECT p FROM Point p WHERE p.y = :y"),
     @NamedQuery(name = "Point.findByZ", query = "SELECT p FROM Point p WHERE p.z = :z"),
@@ -40,8 +41,12 @@ public class Point implements Serializable {
     @Basic(optional = false)
     @Column(name = "POINT_ID")
     private String pointId;
+    @Basic(optional = false)
     @Column(name = "PRIVATE")
-    private Short private1;
+    private short private1;
+    @Basic(optional = false)
+    @Column(name = "TYPE")
+    private String type;
     @Basic(optional = false)
     @Column(name = "X")
     private double x;
@@ -63,8 +68,10 @@ public class Point implements Serializable {
         this.pointId = pointId;
     }
 
-    public Point(String pointId, double x, double y, Date updateTime) {
+    public Point(String pointId, short private1, String type, double x, double y, Date updateTime) {
         this.pointId = pointId;
+        this.private1 = private1;
+        this.type = type;
         this.x = x;
         this.y = y;
         this.updateTime = updateTime;
@@ -78,12 +85,20 @@ public class Point implements Serializable {
         this.pointId = pointId;
     }
 
-    public Short getPrivate1() {
+    public short getPrivate1() {
         return private1;
     }
 
-    public void setPrivate1(Short private1) {
+    public void setPrivate1(short private1) {
         this.private1 = private1;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public double getX() {

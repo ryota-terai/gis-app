@@ -5,7 +5,7 @@
  */
 package com.r_terai.gisapp.faces.shelter;
 
-import com.r_terai.gisapp.ejb.ShelterInformationEJB;
+import com.r_terai.gisapp.ejb.PointInformationEJB;
 import java.io.IOException;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -19,7 +19,7 @@ import org.primefaces.event.FileUploadEvent;
 public class ShelterSetupBean {
 
     @Inject
-    private ShelterInformationEJB shelterEJB;
+    private PointInformationEJB shelterEJB;
 
     /**
      * Creates a new instance of ShelterSetupBean
@@ -28,7 +28,7 @@ public class ShelterSetupBean {
     }
 
     public void handleFileUpload(FileUploadEvent event) throws IOException {
-        shelterEJB.setup(event.getFile().getInputStream());
+        shelterEJB.setup(event.getFile().getInputStream(), false, "shelter");
 
         FacesMessage message = new FacesMessage("Successful", event.getFile().getFileName() + " is uploaded.");
         FacesContext.getCurrentInstance().addMessage(null, message);
