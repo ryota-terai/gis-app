@@ -6,11 +6,10 @@
 package com.r_terai.gisapp.faces.post.check;
 
 import com.r_terai.gisapp.ejb.PostInformationEJB;
-import com.r_terai.gisapp.entity.PostInformation;
+import com.r_terai.gisapp.entity.PostInformationView;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.Date;
 import javax.inject.Inject;
 
 /**
@@ -19,11 +18,11 @@ import javax.inject.Inject;
  */
 public class CheckBean implements Serializable {
 
-    private long id;
+    private String id;
 
     private boolean admin;
 
-    private PostInformation postInformation;
+    private PostInformationView postInformation;
 
     @Inject
     private PostInformationEJB postInformationEJB;
@@ -34,11 +33,11 @@ public class CheckBean implements Serializable {
     public CheckBean() {
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -50,7 +49,7 @@ public class CheckBean implements Serializable {
         this.admin = admin;
     }
 
-    public PostInformation getPostInformation() {
+    public PostInformationView getPostInformation() {
         return postInformation;
     }
 
@@ -70,8 +69,6 @@ public class CheckBean implements Serializable {
     }
 
     public String confirm() {
-        postInformation.setTime(new Date());
-
         postInformationEJB.confirm(postInformation);
 
         return "/post/check/index?faces-redirect=true";

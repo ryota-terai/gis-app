@@ -5,7 +5,7 @@
  */
 package com.r_terai.gisapp.ejb;
 
-import com.r_terai.gisapp.entity.PostInformation;
+import com.r_terai.gisapp.entity.PostInformationView;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -24,21 +24,21 @@ public interface PostInformationEJBLocal {
      * @param information 情報
      * @param file 画像ファイル
      */
-    public void postDisasterInformation(String latitude, String longtitude, String information, byte[] file);
+    public void postInformation(String latitude, String longtitude, String information, byte[] file);
 
     /**
      * 未確認の投稿情報を取得する
      *
      * @return 未確認の投稿情報
      */
-    public List<PostInformation> getUncheckedInformation();
+    public List<PostInformationView> getUncheckedInformation();
 
     /**
      * 確認済みの投稿情報を取得する
      *
      * @return 確認済みの投稿情報
      */
-    public List<PostInformation> getApprovedInformation();
+    public List<PostInformationView> getApprovedInformation();
 
     /**
      * 投稿情報を取得する
@@ -46,17 +46,17 @@ public interface PostInformationEJBLocal {
      * @param id ID
      * @return IDに合致する投稿情報
      */
-    public PostInformation getPostInformation(long id);
+    public PostInformationView getPostInformation(String point_id);
     
     /**
      * 投稿画像取得
      * @param id 投稿ID
      * @return 画像
      */
-    public byte[] getPicture(long id);
+    public byte[] getPicture(String point_id);
 
-    public void confirm(PostInformation information);
+    public void confirm(PostInformationView information);
 
-    public void delete(long id);
+    public void delete(String pointId);
 
 }

@@ -89,7 +89,7 @@ public class PostBean {
             stream.read(buffer, 0, (int) size);
             stream.close();
         }
-        postInformationEJB.postDisasterInformation(latitude, longitude, information, buffer);
+        postInformationEJB.postInformation(latitude, longitude, information, buffer);
         return "disasterPosted?faces-redirect=true";
     }
 }

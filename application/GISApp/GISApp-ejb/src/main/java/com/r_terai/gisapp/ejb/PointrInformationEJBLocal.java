@@ -5,7 +5,7 @@
  */
 package com.r_terai.gisapp.ejb;
 
-import com.r_terai.gisapp.entity.PointInformationView;
+import com.r_terai.gisapp.entity.ShelterInformationView;
 import java.io.InputStream;
 import java.util.List;
 import javax.ejb.Local;
@@ -35,7 +35,7 @@ public interface PointrInformationEJBLocal {
      * @param p20_011 その他
      * @return 避難所一覧
      */
-    List<PointInformationView> search(String administrativeAreaCode, String type, boolean p20_007, boolean p20_008, boolean p20_009, boolean p20_010, boolean p20_011, Boolean open);
+    List<ShelterInformationView> search(String administrativeAreaCode, String type, boolean p20_007, boolean p20_008, boolean p20_009, boolean p20_010, boolean p20_011, Boolean open);
 
     /**
      * 情報更新

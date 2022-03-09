@@ -6,7 +6,7 @@
 package com.r_terai.gisapp.ejb;
 
 import com.mapbox.geojson.FeatureCollection;
-import com.r_terai.gisapp.entity.PointInformationView;
+import com.r_terai.gisapp.entity.ShelterInformationView;
 import com.rterai.gisapp.GISAppEntityUtil;
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -45,15 +45,15 @@ public class PointInformationEJB implements PointrInformationEJBLocal {
 
         FeatureCollection featureCollection = FeatureCollection.fromJson(streamToString);
 
-        GISAppEntityUtil.persist(em, featureCollection, _private, type);
+        GISAppEntityUtil.PointUtil.persist(em, featureCollection, _private, type);
     }
 
     @Override
-    public List<PointInformationView> search(String administrativeAreaCode, String type, boolean p20_007, boolean p20_008, boolean p20_009, boolean p20_010, boolean p20_011, Boolean open) {
-        List<PointInformationView> shelters = GISAppEntityUtil.search(em, administrativeAreaCode, type);
+    public List<ShelterInformationView> search(String administrativeAreaCode, String type, boolean p20_007, boolean p20_008, boolean p20_009, boolean p20_010, boolean p20_011, Boolean open) {
+        List<ShelterInformationView> shelters = GISAppEntityUtil.ShelterInformationViewUtil.search(em, administrativeAreaCode, type);
 
-        List<PointInformationView> shelters2 = new ArrayList();
-        for (PointInformationView shelter : shelters) {
+        List<ShelterInformationView> shelters2 = new ArrayList();
+        for (ShelterInformationView shelter : shelters) {
             boolean check = false;
             if (open == null) {
                 check = true;
@@ -83,7 +83,7 @@ public class PointInformationEJB implements PointrInformationEJBLocal {
 
     @Override
     public void upatePointInformation(String pointId, boolean open, String comment) {
-        GISAppEntityUtil.update(em, pointId, open, comment);
+        GISAppEntityUtil.PointInformationUtil.update(em, pointId, open, comment);
     }
 
 }

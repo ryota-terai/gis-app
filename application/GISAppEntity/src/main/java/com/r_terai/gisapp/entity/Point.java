@@ -7,16 +7,21 @@ package com.r_terai.gisapp.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -60,6 +65,10 @@ public class Point implements Serializable {
     @Column(name = "UPDATE_TIME")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateTime;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "point")
+    private File file;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "point")
+    private List<PointInformation> pointInformationList;
 
     public Point() {
     }
@@ -131,6 +140,23 @@ public class Point implements Serializable {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    public void setFile(File file) {
+        this.file = file;
+    }
+
+    @XmlTransient
+    public List<PointInformation> getPointInformationList() {
+        return pointInformationList;
+    }
+
+    public void setPointInformationList(List<PointInformation> pointInformationList) {
+        this.pointInformationList = pointInformationList;
     }
 
     @Override

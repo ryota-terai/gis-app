@@ -6,7 +6,7 @@
 package com.r_terai.gisapp.faces.post.view;
 
 import com.r_terai.gisapp.ejb.PostInformationEJB;
-import com.r_terai.gisapp.entity.PostInformation;
+import com.r_terai.gisapp.entity.PostInformationView;
 import java.util.List;
 import javax.inject.Inject;
 
@@ -16,7 +16,7 @@ import javax.inject.Inject;
  */
 public class ListCheckedBean {
 
-    private List<PostInformation> postedInformation;
+    private List<PostInformationView> postedInformation;
 
     @Inject
     private PostInformationEJB postInformationEJB;
@@ -27,7 +27,7 @@ public class ListCheckedBean {
     public ListCheckedBean() {
     }
 
-    public List<PostInformation> getPostedInformation() {
+    public List<PostInformationView> getPostedInformation() {
         return postedInformation;
     }
 

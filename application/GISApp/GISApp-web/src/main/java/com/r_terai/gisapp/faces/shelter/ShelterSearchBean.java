@@ -6,7 +6,7 @@
 package com.r_terai.gisapp.faces.shelter;
 
 import com.r_terai.gisapp.ejb.PointInformationEJB;
-import com.r_terai.gisapp.entity.PointInformationView;
+import com.r_terai.gisapp.entity.ShelterInformationView;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -154,9 +154,9 @@ public class ShelterSearchBean implements Serializable {
     }
 
     public void search() {
-        List<PointInformationView> shelterInformationList = searchEJB.search(administrativeAreaCode, "shelter", p20_007, p20_008, p20_009, p20_010, p20_011, null);
+        List<ShelterInformationView> shelterInformationList = searchEJB.search(administrativeAreaCode, "shelter", p20_007, p20_008, p20_009, p20_010, p20_011, null);
         shelters.clear();
-        for (PointInformationView shelterInformation : shelterInformationList) {
+        for (ShelterInformationView shelterInformation : shelterInformationList) {
             ShelterSearchResult result = new ShelterSearchResult(
                     shelterInformation.getPointId(),
                     shelterInformation.getP20001(),

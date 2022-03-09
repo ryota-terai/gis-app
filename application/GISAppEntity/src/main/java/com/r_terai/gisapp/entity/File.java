@@ -27,40 +27,40 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "File.findAll", query = "SELECT f FROM File f"),
-    @NamedQuery(name = "File.findById", query = "SELECT f FROM File f WHERE f.id = :id")})
+    @NamedQuery(name = "File.findByPointId", query = "SELECT f FROM File f WHERE f.pointId = :pointId")})
 public class File implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "ID")
-    private Long id;
+    @Column(name = "POINT_ID")
+    private String pointId;
     @Basic(optional = false)
     @Lob
     @Column(name = "FILE")
     private byte[] file;
-    @JoinColumn(name = "ID", referencedColumnName = "ID", insertable = false, updatable = false)
+    @JoinColumn(name = "POINT_ID", referencedColumnName = "POINT_ID", insertable = false, updatable = false)
     @OneToOne(optional = false)
-    private PostInformation postInformation;
+    private Point point;
 
     public File() {
     }
 
-    public File(Long id) {
-        this.id = id;
+    public File(String pointId) {
+        this.pointId = pointId;
     }
 
-    public File(Long id, byte[] file) {
-        this.id = id;
+    public File(String pointId, byte[] file) {
+        this.pointId = pointId;
         this.file = file;
     }
 
-    public Long getId() {
-        return id;
+    public String getPointId() {
+        return pointId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setPointId(String pointId) {
+        this.pointId = pointId;
     }
 
     public byte[] getFile() {
@@ -71,18 +71,18 @@ public class File implements Serializable {
         this.file = file;
     }
 
-    public PostInformation getPostInformation() {
-        return postInformation;
+    public Point getPoint() {
+        return point;
     }
 
-    public void setPostInformation(PostInformation postInformation) {
-        this.postInformation = postInformation;
+    public void setPoint(Point point) {
+        this.point = point;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (pointId != null ? pointId.hashCode() : 0);
         return hash;
     }
 
@@ -93,7 +93,7 @@ public class File implements Serializable {
             return false;
         }
         File other = (File) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if ((this.pointId == null && other.pointId != null) || (this.pointId != null && !this.pointId.equals(other.pointId))) {
             return false;
         }
         return true;
@@ -101,7 +101,7 @@ public class File implements Serializable {
 
     @Override
     public String toString() {
-        return "com.r_terai.gisapp.entity.File[ id=" + id + " ]";
+        return "com.r_terai.gisapp.entity.File[ pointId=" + pointId + " ]";
     }
     
 }

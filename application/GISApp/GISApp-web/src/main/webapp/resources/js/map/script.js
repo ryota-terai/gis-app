@@ -6,7 +6,7 @@ let zoom = 16; // ズームレベル
 // ここでは3DのOpenStreetMapを表示する
 var map = new maplibregl.Map({
     container: 'map',
-    style: '/GHP2021App/style_normal.json',
+    style: '/GISApp/style_normal.json',
     center: [lon, lat],
     zoom: zoom,
     hash: true,

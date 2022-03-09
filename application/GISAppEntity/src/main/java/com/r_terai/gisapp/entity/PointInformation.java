@@ -11,7 +11,9 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -54,6 +56,9 @@ public class PointInformation implements Serializable {
     @Column(name = "UPDATE_TIME")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateTime;
+    @JoinColumn(name = "POINT_ID", referencedColumnName = "POINT_ID", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Point point;
 
     public PointInformation() {
     }
@@ -118,6 +123,14 @@ public class PointInformation implements Serializable {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Point getPoint() {
+        return point;
+    }
+
+    public void setPoint(Point point) {
+        this.point = point;
     }
 
     @Override

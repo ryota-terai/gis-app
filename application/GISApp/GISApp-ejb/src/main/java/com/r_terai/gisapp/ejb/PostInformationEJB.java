@@ -6,8 +6,8 @@
 package com.r_terai.gisapp.ejb;
 
 import com.r_terai.gisapp.entity.File;
-import com.r_terai.gisapp.entity.PostInformation;
-import java.util.Date;
+import com.r_terai.gisapp.entity.PostInformationView;
+import com.rterai.gisapp.GISAppEntityUtil;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.ejb.LocalBean;
@@ -32,49 +32,28 @@ public class PostInformationEJB implements PostInformationEJBLocal {
     private static final Logger LOG = Logger.getLogger(PostInformationEJB.class.getName());
 
     @Override
-    public void postDisasterInformation(String latitude, String longtitude, String information, byte[] file) {
-        PostInformation info = new PostInformation();
-        Date now = new Date();
-        info.setId(now.getTime());
-        info.setTime(now);
-        info.setLatitude(latitude);
-        info.setLongitude(longtitude);
-        info.setInformation(information);
-        info.setApproved((short) 0);
-
-        em.persist(info);
-
-        if (file != null) {
-            File fileEntity = new File();
-            fileEntity.setId(info.getId());
-            fileEntity.setFile(file);
-
-            em.persist(fileEntity);
-        }
+    public void postInformation(String latitude, String longtitude, String information, byte[] file) {
+        GISAppEntityUtil.PointUtil.persist(em, "post_information", longtitude, latitude, information, file);
     }
 
     @Override
-    public List<PostInformation> getUncheckedInformation() {
-        return em.createNamedQuery("PostInformation.findByApproved", PostInformation.class)
-                .setParameter("approved", 0)
-                .getResultList();
+    public List<PostInformationView> getUncheckedInformation() {
+        return GISAppEntityUtil.PostInformationViewUtil.getInformation(em, false);
     }
 
     @Override
-    public List<PostInformation> getApprovedInformation() {
-        return em.createNamedQuery("PostInformation.findByApproved", PostInformation.class)
-                .setParameter("approved", 1)
-                .getResultList();
+    public List<PostInformationView> getApprovedInformation() {
+        return GISAppEntityUtil.PostInformationViewUtil.getInformation(em, true);
     }
 
     @Override
-    public PostInformation getPostInformation(long id) {
-        return em.find(PostInformation.class, id);
+    public PostInformationView getPostInformation(String pointId) {
+        return em.find(PostInformationView.class, pointId);
     }
 
     @Override
-    public byte[] getPicture(long id) {
-        File file = em.find(File.class, id);
+    public byte[] getPicture(String pointId) {
+        File file = em.find(File.class, pointId);
         if (file != null) {
             return file.getFile();
         } else {
@@ -83,17 +62,14 @@ public class PostInformationEJB implements PostInformationEJBLocal {
     }
 
     @Override
-    public void confirm(PostInformation information) {
-        information.setApproved(1);
-        em.merge(information);
+    public void confirm(PostInformationView information) {
+        GISAppEntityUtil.PostInformationViewUtil.merge(em, information);
     }
 
+
     @Override
-    public void delete(long id) {
-        em.remove(getPostInformation(id));
-        File file = em.find(File.class, id);
-        if (file != null) {
-            em.remove(file);
-        }
+    public void delete(String pointId) {
+        GISAppEntityUtil.PostInformationViewUtil.remove(em, pointId);
     }
+
 }

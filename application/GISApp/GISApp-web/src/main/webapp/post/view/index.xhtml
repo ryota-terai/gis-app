@@ -21,20 +21,20 @@
                     <p:dataTable id="tbl" var="information" value="#{listCheckedBean.postedInformation}"
                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
                                  paginator="true" rows="50" style="margin-bottom:20px" sortMode="multiple">
-                        <p:column sortBy="#{information.id}">
+                        <p:column sortBy="#{information.pointId}">
                             <f:facet name="header">
                                 <h:outputText value="ID" />
                             </f:facet>
-                            <h:link outcome="view" value="#{information.id}">
-                                <f:param name="id" value="#{information.id}" />
+                            <h:link outcome="view" value="#{information.pointId}">
+                                <f:param name="id" value="#{information.pointId}" />
                             </h:link>
                         </p:column>
 
-                        <p:column sortBy="#{information.time}">
+                        <p:column sortBy="#{information.updateTime}">
                             <f:facet name="header">
                                 <h:outputText value="投稿時刻" />
                             </f:facet>
-                            <h:outputText value="#{information.time}">
+                            <h:outputText value="#{information.updateTime}">
                                 <f:convertDateTime type="date" pattern="yyyy/MM/dd HH:mm" timeZone="Asia/Tokyo"/>
                             </h:outputText>
                         </p:column>

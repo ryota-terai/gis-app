@@ -29,8 +29,8 @@ and open the template in the editor.
                 <h:form id="frm">
                     <p:growl id="growl" life="20000" />
                     <p:growl id="message" showDetail="true"/>
-                    <h:inputHidden id="latitude" value="#{postCheckBean.postInformation.latitude}" />
-                    <h:inputHidden id="longitude" value="#{postCheckBean.postInformation.longitude}" />
+                    <h:inputHidden id="latitude" value="#{postCheckBean.postInformation.y}" />
+                    <h:inputHidden id="longitude" value="#{postCheckBean.postInformation.x}" />
                     <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
                         <p:outputLabel for="picture" value="写真" />
                         <p:graphicImage id="picture" value="#{postCheckBean.picture}" stream="false" width="600px"/>

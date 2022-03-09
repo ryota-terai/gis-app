@@ -8,9 +8,9 @@ package com.r_terai.gisapp.rest;
 import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.FeatureCollection;
 import com.mapbox.geojson.Point;
-import com.r_terai.gisapp.ejb.PostInformationGeoJsonBean;
+import com.r_terai.gisapp.ejb.PostInformationGeoJsonEJB;
 import com.r_terai.gisapp.ejb.PointInformationEJB;
-import com.r_terai.gisapp.entity.PointInformationView;
+import com.r_terai.gisapp.entity.ShelterInformationView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -51,7 +51,7 @@ public class GenericResource {
     UserTransaction tx;
 
     @EJB(name = "PostInformationGeoJsonBean")
-    PostInformationGeoJsonBean postInformationGeoJsonBean;
+    PostInformationGeoJsonEJB postInformationGeoJsonBean;
 
     @EJB(name = "ShelterInformationEJB")
     PointInformationEJB shelterInformationGeoJsonBean;
@@ -107,7 +107,7 @@ public class GenericResource {
         FeatureCollection geoJson = null;
         try {
             tx.begin();
-            List<PointInformationView> shelters = shelterInformationGeoJsonBean.search(administrativeAreaCode, "shelter", p20_007, p20_008, p20_009, p20_010, p20_011, open);
+            List<ShelterInformationView> shelters = shelterInformationGeoJsonBean.search(administrativeAreaCode, "shelter", p20_007, p20_008, p20_009, p20_010, p20_011, open);
 
             geoJson = convertToGeoJSON(shelters);
             tx.commit();
@@ -125,10 +125,10 @@ public class GenericResource {
         return geoJson != null ? geoJson.toJson() : null;
     }
 
-    private FeatureCollection convertToGeoJSON(List<PointInformationView> shelters) {
+    private FeatureCollection convertToGeoJSON(List<ShelterInformationView> shelters) {
         FeatureCollection geoJson;
         List<Feature> features = new ArrayList();
-        for (PointInformationView shelter : shelters) {
+        for (ShelterInformationView shelter : shelters) {
             Point point = Point.fromLngLat(shelter.getX(), shelter.getY());
             Feature feature = Feature.fromGeometry(point);
             feature.addStringProperty("P20_001", shelter.getP20001());
