@@ -25,7 +25,8 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>GISAppEntity</artifactId>
-            <version>${project.version}</version>
+            <version>1.0-SNAPSHOT</version>
+            <type>jar</type>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.mapbox.mapboxsdk/mapbox-sdk-geojson -->
         <dependency>

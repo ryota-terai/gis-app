@@ -10,12 +10,14 @@ import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.FeatureCollection;
 import com.mapbox.geojson.Geometry;
 import com.r_terai.gisapp.entity.File;
+import com.r_terai.gisapp.entity.ObserverSetting;
 import com.r_terai.gisapp.entity.ObserverTarget;
 import com.r_terai.gisapp.entity.Point;
 import com.r_terai.gisapp.entity.PointInformation;
 import com.r_terai.gisapp.entity.PointInformationPK;
 import com.r_terai.gisapp.entity.PostInformationView;
 import com.r_terai.gisapp.entity.ShelterInformationView;
+import com.r_terai.gisapp.entity.TimerSetting;
 import com.r_terai.java.util.Logger;
 import com.r_terai.java.util.Logger.Level;
 import com.r_terai.java.util.Util;
@@ -237,5 +239,40 @@ public class GISAppEntityUtil {
             persist(em, application, module, className, methodName);
             logger.log(Logger.Level.INFO, "Application={};Module={};Class={};Method={}", application, module, className, methodName);
         }
+
+        public static List<ObserverTarget> getOrderByUpdateTimeDesc(EntityManager em, String application, String module, String _class, String method) {
+            List<ObserverTarget> targets = em.createNativeQuery("SELECT * FROM OBSERVER_TARGET WHERE APPLICATION = ?1 AND MODULE = ?2 AND CLASS = ?3 AND METHOD = ?4 ORDER BY UPDATE_TIME DESC", ObserverTarget.class)
+                    .setParameter(1, application)
+                    .setParameter(2, module)
+                    .setParameter(3, _class)
+                    .setParameter(4, method)
+                    .getResultList();
+
+            return targets;
+        }
+    }
+
+    public static class ObserverSettingUtil {
+
+        public static List<ObserverSetting> get(EntityManager em) {
+            List<ObserverSetting> settings = em.createNamedQuery("ObserverSetting.findByEnable", ObserverSetting.class)
+                    .setParameter("enable", (short) 1)
+                    .getResultList();
+            return settings;
+        }
+
+    }
+
+    public static class TimerSettingUtil {
+
+        public static TimerSetting get(EntityManager em, String application, String module, String className) {
+            TimerSetting setting = (TimerSetting) em.createNativeQuery("SELECT * FROM TIMER_SETTING WHERE APPLICATION = ?1 AND MODULE = ?2 AND CLASS = ?3", TimerSetting.class)
+                    .setParameter(1, application)
+                    .setParameter(2, module)
+                    .setParameter(3, className)
+                    .getSingleResult();
+            return setting;
+        }
+
     }
 }

@@ -6,10 +6,14 @@
 package com.r_terai.gisapp.ejb;
 
 import com.r_terai.gisapp.GISAppEntityUtil;
+import com.r_terai.gisapp.entity.ObserverSetting;
+import com.r_terai.gisapp.entity.ObserverTarget;
 import com.r_terai.gisapp.entity.TimerSetting;
 import com.r_terai.java.util.Logger;
 import com.r_terai.java.util.Logger.Level;
 import com.r_terai.java.util.Util;
+import java.util.Date;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.ejb.Singleton;
@@ -45,11 +49,7 @@ public class OvserverTimer {
             String application = Util.getApplicationName();
             String module = Util.getModuleName();
 
-            TimerSetting setting = (TimerSetting) em.createNativeQuery("SELECT * FROM TIMER_SETTING WHERE APPLICATION = ?1 AND MODULE = ?2 AND CLASS = ?3", TimerSetting.class)
-                    .setParameter(1, application)
-                    .setParameter(2, module)
-                    .setParameter(3, this.getClass().getName())
-                    .getSingleResult();
+            TimerSetting setting = GISAppEntityUtil.TimerSettingUtil.get(em, application, module, this.getClass().getName());
 
             TimerConfig timerConfig = new TimerConfig();
             timerConfig.setInfo(this.getClass().getName());
@@ -68,11 +68,32 @@ public class OvserverTimer {
     @Timeout
     public void timeout(Timer timer) {
         try {
+            observe();
             GISAppEntityUtil.ObserverTargetUtil.kick(em);
         } catch (NamingException ex) {
             logger.log(Level.SEVERE, null, ex);
         }
 
+    }
+
+    private void observe() {
+        List<ObserverSetting> settings = GISAppEntityUtil.ObserverSettingUtil.get(em);
+
+        for (ObserverSetting setting : settings) {
+            List<ObserverTarget> targets = GISAppEntityUtil.ObserverTargetUtil.getOrderByUpdateTimeDesc(em, setting.getApplication(), setting.getModule(), setting.getClass1(), setting.getMethod());
+            boolean first = true;
+            for (ObserverTarget target : targets) {
+                if (first) {
+                    Date now = new Date();
+                    if (now.getTime() - target.getUpdateTime().getTime() > setting.getTimeout()) {
+                        logger.log(Level.ERROR, setting.toString() + " is timeout");
+                    }
+                    first = false;
+                } else {
+                    em.remove(target);
+                }
+            }
+        }
     }
 
 }

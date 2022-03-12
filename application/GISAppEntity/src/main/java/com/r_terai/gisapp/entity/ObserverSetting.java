@@ -6,7 +6,6 @@
 package com.r_terai.gisapp.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,8 +16,6 @@ import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -26,16 +23,17 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author r-terai
  */
 @Entity
-@Table(name = "OBSERVER_TARGET")
+@Table(name = "OBSERVER_SETTING")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "ObserverTarget.findAll", query = "SELECT o FROM ObserverTarget o"),
-    @NamedQuery(name = "ObserverTarget.findById", query = "SELECT o FROM ObserverTarget o WHERE o.id = :id"),
-    @NamedQuery(name = "ObserverTarget.findByApplication", query = "SELECT o FROM ObserverTarget o WHERE o.application = :application"),
-    @NamedQuery(name = "ObserverTarget.findByModule", query = "SELECT o FROM ObserverTarget o WHERE o.module = :module"),
-    @NamedQuery(name = "ObserverTarget.findByMethod", query = "SELECT o FROM ObserverTarget o WHERE o.method = :method"),
-    @NamedQuery(name = "ObserverTarget.findByUpdateTime", query = "SELECT o FROM ObserverTarget o WHERE o.updateTime = :updateTime")})
-public class ObserverTarget implements Serializable {
+    @NamedQuery(name = "ObserverSetting.findAll", query = "SELECT o FROM ObserverSetting o"),
+    @NamedQuery(name = "ObserverSetting.findById", query = "SELECT o FROM ObserverSetting o WHERE o.id = :id"),
+    @NamedQuery(name = "ObserverSetting.findByEnable", query = "SELECT o FROM ObserverSetting o WHERE o.enable = :enable"),
+    @NamedQuery(name = "ObserverSetting.findByApplication", query = "SELECT o FROM ObserverSetting o WHERE o.application = :application"),
+    @NamedQuery(name = "ObserverSetting.findByModule", query = "SELECT o FROM ObserverSetting o WHERE o.module = :module"),
+    @NamedQuery(name = "ObserverSetting.findByMethod", query = "SELECT o FROM ObserverSetting o WHERE o.method = :method"),
+    @NamedQuery(name = "ObserverSetting.findByTimeout", query = "SELECT o FROM ObserverSetting o WHERE o.timeout = :timeout")})
+public class ObserverSetting implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -43,6 +41,9 @@ public class ObserverTarget implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID")
     private Integer id;
+    @Basic(optional = false)
+    @Column(name = "ENABLE")
+    private short enable;
     @Basic(optional = false)
     @Column(name = "APPLICATION")
     private String application;
@@ -56,28 +57,25 @@ public class ObserverTarget implements Serializable {
     @Basic(optional = false)
     @Column(name = "METHOD")
     private String method;
-    @Lob
-    @Column(name = "STATUS")
-    private String status;
     @Basic(optional = false)
-    @Column(name = "UPDATE_TIME")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updateTime;
+    @Column(name = "TIMEOUT")
+    private int timeout;
 
-    public ObserverTarget() {
+    public ObserverSetting() {
     }
 
-    public ObserverTarget(Integer id) {
+    public ObserverSetting(Integer id) {
         this.id = id;
     }
 
-    public ObserverTarget(Integer id, String application, String module, String class1, String method, Date updateTime) {
+    public ObserverSetting(Integer id, short enable, String application, String module, String class1, String method, int timeout) {
         this.id = id;
+        this.enable = enable;
         this.application = application;
         this.module = module;
         this.class1 = class1;
         this.method = method;
-        this.updateTime = updateTime;
+        this.timeout = timeout;
     }
 
     public Integer getId() {
@@ -86,6 +84,14 @@ public class ObserverTarget implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public short getEnable() {
+        return enable;
+    }
+
+    public void setEnable(short enable) {
+        this.enable = enable;
     }
 
     public String getApplication() {
@@ -120,20 +126,12 @@ public class ObserverTarget implements Serializable {
         this.method = method;
     }
 
-    public String getStatus() {
-        return status;
+    public int getTimeout() {
+        return timeout;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
+    public void setTimeout(int timeout) {
+        this.timeout = timeout;
     }
 
     @Override
@@ -146,10 +144,10 @@ public class ObserverTarget implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ObserverTarget)) {
+        if (!(object instanceof ObserverSetting)) {
             return false;
         }
-        ObserverTarget other = (ObserverTarget) object;
+        ObserverSetting other = (ObserverSetting) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -158,7 +156,7 @@ public class ObserverTarget implements Serializable {
 
     @Override
     public String toString() {
-        return "com.r_terai.gisapp.entity.ObserverTarget[ id=" + id + " ]";
+        return "com.r_terai.gisapp.entity.ObserverSetting[ id=" + id + " ]";
     }
     
 }
