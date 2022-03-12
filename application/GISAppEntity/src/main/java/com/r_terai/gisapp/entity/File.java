@@ -34,7 +34,7 @@ public class File implements Serializable {
     @Id
     @Basic(optional = false)
     @Column(name = "POINT_ID")
-    private String pointId;
+    private Integer pointId;
     @Basic(optional = false)
     @Lob
     @Column(name = "FILE")
@@ -46,20 +46,20 @@ public class File implements Serializable {
     public File() {
     }
 
-    public File(String pointId) {
+    public File(Integer pointId) {
         this.pointId = pointId;
     }
 
-    public File(String pointId, byte[] file) {
+    public File(Integer pointId, byte[] file) {
         this.pointId = pointId;
         this.file = file;
     }
 
-    public String getPointId() {
+    public Integer getPointId() {
         return pointId;
     }
 
-    public void setPointId(String pointId) {
+    public void setPointId(Integer pointId) {
         this.pointId = pointId;
     }
 

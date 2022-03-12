@@ -19,7 +19,7 @@ public class PointInformationPK implements Serializable {
 
     @Basic(optional = false)
     @Column(name = "POINT_ID")
-    private String pointId;
+    private int pointId;
     @Basic(optional = false)
     @Column(name = "NAME")
     private String name;
@@ -27,16 +27,16 @@ public class PointInformationPK implements Serializable {
     public PointInformationPK() {
     }
 
-    public PointInformationPK(String pointId, String name) {
+    public PointInformationPK(int pointId, String name) {
         this.pointId = pointId;
         this.name = name;
     }
 
-    public String getPointId() {
+    public int getPointId() {
         return pointId;
     }
 
-    public void setPointId(String pointId) {
+    public void setPointId(int pointId) {
         this.pointId = pointId;
     }
 
@@ -51,7 +51,7 @@ public class PointInformationPK implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (pointId != null ? pointId.hashCode() : 0);
+        hash += (int) pointId;
         hash += (name != null ? name.hashCode() : 0);
         return hash;
     }
@@ -63,7 +63,7 @@ public class PointInformationPK implements Serializable {
             return false;
         }
         PointInformationPK other = (PointInformationPK) object;
-        if ((this.pointId == null && other.pointId != null) || (this.pointId != null && !this.pointId.equals(other.pointId))) {
+        if (this.pointId != other.pointId) {
             return false;
         }
         if ((this.name == null && other.name != null) || (this.name != null && !this.name.equals(other.name))) {

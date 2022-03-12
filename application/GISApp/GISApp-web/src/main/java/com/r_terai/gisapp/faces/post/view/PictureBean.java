@@ -17,7 +17,7 @@ import javax.inject.Inject;
  */
 public class PictureBean implements Serializable {
 
-    private String id;
+    private int id;
     @Inject
     private PostInformationEJB postInformationEJB;
 
@@ -27,11 +27,11 @@ public class PictureBean implements Serializable {
     public PictureBean() {
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

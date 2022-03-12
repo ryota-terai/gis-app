@@ -50,7 +50,7 @@ public class ShelterInformationView implements Serializable {
     @Id
     @Basic(optional = false)
     @Column(name = "POINT_ID")
-    private String pointId;
+    private int pointId;
     @Basic(optional = false)
     @Column(name = "PRIVATE")
     private short private1;
@@ -106,11 +106,11 @@ public class ShelterInformationView implements Serializable {
     public ShelterInformationView() {
     }
 
-    public String getPointId() {
+    public int getPointId() {
         return pointId;
     }
 
-    public void setPointId(String pointId) {
+    public void setPointId(int pointId) {
         this.pointId = pointId;
     }
 
@@ -273,5 +273,5 @@ public class ShelterInformationView implements Serializable {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
-
+    
 }

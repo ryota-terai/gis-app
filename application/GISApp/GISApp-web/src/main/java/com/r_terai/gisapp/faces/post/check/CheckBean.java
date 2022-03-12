@@ -18,7 +18,7 @@ import javax.inject.Inject;
  */
 public class CheckBean implements Serializable {
 
-    private String id;
+    private int id;
 
     private boolean admin;
 
@@ -33,11 +33,11 @@ public class CheckBean implements Serializable {
     public CheckBean() {
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

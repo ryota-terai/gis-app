@@ -6,6 +6,8 @@
 package com.rterai.java.util;
 
 import java.util.Date;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 /**
  *
@@ -24,4 +26,13 @@ public class Util {
         return sb.toString().substring(0, length);
     }
 
+    public static String getModuleName() throws NamingException {
+        InitialContext ic = new InitialContext();
+        return (String) ic.lookup("java:module/ModuleName");
+    }
+
+    public static String getApplicationName() throws NamingException {
+        InitialContext ic = new InitialContext();
+        return (String) ic.lookup("java:app/AppName");
+    }
 }

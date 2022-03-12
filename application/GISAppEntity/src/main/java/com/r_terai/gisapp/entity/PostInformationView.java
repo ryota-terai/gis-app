@@ -42,7 +42,7 @@ public class PostInformationView implements Serializable {
     @Id
     @Basic(optional = false)
     @Column(name = "POINT_ID")
-    private String pointId;
+    private int pointId;
     @Basic(optional = false)
     @Column(name = "PRIVATE")
     private short private1;
@@ -71,11 +71,11 @@ public class PostInformationView implements Serializable {
     public PostInformationView() {
     }
 
-    public String getPointId() {
+    public int getPointId() {
         return pointId;
     }
 
-    public void setPointId(String pointId) {
+    public void setPointId(int pointId) {
         this.pointId = pointId;
     }
 

@@ -8,18 +8,20 @@ package com.r_terai.gisapp.ejb;
 import com.mapbox.geojson.FeatureCollection;
 import com.r_terai.gisapp.entity.ShelterInformationView;
 import com.rterai.gisapp.GISAppEntityUtil;
+import com.rterai.java.util.LogInterceptor;
+import com.rterai.java.util.Logger;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -35,7 +37,7 @@ public class PointInformationEJB implements PointrInformationEJBLocal {
     @PersistenceContext(unitName = "GISAppEntity")
     private EntityManager em;
 
-    private static final Logger LOG = Logger.getLogger(PointInformationEJB.class.getName());
+    private static final Logger LOG = new Logger(PointInformationEJB.class.getName());
 
     @Override
     public void setup(InputStream stream, boolean _private, String type) {
@@ -49,6 +51,7 @@ public class PointInformationEJB implements PointrInformationEJBLocal {
     }
 
     @Override
+    @Interceptors(LogInterceptor.class)
     public List<ShelterInformationView> search(String administrativeAreaCode, String type, boolean p20_007, boolean p20_008, boolean p20_009, boolean p20_010, boolean p20_011, Boolean open) {
         List<ShelterInformationView> shelters = GISAppEntityUtil.ShelterInformationViewUtil.search(em, administrativeAreaCode, type);
 
@@ -82,7 +85,7 @@ public class PointInformationEJB implements PointrInformationEJBLocal {
     }
 
     @Override
-    public void upatePointInformation(String pointId, boolean open, String comment) {
+    public void upatePointInformation(int pointId, boolean open, String comment) {
         GISAppEntityUtil.PointInformationUtil.update(em, pointId, open, comment);
     }
 

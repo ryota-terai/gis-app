@@ -73,7 +73,7 @@ public class PointInformation implements Serializable {
         this.updateTime = updateTime;
     }
 
-    public PointInformation(String pointId, String name) {
+    public PointInformation(int pointId, String name) {
         this.pointInformationPK = new PointInformationPK(pointId, name);
     }
 

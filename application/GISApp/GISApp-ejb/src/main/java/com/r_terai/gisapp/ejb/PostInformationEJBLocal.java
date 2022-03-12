@@ -46,17 +46,17 @@ public interface PostInformationEJBLocal {
      * @param id ID
      * @return IDに合致する投稿情報
      */
-    public PostInformationView getPostInformation(String point_id);
+    public PostInformationView getPostInformation(int point_id);
     
     /**
      * 投稿画像取得
      * @param id 投稿ID
      * @return 画像
      */
-    public byte[] getPicture(String point_id);
+    public byte[] getPicture(int point_id);
 
     public void confirm(PostInformationView information);
 
-    public void delete(String pointId);
+    public void delete(int pointId);
 
 }

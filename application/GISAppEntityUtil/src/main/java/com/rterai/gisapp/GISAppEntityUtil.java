@@ -15,11 +15,10 @@ import com.r_terai.gisapp.entity.PointInformation;
 import com.r_terai.gisapp.entity.PointInformationPK;
 import com.r_terai.gisapp.entity.PostInformationView;
 import com.r_terai.gisapp.entity.ShelterInformationView;
-import com.rterai.java.util.Util;
+import com.rterai.java.util.Logger;
+import com.rterai.java.util.Logger.Level;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 
@@ -37,14 +36,14 @@ public class GISAppEntityUtil {
     private static final String APPROVED = "APPROVED";
     private static final String INFORMATION = "INFORMATION";
 
-    private static final Logger LOG = Logger.getLogger(GISAppEntityUtil.class.getName());
+    private static final Logger LOG = new Logger(GISAppEntityUtil.class.getName());
 
     public static class PointUtil {
 
         public static void persist(EntityManager em, FeatureCollection featureCollection, boolean _private, String type) {
             for (Feature feature : featureCollection.features()) {
                 Point point = new Point();
-                point.setPointId(Util.makeId(32, true));
+//                point.setPointId(Util.makeId(32, true));
                 point.setPrivate1((short) 0);
                 Geometry geometry = feature.geometry();
                 point.setX(((com.mapbox.geojson.Point) geometry).longitude());
@@ -53,6 +52,8 @@ public class GISAppEntityUtil {
                 point.setType(type);
                 point.setUpdateTime(new Date());
                 em.persist(point);
+                em.flush();
+                
                 for (String key : feature.properties().keySet()) {
                     if (!feature.getProperty(key).isJsonNull()) {
                         PointInformation info = new PointInformation(point.getPointId(), key);
@@ -80,7 +81,7 @@ public class GISAppEntityUtil {
 
         public static void persist(EntityManager em, String type, String longtitude, String latitude, String information, byte[] file) throws NumberFormatException {
             Point point = new Point();
-            point.setPointId(Util.makeId(32, true));
+//            point.setPointId(Util.makeId(32, true));
             point.setPrivate1((short) 0);
             point.setX(Double.parseDouble(longtitude));
             point.setY(Double.parseDouble(latitude));
@@ -88,6 +89,8 @@ public class GISAppEntityUtil {
             Date now = new Date();
             point.setUpdateTime(now);
             em.persist(point);
+            em.flush();
+            
             PointInformation info = new PointInformation(point.getPointId(), GISAppEntityUtil.INFORMATION);
             info.setUpdateTime(new Date());
             info.setType(GISAppEntityUtil.POINT_INFORMATION_TYPE_STRING);
@@ -118,7 +121,7 @@ public class GISAppEntityUtil {
 
     public static class PointInformationUtil {
 
-        public static void update(EntityManager em, String pointId, boolean open, String comment) {
+        public static void update(EntityManager em, int pointId, boolean open, String comment) {
             PointInformation info;
             try {
                 info = (PointInformation) em.createNativeQuery("SELECT * FROM POINT_INFORMATION WHERE POINT_ID = ?1 AND NAME = ?2", PointInformation.class).setParameter(1, pointId).setParameter(2, GISAppEntityUtil.OPEN).getSingleResult();
@@ -187,7 +190,7 @@ public class GISAppEntityUtil {
             }
         }
 
-        public static void remove(EntityManager em, String pointId) {
+        public static void remove(EntityManager em, int pointId) {
             Point point = em.find(Point.class, pointId);
             if (point != null) {
                 em.remove(point);

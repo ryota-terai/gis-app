@@ -11,10 +11,10 @@ import com.mapbox.geojson.Point;
 import com.r_terai.gisapp.ejb.PostInformationGeoJsonEJB;
 import com.r_terai.gisapp.ejb.PointInformationEJB;
 import com.r_terai.gisapp.entity.ShelterInformationView;
+import com.rterai.java.util.Logger;
+import com.rterai.java.util.Logger.Level;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.TransactionManagement;
@@ -86,7 +86,6 @@ public class GenericResource {
                 LOG.log(Level.SEVERE, null, ex);
                 return null;
             } catch (IllegalStateException | SecurityException | SystemException ex1) {
-                Logger.getLogger(GenericResource.class.getName()).log(Level.SEVERE, null, ex1);
                 LOG.log(Level.SEVERE, null, ex);
                 return null;
             }
@@ -117,8 +116,7 @@ public class GenericResource {
                 LOG.log(Level.SEVERE, null, ex);
                 return null;
             } catch (IllegalStateException | SecurityException | SystemException ex1) {
-                Logger.getLogger(GenericResource.class.getName()).log(Level.SEVERE, null, ex1);
-                LOG.log(Level.SEVERE, null, ex);
+                LOG.log(Level.SEVERE, null, ex1);
                 return null;
             }
         }

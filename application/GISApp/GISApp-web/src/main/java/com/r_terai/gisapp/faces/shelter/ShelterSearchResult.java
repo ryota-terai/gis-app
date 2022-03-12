@@ -11,7 +11,7 @@ package com.r_terai.gisapp.faces.shelter;
  */
 public class ShelterSearchResult {
 
-    private final String key;
+    private final int key;
     private final String administrativeAreaCode;
     private final String name;
     private final String address;
@@ -29,7 +29,7 @@ public class ShelterSearchResult {
     private boolean open;
     private String comment;
 
-    public ShelterSearchResult(String key, String administrativeAreaCode, String name, String address, String type, double latitude, double longitude, boolean p20007, boolean p20008, boolean p20009, boolean p20010, boolean p20011, boolean p20012, int numberOfEvacuus, int numberOfNonEvacuees, boolean open, String comment) {
+    public ShelterSearchResult(int key, String administrativeAreaCode, String name, String address, String type, double latitude, double longitude, boolean p20007, boolean p20008, boolean p20009, boolean p20010, boolean p20011, boolean p20012, int numberOfEvacuus, int numberOfNonEvacuees, boolean open, String comment) {
         this.key = key;
         this.administrativeAreaCode = administrativeAreaCode;
         this.name = name;
@@ -49,7 +49,7 @@ public class ShelterSearchResult {
         this.comment = comment;
     }
 
-    public String getKey() {
+    public int getKey() {
         return key;
     }
 

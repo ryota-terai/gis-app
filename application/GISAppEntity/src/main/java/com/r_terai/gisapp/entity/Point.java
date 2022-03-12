@@ -12,6 +12,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -43,9 +45,10 @@ public class Point implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "POINT_ID")
-    private String pointId;
+    private Integer pointId;
     @Basic(optional = false)
     @Column(name = "PRIVATE")
     private short private1;
@@ -73,11 +76,11 @@ public class Point implements Serializable {
     public Point() {
     }
 
-    public Point(String pointId) {
+    public Point(Integer pointId) {
         this.pointId = pointId;
     }
 
-    public Point(String pointId, short private1, String type, double x, double y, Date updateTime) {
+    public Point(Integer pointId, short private1, String type, double x, double y, Date updateTime) {
         this.pointId = pointId;
         this.private1 = private1;
         this.type = type;
@@ -86,11 +89,11 @@ public class Point implements Serializable {
         this.updateTime = updateTime;
     }
 
-    public String getPointId() {
+    public Integer getPointId() {
         return pointId;
     }
 
-    public void setPointId(String pointId) {
+    public void setPointId(Integer pointId) {
         this.pointId = pointId;
     }
 

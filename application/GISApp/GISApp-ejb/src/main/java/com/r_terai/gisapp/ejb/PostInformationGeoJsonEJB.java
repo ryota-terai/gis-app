@@ -11,9 +11,9 @@ import com.mapbox.geojson.Point;
 import com.r_terai.gisapp.entity.File;
 import com.r_terai.gisapp.entity.PostInformationView;
 import com.rterai.gisapp.GISAppEntityUtil;
+import com.rterai.java.util.Logger;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -33,7 +33,7 @@ public class PostInformationGeoJsonEJB {
     @PersistenceContext(unitName = "GISAppEntity")
     private EntityManager em;
 
-    private static final Logger LOG = Logger.getLogger(PostInformationGeoJsonEJB.class.getName());
+    private static final Logger LOG = new Logger(PostInformationGeoJsonEJB.class.getName());
 
     public FeatureCollection getDisasterInformationGeoJson() {
         List<PostInformationView> approvedInformation = GISAppEntityUtil.PostInformationViewUtil.getInformation(em, true);
@@ -44,7 +44,7 @@ public class PostInformationGeoJsonEJB {
             Point point = Point.fromLngLat(information.getX(), information.getY());
             Feature feature = Feature.fromGeometry(point);
             feature.addStringProperty("comment", information.getInformation().replace("\n", ""));
-            feature.addStringProperty("id", information.getPointId());
+            feature.addNumberProperty("id", information.getPointId());
 
             File file = em.find(File.class, information.getPointId());
             feature.addBooleanProperty("picture", file != null);

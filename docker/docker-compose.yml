@@ -5,8 +5,8 @@ services:
       context: ./payara
       dockerfile: Dockerfile-payara-mysql
     environment:
-      - JVM_ARGS=-Djava.rmi.server.hostname=payara -Dcom.sun.management.jmxremote.rmi.port=12345 -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=12345 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.local.only=false -Dcom.sun.management.jmxremote.authenticate=false
-#      - JVM_ARGS=-Djava.rmi.server.hostname=127.0.0.1 -Dcom.sun.management.jmxremote.rmi.port=12345 -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=12345 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.local.only=false -Dcom.sun.management.jmxremote.authenticate=false
+      - JVM_ARGS=-Djava.rmi.server.hostname=payara -Dcom.sun.management.jmxremote.rmi.port=12345 -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=12345 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.local.only=false -Dcom.sun.management.jmxremote.authenticate=false -Dlog4j2.configurationFile=/opt/payara/log4j2.xml
+#      - JVM_ARGS=-Djava.rmi.server.hostname=127.0.0.1 -Dcom.sun.management.jmxremote.rmi.port=12345 -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=12345 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.local.only=false -Dcom.sun.management.jmxremote.authenticate=false -Dlog4j2.configurationFile=/log4j2.xml
     volumes:
       - type: volume
         source: payaradata

@@ -3,13 +3,9 @@
   <persistence-unit name="GISAppEntity" transaction-type="JTA">
     <jta-data-source>jdbc/GISApp</jta-data-source>
     <class>com.r_terai.gisapp.entity.File</class>
-    <class>com.r_terai.gisapp.entity.ShelterInformationExt</class>
-    <class>com.r_terai.gisapp.entity.PostInformation</class>
-    <class>com.r_terai.gisapp.entity.ShelterInformation</class>
     <class>com.r_terai.gisapp.entity.Point</class>
     <class>com.r_terai.gisapp.entity.PointInformation</class>
-    <class>com.r_terai.gisapp.entity.ShelterInformationView</class>
-    <class>com.r_terai.gisapp.entity.PointInformationView</class>
     <class>com.r_terai.gisapp.entity.PostInformationView</class>
+    <class>com.r_terai.gisapp.entity.ShelterInformationView</class>
   </persistence-unit>
 </persistence>

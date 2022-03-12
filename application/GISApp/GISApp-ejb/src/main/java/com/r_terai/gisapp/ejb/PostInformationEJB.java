@@ -8,8 +8,8 @@ package com.r_terai.gisapp.ejb;
 import com.r_terai.gisapp.entity.File;
 import com.r_terai.gisapp.entity.PostInformationView;
 import com.rterai.gisapp.GISAppEntityUtil;
+import com.rterai.java.util.Logger;
 import java.util.List;
-import java.util.logging.Logger;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -29,7 +29,7 @@ public class PostInformationEJB implements PostInformationEJBLocal {
     @PersistenceContext(unitName = "GISAppEntity")
     private EntityManager em;
 
-    private static final Logger LOG = Logger.getLogger(PostInformationEJB.class.getName());
+    private static final Logger LOG = new Logger(PostInformationEJB.class.getName());
 
     @Override
     public void postInformation(String latitude, String longtitude, String information, byte[] file) {
@@ -47,12 +47,12 @@ public class PostInformationEJB implements PostInformationEJBLocal {
     }
 
     @Override
-    public PostInformationView getPostInformation(String pointId) {
+    public PostInformationView getPostInformation(int pointId) {
         return em.find(PostInformationView.class, pointId);
     }
 
     @Override
-    public byte[] getPicture(String pointId) {
+    public byte[] getPicture(int pointId) {
         File file = em.find(File.class, pointId);
         if (file != null) {
             return file.getFile();
@@ -68,7 +68,7 @@ public class PostInformationEJB implements PostInformationEJBLocal {
 
 
     @Override
-    public void delete(String pointId) {
+    public void delete(int pointId) {
         GISAppEntityUtil.PostInformationViewUtil.remove(em, pointId);
     }
 
