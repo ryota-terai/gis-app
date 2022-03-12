@@ -29,7 +29,7 @@ public class PostInformationEJB implements PostInformationEJBLocal {
     @PersistenceContext(unitName = "GISAppEntity")
     private EntityManager em;
 
-    private static final Logger LOG = new Logger(PostInformationEJB.class.getName());
+    private static final Logger logger = new Logger(PostInformationEJB.class.getName());
 
     @Override
     public void postInformation(String latitude, String longtitude, String information, byte[] file) {

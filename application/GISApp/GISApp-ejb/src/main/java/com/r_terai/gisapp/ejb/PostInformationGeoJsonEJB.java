@@ -33,7 +33,7 @@ public class PostInformationGeoJsonEJB {
     @PersistenceContext(unitName = "GISAppEntity")
     private EntityManager em;
 
-    private static final Logger LOG = new Logger(PostInformationGeoJsonEJB.class.getName());
+    private static final Logger logger = new Logger(PostInformationGeoJsonEJB.class.getName());
 
     public FeatureCollection getDisasterInformationGeoJson() {
         List<PostInformationView> approvedInformation = GISAppEntityUtil.PostInformationViewUtil.getInformation(em, true);

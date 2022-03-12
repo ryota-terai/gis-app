@@ -39,7 +39,7 @@ public class GISAppEntityUtil {
     private static final String APPROVED = "APPROVED";
     private static final String INFORMATION = "INFORMATION";
 
-    private static final Logger LOG = new Logger(GISAppEntityUtil.class.getName());
+    private static final Logger logger = new Logger(GISAppEntityUtil.class.getName());
 
     public static class PointUtil {
 
@@ -75,7 +75,7 @@ public class GISAppEntityUtil {
                             info.setBoolean1(feature.getBooleanProperty(key) ? (short) 1 : (short) 0);
                             em.persist(info);
                         } else {
-                            GISAppEntityUtil.LOG.log(Level.INFO, "Type={0}", property.getClass().toGenericString());
+                            GISAppEntityUtil.logger.log(Level.INFO, "Type={0}", property.getClass().toGenericString());
                         }
                     }
                 }
@@ -235,7 +235,7 @@ public class GISAppEntityUtil {
             String methodName = elems[2].getMethodName();
 
             persist(em, application, module, className, methodName);
-            LOG.log(Logger.Level.INFO, "Application={};Module={};Class={};Method={}", application, module, className, methodName);
+            logger.log(Logger.Level.INFO, "Application={};Module={};Class={};Method={}", application, module, className, methodName);
         }
     }
 }
