@@ -7,9 +7,10 @@ package com.r_terai.gisapp.ejb;
 
 import com.mapbox.geojson.FeatureCollection;
 import com.r_terai.gisapp.entity.ShelterInformationView;
-import com.rterai.gisapp.GISAppEntityUtil;
-import com.rterai.java.util.LogInterceptor;
-import com.rterai.java.util.Logger;
+import com.r_terai.gisapp.GISAppEntityUtil;
+import com.r_terai.java.util.LogInterceptor;
+import com.r_terai.java.util.Logger;
+import com.r_terai.java.util.Logger.Level;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -22,6 +23,7 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.interceptor.Interceptors;
+import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -37,9 +39,10 @@ public class PointInformationEJB implements PointrInformationEJBLocal {
     @PersistenceContext(unitName = "GISAppEntity")
     private EntityManager em;
 
-    private static final Logger LOG = new Logger(PointInformationEJB.class.getName());
+    private static final Logger logger = new Logger(PointInformationEJB.class.getName());
 
     @Override
+    @Interceptors(LogInterceptor.class)
     public void setup(InputStream stream, boolean _private, String type) {
         InputStreamReader inputStreamReader = new InputStreamReader(stream);
         Stream<String> streamOfString = new BufferedReader(inputStreamReader).lines();
@@ -51,7 +54,6 @@ public class PointInformationEJB implements PointrInformationEJBLocal {
     }
 
     @Override
-    @Interceptors(LogInterceptor.class)
     public List<ShelterInformationView> search(String administrativeAreaCode, String type, boolean p20_007, boolean p20_008, boolean p20_009, boolean p20_010, boolean p20_011, Boolean open) {
         List<ShelterInformationView> shelters = GISAppEntityUtil.ShelterInformationViewUtil.search(em, administrativeAreaCode, type);
 
@@ -81,10 +83,17 @@ public class PointInformationEJB implements PointrInformationEJBLocal {
                 }
             }
         }
+        try {
+            GISAppEntityUtil.ObserverTargetUtil.kick(em);
+        } catch (NamingException ex) {
+            logger.log(Level.SEVERE, null, ex);
+        }
+
         return shelters2;
     }
 
     @Override
+    @Interceptors(LogInterceptor.class)
     public void upatePointInformation(int pointId, boolean open, String comment) {
         GISAppEntityUtil.PointInformationUtil.update(em, pointId, open, comment);
     }

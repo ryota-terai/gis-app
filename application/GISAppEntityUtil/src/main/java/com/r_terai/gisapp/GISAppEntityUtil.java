@@ -3,22 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.rterai.gisapp;
+package com.r_terai.gisapp;
 
 import com.google.gson.JsonPrimitive;
 import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.FeatureCollection;
 import com.mapbox.geojson.Geometry;
 import com.r_terai.gisapp.entity.File;
+import com.r_terai.gisapp.entity.ObserverTarget;
 import com.r_terai.gisapp.entity.Point;
 import com.r_terai.gisapp.entity.PointInformation;
 import com.r_terai.gisapp.entity.PointInformationPK;
 import com.r_terai.gisapp.entity.PostInformationView;
 import com.r_terai.gisapp.entity.ShelterInformationView;
-import com.rterai.java.util.Logger;
-import com.rterai.java.util.Logger.Level;
+import com.r_terai.java.util.Logger;
+import com.r_terai.java.util.Logger.Level;
+import com.r_terai.java.util.Util;
 import java.util.Date;
 import java.util.List;
+import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 
@@ -53,7 +56,7 @@ public class GISAppEntityUtil {
                 point.setUpdateTime(new Date());
                 em.persist(point);
                 em.flush();
-                
+
                 for (String key : feature.properties().keySet()) {
                     if (!feature.getProperty(key).isJsonNull()) {
                         PointInformation info = new PointInformation(point.getPointId(), key);
@@ -90,7 +93,7 @@ public class GISAppEntityUtil {
             point.setUpdateTime(now);
             em.persist(point);
             em.flush();
-            
+
             PointInformation info = new PointInformation(point.getPointId(), GISAppEntityUtil.INFORMATION);
             info.setUpdateTime(new Date());
             info.setType(GISAppEntityUtil.POINT_INFORMATION_TYPE_STRING);
@@ -211,4 +214,28 @@ public class GISAppEntityUtil {
 
     }
 
+    public static class ObserverTargetUtil {
+
+        private static void persist(EntityManager em, String application, String module, String _class, String method) {
+            ObserverTarget target = new ObserverTarget();
+            target.setApplication(application);
+            target.setModule(module);
+            target.setClass1(_class);
+            target.setMethod(method);
+            target.setUpdateTime(new Date());
+            em.persist(target);
+        }
+
+        public static void kick(EntityManager em) throws NamingException {
+            String application = Util.getApplicationName();
+            String module = Util.getModuleName();
+            StackTraceElement[] elems = Thread.currentThread().getStackTrace();
+
+            String className = elems[2].getClassName();
+            String methodName = elems[2].getMethodName();
+
+            persist(em, application, module, className, methodName);
+            LOG.log(Logger.Level.INFO, "Application={};Module={};Class={};Method={}", application, module, className, methodName);
+        }
+    }
 }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.rterai.java.util;
+package com.r_terai.java.util;
 
 import java.util.Date;
 import javax.naming.InitialContext;

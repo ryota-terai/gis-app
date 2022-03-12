@@ -7,8 +7,8 @@ package com.r_terai.gisapp.ejb;
 
 import com.r_terai.gisapp.entity.File;
 import com.r_terai.gisapp.entity.PostInformationView;
-import com.rterai.gisapp.GISAppEntityUtil;
-import com.rterai.java.util.Logger;
+import com.r_terai.gisapp.GISAppEntityUtil;
+import com.r_terai.java.util.Logger;
 import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
