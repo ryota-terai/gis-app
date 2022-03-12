@@ -10,20 +10,15 @@ import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.FeatureCollection;
 import com.mapbox.geojson.Geometry;
 import com.r_terai.gisapp.entity.File;
-import com.r_terai.gisapp.entity.ObserverSetting;
-import com.r_terai.gisapp.entity.ObserverTarget;
 import com.r_terai.gisapp.entity.Point;
 import com.r_terai.gisapp.entity.PointInformation;
 import com.r_terai.gisapp.entity.PointInformationPK;
 import com.r_terai.gisapp.entity.PostInformationView;
 import com.r_terai.gisapp.entity.ShelterInformationView;
-import com.r_terai.gisapp.entity.TimerSetting;
 import com.r_terai.java.util.Logger;
 import com.r_terai.java.util.Logger.Level;
-import com.r_terai.java.util.Util;
 import java.util.Date;
 import java.util.List;
-import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 
@@ -68,19 +63,23 @@ public class GISAppEntityUtil {
                             info.setType(GISAppEntityUtil.POINT_INFORMATION_TYPE_STRING);
                             info.setString((String) feature.getStringProperty(key));
                             em.persist(info);
+                            GISAppEntityUtil.logger.log(Level.INFO, "info={}", info.toString());
                         } else if (property.isNumber()) {
                             info.setType(GISAppEntityUtil.POINT_INFORMATION_TYPE_NUMBER);
                             info.setNumber(feature.getNumberProperty(key).doubleValue());
                             em.persist(info);
+                            GISAppEntityUtil.logger.log(Level.INFO, "info={}", info.toString());
                         } else if (property.isBoolean()) {
                             info.setType(GISAppEntityUtil.POINT_INFORMATION_TYPE_BOOLEAN);
                             info.setBoolean1(feature.getBooleanProperty(key) ? (short) 1 : (short) 0);
                             em.persist(info);
+                            GISAppEntityUtil.logger.log(Level.INFO, "info={}", info.toString());
                         } else {
-                            GISAppEntityUtil.logger.log(Level.INFO, "Type={0}", property.getClass().toGenericString());
+                            GISAppEntityUtil.logger.log(Level.INFO, "Type={}", property.getClass().toGenericString());
                         }
                     }
                 }
+                GISAppEntityUtil.logger.log(Level.INFO, "point={}", point.toString());
             }
         }
 
@@ -119,7 +118,10 @@ public class GISAppEntityUtil {
     public static class ShelterInformationViewUtil {
 
         public static List<ShelterInformationView> search(EntityManager em, String administrativeAreaCode, String type) {
-            List<ShelterInformationView> shelters = em.createNativeQuery("SELECT * FROM SHELTER_INFORMATION_VIEW WHERE P20_001 like ?1 AND TYPE = ?2", ShelterInformationView.class).setParameter(1, (administrativeAreaCode == null ? "" : administrativeAreaCode) + "%").setParameter(2, type).getResultList();
+            List<ShelterInformationView> shelters = em.createNativeQuery("SELECT * FROM SHELTER_INFORMATION_VIEW WHERE P20_001 like ?1 AND TYPE = ?2", ShelterInformationView.class)
+                    .setParameter(1, (administrativeAreaCode == null ? "" : administrativeAreaCode) + "%")
+                    .setParameter(2, type)
+                    .getResultList();
             return shelters;
         }
     }
@@ -129,7 +131,10 @@ public class GISAppEntityUtil {
         public static void update(EntityManager em, int pointId, boolean open, String comment) {
             PointInformation info;
             try {
-                info = (PointInformation) em.createNativeQuery("SELECT * FROM POINT_INFORMATION WHERE POINT_ID = ?1 AND NAME = ?2", PointInformation.class).setParameter(1, pointId).setParameter(2, GISAppEntityUtil.OPEN).getSingleResult();
+                info = (PointInformation) em.createNativeQuery("SELECT * FROM POINT_INFORMATION WHERE POINT_ID = ?1 AND NAME = ?2", PointInformation.class)
+                        .setParameter(1, pointId)
+                        .setParameter(2, GISAppEntityUtil.OPEN)
+                        .getSingleResult();
                 info.setBoolean1(open ? (short) 1 : 0);
                 info.setUpdateTime(new Date());
                 em.merge(info);
@@ -142,7 +147,10 @@ public class GISAppEntityUtil {
                 em.persist(info);
             }
             try {
-                info = (PointInformation) em.createNativeQuery("SELECT * FROM POINT_INFORMATION WHERE POINT_ID = ?1 AND NAME = ?2", PointInformation.class).setParameter(1, pointId).setParameter(2, GISAppEntityUtil.COMMENT).getSingleResult();
+                info = (PointInformation) em.createNativeQuery("SELECT * FROM POINT_INFORMATION WHERE POINT_ID = ?1 AND NAME = ?2", PointInformation.class)
+                        .setParameter(1, pointId)
+                        .setParameter(2, GISAppEntityUtil.COMMENT)
+                        .getSingleResult();
                 info.setString(comment);
                 info.setUpdateTime(new Date());
                 em.merge(info);
@@ -212,66 +220,6 @@ public class GISAppEntityUtil {
             if (file != null) {
                 em.remove(file);
             }
-        }
-
-    }
-
-    public static class ObserverTargetUtil {
-
-        private static void persist(EntityManager em, String application, String module, String _class, String method) {
-            ObserverTarget target = new ObserverTarget();
-            target.setApplication(application);
-            target.setModule(module);
-            target.setClass1(_class);
-            target.setMethod(method);
-            target.setUpdateTime(new Date());
-            em.persist(target);
-        }
-
-        public static void kick(EntityManager em) throws NamingException {
-            String application = Util.getApplicationName();
-            String module = Util.getModuleName();
-            StackTraceElement[] elems = Thread.currentThread().getStackTrace();
-
-            String className = elems[2].getClassName();
-            String methodName = elems[2].getMethodName();
-
-            persist(em, application, module, className, methodName);
-            logger.log(Logger.Level.INFO, "Application={};Module={};Class={};Method={}", application, module, className, methodName);
-        }
-
-        public static List<ObserverTarget> getOrderByUpdateTimeDesc(EntityManager em, String application, String module, String _class, String method) {
-            List<ObserverTarget> targets = em.createNativeQuery("SELECT * FROM OBSERVER_TARGET WHERE APPLICATION = ?1 AND MODULE = ?2 AND CLASS = ?3 AND METHOD = ?4 ORDER BY UPDATE_TIME DESC", ObserverTarget.class)
-                    .setParameter(1, application)
-                    .setParameter(2, module)
-                    .setParameter(3, _class)
-                    .setParameter(4, method)
-                    .getResultList();
-
-            return targets;
-        }
-    }
-
-    public static class ObserverSettingUtil {
-
-        public static List<ObserverSetting> get(EntityManager em) {
-            List<ObserverSetting> settings = em.createNamedQuery("ObserverSetting.findByEnable", ObserverSetting.class)
-                    .setParameter("enable", (short) 1)
-                    .getResultList();
-            return settings;
-        }
-
-    }
-
-    public static class TimerSettingUtil {
-
-        public static TimerSetting get(EntityManager em, String application, String module, String className) {
-            TimerSetting setting = (TimerSetting) em.createNativeQuery("SELECT * FROM TIMER_SETTING WHERE APPLICATION = ?1 AND MODULE = ?2 AND CLASS = ?3", TimerSetting.class)
-                    .setParameter(1, application)
-                    .setParameter(2, module)
-                    .setParameter(3, className)
-                    .getSingleResult();
-            return setting;
         }
 
     }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE resources PUBLIC "-//GlassFish.org//DTD GlassFish Application Server 3.1 Resource Definitions//EN" "http://glassfish.org/dtds/glassfish-resources_1_5.dtd">
 <resources>
-    <jdbc-connection-pool datasource-classname="com.mysql.cj.jdbc.MysqlXADataSource" name="GISApp" res-type="javax.sql.XADataSource">
+    <jdbc-connection-pool datasource-classname="com.mysql.cj.jdbc.MysqlXADataSource" name="COMMONEntity" res-type="javax.sql.XADataSource">
         <property name="SelfDestructOnPingSecondsLifetime" value="0"></property>
         <property name="UseUsageAdvisor" value="false"></property>
         <property name="FallbackToSystemKeyStore" value="true"></property>
@@ -51,7 +51,7 @@
         <property name="MaxQuerySizeToLog" value="2048"></property>
         <property name="LoadBalanceHostRemovalGracePeriod" value="15000"></property>
         <property name="TreatUtilDateAsTimestamp" value="true"></property>
-        <property name="DatabaseName" value="GISApp"></property>
+        <property name="DatabaseName" value="COMMON"></property>
         <property name="UseSSL" value="true"></property>
         <property name="DisconnectOnExpiredPasswords" value="true"></property>
         <property name="DontCheckOnDuplicateKeyUpdateInSQL" value="false"></property>
@@ -106,8 +106,8 @@
         <property name="UseReadAheadInput" value="true"></property>
         <property name="ParseInfoCacheFactory" value="com.mysql.cj.PerConnectionLRUFactory"></property>
         <property name="DefaultFetchSize" value="0"></property>
-        <property name="URL" value="jdbc:mysql://mysql:3306/GISApp"></property>
-        <property name="Url" value="jdbc:mysql://mysql:3306/GISApp"></property>
+        <property name="URL" value="jdbc:mysql://mysql:3306/COMMON"></property>
+        <property name="Url" value="jdbc:mysql://mysql:3306/COMMON"></property>
         <property name="AllowMasterDownConnections" value="false"></property>
         <property name="CacheDefaultTimezone" value="true"></property>
         <property name="QueriesBeforeRetryMaster" value="50"></property>
@@ -165,5 +165,5 @@
         <property name="ClobberStreamingResults" value="false"></property>
         <property name="ServerTimeZone" value="Asia/Tokyo"></property>
     </jdbc-connection-pool>
-    <jdbc-resource pool-name="GISApp" jndi-name="jdbc/GISApp"></jdbc-resource>
+    <jdbc-resource pool-name="COMMONEntity" jndi-name="jdbc/COMMON"></jdbc-resource>
 </resources>

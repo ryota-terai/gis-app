@@ -8,9 +8,9 @@ package com.r_terai.gisapp.ejb;
 import com.mapbox.geojson.FeatureCollection;
 import com.r_terai.gisapp.entity.ShelterInformationView;
 import com.r_terai.gisapp.GISAppEntityUtil;
+import com.r_terai.java.ee.common.entity.util.COMMONEntityUtil;
 import com.r_terai.java.util.LogInterceptor;
 import com.r_terai.java.util.Logger;
-import com.r_terai.java.util.Logger.Level;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -38,6 +38,9 @@ public class PointInformationEJB implements PointrInformationEJBLocal {
 
     @PersistenceContext(unitName = "GISAppEntity")
     private EntityManager em;
+
+    @PersistenceContext(unitName = "COMMONEntity")
+    private EntityManager common;
 
     private static final Logger logger = new Logger(PointInformationEJB.class.getName());
 
@@ -84,9 +87,9 @@ public class PointInformationEJB implements PointrInformationEJBLocal {
             }
         }
         try {
-            GISAppEntityUtil.ObserverTargetUtil.kick(em);
+            COMMONEntityUtil.ObserverTargetUtil.kick(common);
         } catch (NamingException ex) {
-            logger.log(Level.SEVERE, null, ex);
+            logger.log(Logger.Level.SEVERE, null, ex);
         }
 
         return shelters2;

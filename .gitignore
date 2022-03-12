@@ -31,3 +31,5 @@ hs_err_pid*
 /application/GISApp/GISApp-ear/target/
 /lib/Util/target/
 /application/GISAppEntityUtil/target/
+/lib/COMMONEntity/target/
+/lib/COMMONEntityUtil/target/

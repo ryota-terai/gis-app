@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.r_terai.gisapp.entity;
+package com.r_terai.java.ee.common.entity;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -156,7 +156,7 @@ public class ObserverSetting implements Serializable {
 
     @Override
     public String toString() {
-        return "com.r_terai.gisapp.entity.ObserverSetting[ id=" + id + " ]";
+        return "com.r_terai.java.commonentity.ObserverSetting[ id=" + id + " ]";
     }
     
 }

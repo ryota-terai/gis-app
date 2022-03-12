@@ -1,0 +1,1 @@
+GRANT ALL ON COMMON.* TO 'gisapp'@'%';

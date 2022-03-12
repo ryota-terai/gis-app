@@ -5,10 +5,10 @@
  */
 package com.r_terai.gisapp.ejb;
 
-import com.r_terai.gisapp.GISAppEntityUtil;
-import com.r_terai.gisapp.entity.ObserverSetting;
-import com.r_terai.gisapp.entity.ObserverTarget;
-import com.r_terai.gisapp.entity.TimerSetting;
+import com.r_terai.java.ee.common.entity.ObserverSetting;
+import com.r_terai.java.ee.common.entity.ObserverTarget;
+import com.r_terai.java.ee.common.entity.TimerSetting;
+import com.r_terai.java.ee.common.entity.util.COMMONEntityUtil;
 import com.r_terai.java.util.Logger;
 import com.r_terai.java.util.Logger.Level;
 import com.r_terai.java.util.Util;
@@ -38,7 +38,7 @@ public class OvserverTimer {
     @Resource
     TimerService timer;
 
-    @PersistenceContext(unitName = "GISAppEntity")
+    @PersistenceContext(unitName = "COMMONEntity")
     private EntityManager em;
 
     private static final Logger logger = new Logger(OvserverTimer.class.getName());
@@ -49,7 +49,7 @@ public class OvserverTimer {
             String application = Util.getApplicationName();
             String module = Util.getModuleName();
 
-            TimerSetting setting = GISAppEntityUtil.TimerSettingUtil.get(em, application, module, this.getClass().getName());
+            TimerSetting setting = COMMONEntityUtil.TimerSettingUtil.get(em, application, module, this.getClass().getName());
 
             TimerConfig timerConfig = new TimerConfig();
             timerConfig.setInfo(this.getClass().getName());
@@ -69,7 +69,7 @@ public class OvserverTimer {
     public void timeout(Timer timer) {
         try {
             observe();
-            GISAppEntityUtil.ObserverTargetUtil.kick(em);
+            COMMONEntityUtil.ObserverTargetUtil.kick(em);
         } catch (NamingException ex) {
             logger.log(Level.SEVERE, null, ex);
         }
@@ -77,10 +77,10 @@ public class OvserverTimer {
     }
 
     private void observe() {
-        List<ObserverSetting> settings = GISAppEntityUtil.ObserverSettingUtil.get(em);
+        List<ObserverSetting> settings = COMMONEntityUtil.ObserverSettingUtil.get(em);
 
         for (ObserverSetting setting : settings) {
-            List<ObserverTarget> targets = GISAppEntityUtil.ObserverTargetUtil.getOrderByUpdateTimeDesc(em, setting.getApplication(), setting.getModule(), setting.getClass1(), setting.getMethod());
+            List<ObserverTarget> targets = COMMONEntityUtil.ObserverTargetUtil.getOrderByUpdateTimeDesc(em, setting.getApplication(), setting.getModule(), setting.getClass1(), setting.getMethod());
             boolean first = true;
             for (ObserverTarget target : targets) {
                 if (first) {
