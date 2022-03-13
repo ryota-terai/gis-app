@@ -33,3 +33,5 @@ hs_err_pid*
 /application/GISAppEntityUtil/target/
 /lib/COMMONEntity/target/
 /lib/COMMONEntityUtil/target/
+/lib/COMMONApp/target/
+/lib/mavenproject1/target/
