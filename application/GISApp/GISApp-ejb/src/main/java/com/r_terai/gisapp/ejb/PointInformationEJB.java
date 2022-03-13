@@ -8,6 +8,9 @@ package com.r_terai.gisapp.ejb;
 import com.mapbox.geojson.FeatureCollection;
 import com.r_terai.gisapp.entity.ShelterInformationView;
 import com.r_terai.gisapp.GISAppEntityUtil;
+import com.r_terai.gisapp.PointInformationUtil;
+import com.r_terai.gisapp.PointUtil;
+import com.r_terai.gisapp.ShelterInformationViewUtil;
 import com.r_terai.java.ee.common.entity.util.COMMONEntityUtil;
 import com.r_terai.java.util.LogInterceptor;
 import com.r_terai.java.util.Logger;
@@ -53,12 +56,12 @@ public class PointInformationEJB implements PointrInformationEJBLocal {
 
         FeatureCollection featureCollection = FeatureCollection.fromJson(streamToString);
 
-        GISAppEntityUtil.PointUtil.persist(em, featureCollection, _private, type);
+        PointUtil.persist(em, featureCollection, _private, type);
     }
 
     @Override
     public List<ShelterInformationView> search(String administrativeAreaCode, String type, boolean p20_007, boolean p20_008, boolean p20_009, boolean p20_010, boolean p20_011, Boolean open) {
-        List<ShelterInformationView> shelters = GISAppEntityUtil.ShelterInformationViewUtil.search(em, administrativeAreaCode, type);
+        List<ShelterInformationView> shelters = ShelterInformationViewUtil.search(em, administrativeAreaCode, type);
 
         List<ShelterInformationView> shelters2 = new ArrayList();
         for (ShelterInformationView shelter : shelters) {
@@ -98,7 +101,12 @@ public class PointInformationEJB implements PointrInformationEJBLocal {
     @Override
     @Interceptors(LogInterceptor.class)
     public void upatePointInformation(int pointId, boolean open, String comment) {
-        GISAppEntityUtil.PointInformationUtil.update(em, pointId, open, comment);
+        PointInformationUtil.update(em, pointId, open, comment);
+    }
+
+    @Override
+    public void initialize(String type) {
+        PointUtil.initialize(em, type);
     }
 
 }

@@ -20,6 +20,8 @@
                                   update="messages" sizeLimit="10000000" allowTypes="/(\.|\/)geojson$/"/>
                     <br/>
                     国土数値情報サイトの避難所情報が格納された、GeoJSONファイルを選択若しくは、ドラッグアンドドロップしてください
+                    <br/>
+                    <p:commandButton value="初期化" id="search" action="#{shelterSetupBean.initialize()}" ajax="false" style="margin-right:20px;" />
                 </h:form>
 
             </ui:define>

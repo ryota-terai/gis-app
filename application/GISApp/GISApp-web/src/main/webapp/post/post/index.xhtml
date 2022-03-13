@@ -31,7 +31,7 @@
                         <p:inputTextarea id="information" value="#{postBean.information}" rows="6" cols="50" counter="display" maxlength="255" counterTemplate="{0} characters remaining" />
                         <h:outputText id="display" />
                     </h:panelGrid>
-                    <h:commandButton value="投稿" id="post" action="#{postBean.postDisaster()}" style="margin-right:20px;" />
+                    <p:commandButton value="投稿" id="post" action="#{postBean.postDisaster}" ajax="false" />
                 </h:form>
 
                 <link rel='stylesheet' href='https://unpkg.com/maplibre-gl@2.1.6/dist/maplibre-gl.css' />

@@ -32,8 +32,8 @@
                         <h:outputText id="display" />
                     </h:panelGrid>
                     <hr />
-                    <h:commandButton value="承認" id="confirm" action="#{postCheckBean.confirm()}" style="margin-right:20px;" />
-                    <h:commandButton value="却下" id="delete" action="#{postCheckBean.delete()}" style="margin-right:20px;" />
+                    <p:commandButton value="承認" id="confirm" action="#{postCheckBean.confirm}" ajax="false" style="margin-right:20px;" />
+                    <p:commandButton value="却下" id="delete" action="#{postCheckBean.delete}" ajax="false" style="margin-right:20px;" />
                 </h:form>
                 <hr />
                 <h:link outcome="index" value="戻る"/>

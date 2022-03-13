@@ -33,4 +33,11 @@ public class ShelterSetupBean {
         FacesMessage message = new FacesMessage("Successful", event.getFile().getFileName() + " is uploaded.");
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
+
+    public void initialize() {
+        shelterEJB.initialize("shelter");
+
+        FacesMessage message = new FacesMessage("Successful", "Initialized.");
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
 }

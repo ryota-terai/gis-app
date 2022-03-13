@@ -45,5 +45,7 @@ public interface PointrInformationEJBLocal {
      * @param comment 備考
      */
     void upatePointInformation(int pointId, boolean open, String comment);
+    
+    void initialize(String type);
 
 }

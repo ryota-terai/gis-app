@@ -11,6 +11,7 @@ import com.mapbox.geojson.Point;
 import com.r_terai.gisapp.entity.File;
 import com.r_terai.gisapp.entity.PostInformationView;
 import com.r_terai.gisapp.GISAppEntityUtil;
+import com.r_terai.gisapp.PostInformationViewUtil;
 import com.r_terai.java.util.Logger;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +37,7 @@ public class PostInformationGeoJsonEJB {
     private static final Logger logger = new Logger(PostInformationGeoJsonEJB.class.getName());
 
     public FeatureCollection getDisasterInformationGeoJson() {
-        List<PostInformationView> approvedInformation = GISAppEntityUtil.PostInformationViewUtil.getInformation(em, true);
+        List<PostInformationView> approvedInformation = PostInformationViewUtil.getInformation(em, true);
 
         List<Feature> features = new ArrayList();
 

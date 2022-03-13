@@ -40,8 +40,8 @@ and open the template in the editor.
                     </h:panelGrid>
                     <p:accordionPanel>
                         <p:tab title="管理者メニュー" rendered="#{postCheckBean.admin}">
-                            <h:commandButton value="更新" id="confirm" action="#{postCheckBean.confirm()}" style="margin-right:20px;" />
-                            <h:commandButton value="削除" id="delete" action="#{postCheckBean.delete()}" style="margin-right:20px;" />
+                            <p:commandButton value="更新" id="confirm" action="#{postCheckBean.confirm}" ajax="false" style="margin-right:20px;" />
+                            <p:commandButton value="削除" id="delete" action="#{postCheckBean.delete}" ajax="false" style="margin-right:20px;" />
                         </p:tab>
                     </p:accordionPanel>
                 </h:form>

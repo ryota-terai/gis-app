@@ -8,6 +8,8 @@ package com.r_terai.gisapp.ejb;
 import com.r_terai.gisapp.entity.File;
 import com.r_terai.gisapp.entity.PostInformationView;
 import com.r_terai.gisapp.GISAppEntityUtil;
+import com.r_terai.gisapp.PointUtil;
+import com.r_terai.gisapp.PostInformationViewUtil;
 import com.r_terai.java.util.Logger;
 import java.util.List;
 import javax.ejb.LocalBean;
@@ -33,17 +35,17 @@ public class PostInformationEJB implements PostInformationEJBLocal {
 
     @Override
     public void postInformation(String latitude, String longtitude, String information, byte[] file) {
-        GISAppEntityUtil.PointUtil.persist(em, "post_information", longtitude, latitude, information, file);
+        PointUtil.persist(em, "post_information", longtitude, latitude, information, file);
     }
 
     @Override
     public List<PostInformationView> getUncheckedInformation() {
-        return GISAppEntityUtil.PostInformationViewUtil.getInformation(em, false);
+        return PostInformationViewUtil.getInformation(em, false);
     }
 
     @Override
     public List<PostInformationView> getApprovedInformation() {
-        return GISAppEntityUtil.PostInformationViewUtil.getInformation(em, true);
+        return PostInformationViewUtil.getInformation(em, true);
     }
 
     @Override
@@ -63,13 +65,13 @@ public class PostInformationEJB implements PostInformationEJBLocal {
 
     @Override
     public void confirm(PostInformationView information) {
-        GISAppEntityUtil.PostInformationViewUtil.merge(em, information);
+        PostInformationViewUtil.merge(em, information);
     }
 
 
     @Override
     public void delete(int pointId) {
-        GISAppEntityUtil.PostInformationViewUtil.remove(em, pointId);
+        PointUtil.remove(em, pointId);
     }
 
 }
