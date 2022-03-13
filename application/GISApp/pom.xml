@@ -84,9 +84,6 @@
         <module>GISApp-ejb</module>
         <module>GISApp-web</module>
         <module>../GISAppEntity</module>
-        <module>../../lib/Util</module>
         <module>../GISAppEntityUtil</module>
-        <module>../../lib/COMMONEntity</module>
-        <module>../../lib/COMMONEntityUtil</module>
     </modules>
 </project>
