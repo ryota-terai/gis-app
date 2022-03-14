@@ -7,7 +7,6 @@ package com.r_terai.gisapp.ejb;
 
 import com.mapbox.geojson.FeatureCollection;
 import com.r_terai.gisapp.entity.ShelterInformationView;
-import com.r_terai.gisapp.GISAppEntityUtil;
 import com.r_terai.gisapp.PointInformationUtil;
 import com.r_terai.gisapp.PointUtil;
 import com.r_terai.gisapp.ShelterInformationViewUtil;
