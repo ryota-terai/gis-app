@@ -11,7 +11,7 @@ import com.r_terai.gisapp.PointInformationUtil;
 import com.r_terai.gisapp.PointUtil;
 import com.r_terai.gisapp.ShelterInformationViewUtil;
 import com.r_terai.java.ee.common.entity.util.COMMONEntityUtil;
-import com.r_terai.java.util.LogInterceptor;
+import com.r_terai.java.ee.LogInterceptor;
 import com.r_terai.java.util.Logger;
 import java.io.BufferedReader;
 import java.io.InputStream;
