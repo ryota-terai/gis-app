@@ -89,7 +89,7 @@ public class PointInformationEJB implements PointrInformationEJBLocal {
             }
         }
         try {
-            COMMONEntityUtil.ObserverTargetUtil.kick(common);
+            COMMONEntityUtil.ObserverTargetUtil.kick(common, 200, null, true);
         } catch (NamingException ex) {
             logger.log(Logger.Level.SEVERE, null, ex);
         }
