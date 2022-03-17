@@ -6,6 +6,7 @@
 package com.r_terai.gisapp.ejb;
 
 import com.mapbox.geojson.FeatureCollection;
+import com.r_terai.gisapp.GeojsonFileQueueUtil;
 import com.r_terai.gisapp.entity.ShelterInformationView;
 import com.r_terai.gisapp.PointInformationUtil;
 import com.r_terai.gisapp.PointUtil;
@@ -56,6 +57,16 @@ public class PointInformationEJB implements PointrInformationEJBLocal {
         FeatureCollection featureCollection = FeatureCollection.fromJson(streamToString);
 
         PointUtil.persist(em, featureCollection, _private, type);
+    }
+
+    @Override
+    @Interceptors(LogInterceptor.class)
+    public void setupLater(InputStream stream, boolean _private, String type) {
+        InputStreamReader inputStreamReader = new InputStreamReader(stream);
+        Stream<String> streamOfString = new BufferedReader(inputStreamReader).lines();
+        String streamToString = streamOfString.collect(Collectors.joining());
+
+        GeojsonFileQueueUtil.persist(em, streamToString, _private, type);
     }
 
     @Override

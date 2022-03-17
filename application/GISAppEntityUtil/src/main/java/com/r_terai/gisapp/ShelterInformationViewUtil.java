@@ -16,7 +16,10 @@ import javax.persistence.EntityManager;
 public class ShelterInformationViewUtil {
 
     public static List<ShelterInformationView> search(EntityManager em, String administrativeAreaCode, String type) {
-        List<ShelterInformationView> shelters = em.createNativeQuery("SELECT * FROM SHELTER_INFORMATION_VIEW WHERE P20_001 like ?1 AND TYPE = ?2", ShelterInformationView.class).setParameter(1, (administrativeAreaCode == null ? "" : administrativeAreaCode) + "%").setParameter(2, type).getResultList();
+        List<ShelterInformationView> shelters = em.createNativeQuery("SELECT * FROM SHELTER_INFORMATION_VIEW WHERE P20_001 like ?1 AND TYPE = ?2", ShelterInformationView.class)
+                .setParameter(1, (administrativeAreaCode == null ? "" : administrativeAreaCode) + "%")
+                .setParameter(2, type)
+                .getResultList();
         return shelters;
     }
 

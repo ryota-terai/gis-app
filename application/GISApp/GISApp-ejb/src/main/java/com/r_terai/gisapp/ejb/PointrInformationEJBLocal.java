@@ -24,6 +24,8 @@ public interface PointrInformationEJBLocal {
      */
     void setup(InputStream stream, boolean _private, String type);
 
+    void setupLater(InputStream stream, boolean _private, String type);
+
     /**
      * 一覧を検索
      *
@@ -45,7 +47,7 @@ public interface PointrInformationEJBLocal {
      * @param comment 備考
      */
     void upatePointInformation(int pointId, boolean open, String comment);
-    
+
     void initialize(String type);
 
 }

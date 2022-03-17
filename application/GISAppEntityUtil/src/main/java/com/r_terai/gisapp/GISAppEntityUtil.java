@@ -23,4 +23,5 @@ public class GISAppEntityUtil {
 
     static final Logger logger = new Logger(GISAppEntityUtil.class.getName());
 
+
 }

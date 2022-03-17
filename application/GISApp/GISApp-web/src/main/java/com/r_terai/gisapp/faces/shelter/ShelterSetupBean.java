@@ -34,6 +34,13 @@ public class ShelterSetupBean {
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
 
+    public void handleFileUpload2(FileUploadEvent event) throws IOException {
+        shelterEJB.setupLater(event.getFile().getInputStream(), false, "shelter");
+
+        FacesMessage message = new FacesMessage("Successful", event.getFile().getFileName() + " is queued.");
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+
     public void initialize() {
         shelterEJB.initialize("shelter");
 
