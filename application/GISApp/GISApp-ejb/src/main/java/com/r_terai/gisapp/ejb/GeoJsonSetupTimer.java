@@ -45,8 +45,9 @@ public class GeoJsonSetupTimer extends TimerEJB {
 
         List<GeojsonFileQueue> queue = GeojsonFileQueueUtil.search(gis);
 
-        GeojsonFileQueue file = queue.get(0);
-        if (file != null) {
+        if (!queue.isEmpty()) {
+            GeojsonFileQueue file = queue.get(0);
+
             FeatureCollection featureCollection = FeatureCollection.fromJson(file.getGeojson());
             PointUtil.persist(gis, featureCollection, (file.getPrivate1() == (short) 1), file.getType());
             gis.remove(file);
