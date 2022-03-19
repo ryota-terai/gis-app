@@ -5,6 +5,7 @@
  */
 package com.r_terai.gisapp.ejb;
 
+import com.r_terai.gisapp.entity.ShelterInformation;
 import com.r_terai.gisapp.entity.ShelterInformationView;
 import java.io.InputStream;
 import java.util.List;
@@ -40,6 +41,19 @@ public interface PointrInformationEJBLocal {
     List<ShelterInformationView> search(String administrativeAreaCode, String type, boolean p20_007, boolean p20_008, boolean p20_009, boolean p20_010, boolean p20_011, Boolean open);
 
     /**
+     * 一覧を検索
+     *
+     * @param administrativeAreaCode 行政区域コード
+     * @param p20_007 地震災害
+     * @param p20_008 津波災害
+     * @param p20_009 水害
+     * @param p20_010 火山災害
+     * @param p20_011 その他
+     * @return 避難所一覧
+     */
+    List<ShelterInformation> searchRelased(String administrativeAreaCode, String type, boolean p20_007, boolean p20_008, boolean p20_009, boolean p20_010, boolean p20_011, Boolean open);
+
+    /**
      * 情報更新
      *
      * @param pointId 主キー
@@ -49,5 +63,7 @@ public interface PointrInformationEJBLocal {
     void upatePointInformation(int pointId, boolean open, String comment);
 
     void initialize(String type);
+    
+    void release();
 
 }

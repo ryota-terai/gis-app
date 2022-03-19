@@ -10,5 +10,6 @@
     <class>com.r_terai.gisapp.entity.ShelterInformationView</class>
     <class>com.r_terai.gisapp.entity.TimerSetting</class>
     <class>com.r_terai.gisapp.entity.GeojsonFileQueue</class>
+    <class>com.r_terai.gisapp.entity.ShelterInformation</class>
   </persistence-unit>
 </persistence>

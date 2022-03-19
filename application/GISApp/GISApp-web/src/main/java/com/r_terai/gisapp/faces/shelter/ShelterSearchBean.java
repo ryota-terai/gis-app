@@ -6,6 +6,7 @@
 package com.r_terai.gisapp.faces.shelter;
 
 import com.r_terai.gisapp.ejb.PointInformationEJB;
+import com.r_terai.gisapp.entity.ShelterInformation;
 import com.r_terai.gisapp.entity.ShelterInformationView;
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -10,7 +10,7 @@ import com.mapbox.geojson.FeatureCollection;
 import com.mapbox.geojson.Point;
 import com.r_terai.gisapp.ejb.PostInformationGeoJsonEJB;
 import com.r_terai.gisapp.ejb.PointInformationEJB;
-import com.r_terai.gisapp.entity.ShelterInformationView;
+import com.r_terai.gisapp.entity.ShelterInformation;
 import com.r_terai.java.util.Logger;
 import com.r_terai.java.util.Logger.Level;
 import java.util.ArrayList;
@@ -106,7 +106,7 @@ public class GenericResource {
         FeatureCollection geoJson = null;
         try {
             tx.begin();
-            List<ShelterInformationView> shelters = shelterInformationGeoJsonBean.search(administrativeAreaCode, "shelter", p20_007, p20_008, p20_009, p20_010, p20_011, open);
+            List<ShelterInformation> shelters = shelterInformationGeoJsonBean.searchRelased(administrativeAreaCode, "shelter", p20_007, p20_008, p20_009, p20_010, p20_011, open);
 
             geoJson = convertToGeoJSON(shelters);
             tx.commit();
@@ -123,10 +123,10 @@ public class GenericResource {
         return geoJson != null ? geoJson.toJson() : null;
     }
 
-    private FeatureCollection convertToGeoJSON(List<ShelterInformationView> shelters) {
+    private FeatureCollection convertToGeoJSON(List<ShelterInformation> shelters) {
         FeatureCollection geoJson;
         List<Feature> features = new ArrayList();
-        for (ShelterInformationView shelter : shelters) {
+        for (ShelterInformation shelter : shelters) {
             Point point = Point.fromLngLat(shelter.getX(), shelter.getY());
             Feature feature = Feature.fromGeometry(point);
             feature.addStringProperty("P20_001", shelter.getP20001());

@@ -40,6 +40,13 @@ public class ShelterSetupBean {
         FacesMessage message = new FacesMessage("Successful", event.getFile().getFileName() + " is queued.");
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
+    
+    public void release(){
+        shelterEJB.release();
+
+        FacesMessage message = new FacesMessage("Successful", "Released.");
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
 
     public void initialize() {
         shelterEJB.initialize("shelter");
