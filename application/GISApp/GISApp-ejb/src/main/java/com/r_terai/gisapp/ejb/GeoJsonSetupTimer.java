@@ -12,7 +12,7 @@ import com.r_terai.gisapp.entity.GeojsonFileQueue;
 import com.r_terai.java.ee.LogInterceptor;
 import com.r_terai.java.ee.common.entity.util.COMMONEntityUtil;
 import com.r_terai.java.util.Logger;
-import com.rterai.java.ee.common.TimerEJB;
+import com.r_terai.java.ee.common.TimerEJB;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Singleton;
