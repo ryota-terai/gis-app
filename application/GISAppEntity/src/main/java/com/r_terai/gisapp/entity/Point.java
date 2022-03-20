@@ -6,8 +6,8 @@
 package com.r_terai.gisapp.entity;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -71,7 +71,7 @@ public class Point implements Serializable {
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "point")
     private File file;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "point")
-    private List<PointInformation> pointInformationList;
+    private Collection<PointInformation> pointInformationCollection;
 
     public Point() {
     }
@@ -154,12 +154,12 @@ public class Point implements Serializable {
     }
 
     @XmlTransient
-    public List<PointInformation> getPointInformationList() {
-        return pointInformationList;
+    public Collection<PointInformation> getPointInformationCollection() {
+        return pointInformationCollection;
     }
 
-    public void setPointInformationList(List<PointInformation> pointInformationList) {
-        this.pointInformationList = pointInformationList;
+    public void setPointInformationCollection(Collection<PointInformation> pointInformationCollection) {
+        this.pointInformationCollection = pointInformationCollection;
     }
 
     @Override
