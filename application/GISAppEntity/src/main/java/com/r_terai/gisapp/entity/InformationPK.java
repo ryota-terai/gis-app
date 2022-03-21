@@ -15,29 +15,41 @@ import javax.persistence.Embeddable;
  * @author r-terai
  */
 @Embeddable
-public class PointInformationPK implements Serializable {
+public class InformationPK implements Serializable {
 
     @Basic(optional = false)
-    @Column(name = "POINT_ID")
-    private int pointId;
+    @Column(name = "ID_TYPE")
+    private String idType;
+    @Basic(optional = false)
+    @Column(name = "ID")
+    private int id;
     @Basic(optional = false)
     @Column(name = "NAME")
     private String name;
 
-    public PointInformationPK() {
+    public InformationPK() {
     }
 
-    public PointInformationPK(int pointId, String name) {
-        this.pointId = pointId;
+    public InformationPK(String idType, int id, String name) {
+        this.idType = idType;
+        this.id = id;
         this.name = name;
     }
 
-    public int getPointId() {
-        return pointId;
+    public String getIdType() {
+        return idType;
     }
 
-    public void setPointId(int pointId) {
-        this.pointId = pointId;
+    public void setIdType(String idType) {
+        this.idType = idType;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -51,7 +63,8 @@ public class PointInformationPK implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (int) pointId;
+        hash += (idType != null ? idType.hashCode() : 0);
+        hash += (int) id;
         hash += (name != null ? name.hashCode() : 0);
         return hash;
     }
@@ -59,11 +72,14 @@ public class PointInformationPK implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof PointInformationPK)) {
+        if (!(object instanceof InformationPK)) {
             return false;
         }
-        PointInformationPK other = (PointInformationPK) object;
-        if (this.pointId != other.pointId) {
+        InformationPK other = (InformationPK) object;
+        if ((this.idType == null && other.idType != null) || (this.idType != null && !this.idType.equals(other.idType))) {
+            return false;
+        }
+        if (this.id != other.id) {
             return false;
         }
         if ((this.name == null && other.name != null) || (this.name != null && !this.name.equals(other.name))) {
@@ -74,7 +90,7 @@ public class PointInformationPK implements Serializable {
 
     @Override
     public String toString() {
-        return "com.r_terai.gisapp.entity.PointInformationPK[ pointId=" + pointId + ", name=" + name + " ]";
+        return "com.r_terai.gisapp.entity.InformationPK[ idType=" + idType + ", id=" + id + ", name=" + name + " ]";
     }
     
 }

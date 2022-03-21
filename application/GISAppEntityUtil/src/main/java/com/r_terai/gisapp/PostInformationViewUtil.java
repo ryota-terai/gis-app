@@ -5,8 +5,8 @@
  */
 package com.r_terai.gisapp;
 
-import com.r_terai.gisapp.entity.PointInformation;
-import com.r_terai.gisapp.entity.PointInformationPK;
+import com.r_terai.gisapp.entity.Information;
+import com.r_terai.gisapp.entity.InformationPK;
 import com.r_terai.gisapp.entity.PostInformationView;
 import java.util.Date;
 import java.util.List;
@@ -23,29 +23,29 @@ public class PostInformationViewUtil {
     }
 
     public static void merge(EntityManager em, PostInformationView information) {
-        PointInformation info = em.find(PointInformation.class, new PointInformationPK(information.getPointId(), GISAppEntityUtil.INFORMATION));
+        Information info = em.find(Information.class, new InformationPK(GISAppEntityUtil.ID_TYPE_POINT, information.getPointId(), GISAppEntityUtil.INFORMATION));
         if (info == null) {
-            info = new PointInformation(information.getPointId(), GISAppEntityUtil.INFORMATION);
+            info = new Information(GISAppEntityUtil.ID_TYPE_POINT, information.getPointId(), GISAppEntityUtil.INFORMATION);
             info.setUpdateTime(new Date());
-            info.setType(GISAppEntityUtil.POINT_INFORMATION_TYPE_STRING);
+            info.setType(GISAppEntityUtil.INFORMATION_TYPE_STRING);
             info.setString(information.getInformation());
             em.persist(info);
         } else {
             info.setUpdateTime(new Date());
-            info.setType(GISAppEntityUtil.POINT_INFORMATION_TYPE_STRING);
+            info.setType(GISAppEntityUtil.INFORMATION_TYPE_STRING);
             info.setString(information.getInformation());
             em.merge(info);
         }
-        info = em.find(PointInformation.class, new PointInformationPK(information.getPointId(), GISAppEntityUtil.APPROVED));
+        info = em.find(Information.class, new InformationPK(GISAppEntityUtil.ID_TYPE_POINT, information.getPointId(), GISAppEntityUtil.APPROVED));
         if (info == null) {
-            info = new PointInformation(information.getPointId(), GISAppEntityUtil.APPROVED);
+            info = new Information(GISAppEntityUtil.ID_TYPE_POINT, information.getPointId(), GISAppEntityUtil.APPROVED);
             info.setUpdateTime(new Date());
-            info.setType(GISAppEntityUtil.POINT_INFORMATION_TYPE_BOOLEAN);
+            info.setType(GISAppEntityUtil.INFORMATION_TYPE_BOOLEAN);
             info.setBoolean1((short) 1);
             em.persist(info);
         } else {
             info.setUpdateTime(new Date());
-            info.setType(GISAppEntityUtil.POINT_INFORMATION_TYPE_BOOLEAN);
+            info.setType(GISAppEntityUtil.INFORMATION_TYPE_BOOLEAN);
             info.setBoolean1((short) 1);
             em.merge(info);
         }

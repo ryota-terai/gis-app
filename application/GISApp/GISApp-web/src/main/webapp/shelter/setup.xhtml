@@ -14,14 +14,24 @@
         <ui:composition template="/WEB-INF/template/template.xhtml">
             <ui:define name="content">
                 <p:growl id="messages" showDetail="true"/>
-                <h1>避難所セットアップ</h1>
+                <h1>GeoJSONセットアップ</h1>
                 <h:form id="frm" enctype="multipart/form-data">
+                    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+                        <p:outputLabel for="type" value="タイプ" />
+                        <p:inputText id="type" value="#{shelterSetupBean.type}"/>
+
+                        <p:outputLabel for="private" value="プライベート" />
+                        <p:selectBooleanButton id="private" value="#{shelterSetupBean.private}" onLabel="Yes" offLabel="No" style="width:60px" />
+                        
+                        <p:commandButton value="設定" id="set" action="#{shelterSetupBean.set()}" ajax="false" style="margin-right:20px;" />
+                    </h:panelGrid>
+
                     <p:fileUpload id="fileUpload" listener="#{shelterSetupBean.handleFileUpload}" auto="true" mode="advanced" dragDropSupport="true"
-                                  update="messages" sizeLimit="10000000" allowTypes="/(\.|\/)geojson$/"/>
+                                  update="messages" sizeLimit="1000000000" allowTypes="/(\.|\/)geojson$/"/>
                     <br/>
                     <h2>連続処理用</h2>
                     <p:fileUpload id="fileUpload2" listener="#{shelterSetupBean.handleFileUpload2}" auto="true" mode="advanced" dragDropSupport="true"
-                                  update="messages" sizeLimit="10000000" allowTypes="/(\.|\/)geojson$/"/>
+                                  update="messages" sizeLimit="1000000000" allowTypes="/(\.|\/)geojson$/"/>
                     国土数値情報サイトの避難所情報が格納された、GeoJSONファイルを選択若しくは、ドラッグアンドドロップしてください
                     <br/>
                     <p:commandButton value="リリース" id="release" action="#{shelterSetupBean.release()}" ajax="false" style="margin-right:20px;" />

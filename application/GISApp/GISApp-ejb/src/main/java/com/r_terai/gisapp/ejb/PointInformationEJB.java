@@ -6,9 +6,12 @@
 package com.r_terai.gisapp.ejb;
 
 import com.mapbox.geojson.FeatureCollection;
+import com.r_terai.gisapp.GISAppEntityUtil;
 import com.r_terai.gisapp.GeojsonFileQueueUtil;
-import com.r_terai.gisapp.PointInformationUtil;
+import com.r_terai.gisapp.InformationUtil;
+import com.r_terai.gisapp.MultiPolygonUtil;
 import com.r_terai.gisapp.PointUtil;
+import com.r_terai.gisapp.PolygonUtil;
 import com.r_terai.gisapp.ShelterInformationUtil;
 import com.r_terai.gisapp.ShelterInformationViewUtil;
 import com.r_terai.gisapp.entity.ShelterInformation;
@@ -51,24 +54,24 @@ public class PointInformationEJB implements PointrInformationEJBLocal {
 
     @Override
     @Interceptors(LogInterceptor.class)
-    public void setup(InputStream stream, boolean _private, String type) {
+    public void setup(InputStream stream, boolean _private, String type, boolean expand) {
         InputStreamReader inputStreamReader = new InputStreamReader(stream);
         Stream<String> streamOfString = new BufferedReader(inputStreamReader).lines();
         String streamToString = streamOfString.collect(Collectors.joining());
 
         FeatureCollection featureCollection = FeatureCollection.fromJson(streamToString);
 
-        PointUtil.persist(em, featureCollection, _private, type);
+        GISAppEntityUtil.persist(em, featureCollection, _private, type, expand);
     }
 
     @Override
     @Interceptors(LogInterceptor.class)
-    public void setupLater(InputStream stream, boolean _private, String type) {
+    public void setupLater(InputStream stream, boolean _private, String type, boolean expand) {
         InputStreamReader inputStreamReader = new InputStreamReader(stream);
         Stream<String> streamOfString = new BufferedReader(inputStreamReader).lines();
         String streamToString = streamOfString.collect(Collectors.joining());
 
-        GeojsonFileQueueUtil.persist(em, streamToString, _private, type);
+        GeojsonFileQueueUtil.persist(em, streamToString, _private, type, expand);
     }
 
     @Override
@@ -154,11 +157,13 @@ public class PointInformationEJB implements PointrInformationEJBLocal {
     @Override
     @Interceptors(LogInterceptor.class)
     public void upatePointInformation(int pointId, boolean open, String comment) {
-        PointInformationUtil.update(em, pointId, open, comment);
+        InformationUtil.update(em, GISAppEntityUtil.ID_TYPE_POINT, pointId, open, comment);
     }
 
     @Override
     public void initialize(String type) {
+        MultiPolygonUtil.initialize(em, type);
+        PolygonUtil.initialize(em, type);
         PointUtil.initialize(em, type);
     }
 

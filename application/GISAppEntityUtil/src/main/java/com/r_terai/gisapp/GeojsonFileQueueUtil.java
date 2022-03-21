@@ -15,11 +15,12 @@ import javax.persistence.EntityManager;
  */
 public class GeojsonFileQueueUtil {
 
-    public static void persist(EntityManager em, String geojson, boolean _private, String type) {
+    public static void persist(EntityManager em, String geojson, boolean _private, String type, boolean expand) {
         GeojsonFileQueue file = new GeojsonFileQueue();
         file.setPrivate1(_private ? (short) 1 : 0);
         file.setType(type);
         file.setGeojson(geojson);
+        file.setExpand(expand ? (short) 1 : (short) 0);
         em.persist(file);
     }
 

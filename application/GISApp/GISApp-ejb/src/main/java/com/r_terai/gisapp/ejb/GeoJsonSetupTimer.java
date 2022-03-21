@@ -6,6 +6,7 @@
 package com.r_terai.gisapp.ejb;
 
 import com.mapbox.geojson.FeatureCollection;
+import com.r_terai.gisapp.GISAppEntityUtil;
 import com.r_terai.gisapp.GeojsonFileQueueUtil;
 import com.r_terai.gisapp.PointUtil;
 import com.r_terai.gisapp.entity.GeojsonFileQueue;
@@ -49,7 +50,7 @@ public class GeoJsonSetupTimer extends TimerEJB {
             GeojsonFileQueue file = queue.get(0);
 
             FeatureCollection featureCollection = FeatureCollection.fromJson(file.getGeojson());
-            PointUtil.persist(gis, featureCollection, (file.getPrivate1() == (short) 1), file.getType());
+            GISAppEntityUtil.persist(gis, featureCollection, (file.getPrivate1() == (short) 1), file.getType(), file.getExpand() == 1);
             gis.remove(file);
         }
     }

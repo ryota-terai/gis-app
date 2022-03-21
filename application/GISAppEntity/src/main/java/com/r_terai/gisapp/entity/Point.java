@@ -68,10 +68,16 @@ public class Point implements Serializable {
     @Column(name = "UPDATE_TIME")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateTime;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pointId")
+    private Collection<MultiPolygonGeometry> multiPolygonGeometryCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pointId")
+    private Collection<MultiLineStringGeometry> multiLineStringGeometryCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pointId")
+    private Collection<PolygonGeometry> polygonGeometryCollection;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "point")
     private File file;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "point")
-    private Collection<PointInformation> pointInformationCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pointId")
+    private Collection<LineStringGeometry> lineStringGeometryCollection;
 
     public Point() {
     }
@@ -145,6 +151,33 @@ public class Point implements Serializable {
         this.updateTime = updateTime;
     }
 
+    @XmlTransient
+    public Collection<MultiPolygonGeometry> getMultiPolygonGeometryCollection() {
+        return multiPolygonGeometryCollection;
+    }
+
+    public void setMultiPolygonGeometryCollection(Collection<MultiPolygonGeometry> multiPolygonGeometryCollection) {
+        this.multiPolygonGeometryCollection = multiPolygonGeometryCollection;
+    }
+
+    @XmlTransient
+    public Collection<MultiLineStringGeometry> getMultiLineStringGeometryCollection() {
+        return multiLineStringGeometryCollection;
+    }
+
+    public void setMultiLineStringGeometryCollection(Collection<MultiLineStringGeometry> multiLineStringGeometryCollection) {
+        this.multiLineStringGeometryCollection = multiLineStringGeometryCollection;
+    }
+
+    @XmlTransient
+    public Collection<PolygonGeometry> getPolygonGeometryCollection() {
+        return polygonGeometryCollection;
+    }
+
+    public void setPolygonGeometryCollection(Collection<PolygonGeometry> polygonGeometryCollection) {
+        this.polygonGeometryCollection = polygonGeometryCollection;
+    }
+
     public File getFile() {
         return file;
     }
@@ -154,12 +187,12 @@ public class Point implements Serializable {
     }
 
     @XmlTransient
-    public Collection<PointInformation> getPointInformationCollection() {
-        return pointInformationCollection;
+    public Collection<LineStringGeometry> getLineStringGeometryCollection() {
+        return lineStringGeometryCollection;
     }
 
-    public void setPointInformationCollection(Collection<PointInformation> pointInformationCollection) {
-        this.pointInformationCollection = pointInformationCollection;
+    public void setLineStringGeometryCollection(Collection<LineStringGeometry> lineStringGeometryCollection) {
+        this.lineStringGeometryCollection = lineStringGeometryCollection;
     }
 
     @Override

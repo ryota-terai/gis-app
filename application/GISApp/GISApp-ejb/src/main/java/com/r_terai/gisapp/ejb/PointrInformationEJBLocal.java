@@ -23,9 +23,9 @@ public interface PointrInformationEJBLocal {
      *
      * @param stream 地点情報(GeoJSON形式)
      */
-    void setup(InputStream stream, boolean _private, String type);
+    void setup(InputStream stream, boolean _private, String type, boolean expand);
 
-    void setupLater(InputStream stream, boolean _private, String type);
+    void setupLater(InputStream stream, boolean _private, String type, boolean expand);
 
     /**
      * 一覧を検索

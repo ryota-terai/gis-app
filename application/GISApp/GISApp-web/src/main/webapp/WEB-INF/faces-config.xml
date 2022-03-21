@@ -67,7 +67,7 @@
         <managed-bean-name>shelterSetupBean</managed-bean-name>
         <managed-bean-class>com.r_terai.gisapp.faces.shelter.ShelterSetupBean</managed-bean-class>
     
-        <managed-bean-scope>request</managed-bean-scope></managed-bean>
+        <managed-bean-scope>view</managed-bean-scope></managed-bean>
     <managed-bean>
         <managed-bean-name>shelterSearchBean</managed-bean-name>
         <managed-bean-class>com.r_terai.gisapp.faces.shelter.ShelterSearchBean</managed-bean-class>

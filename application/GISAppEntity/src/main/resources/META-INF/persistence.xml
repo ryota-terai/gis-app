@@ -3,13 +3,19 @@
   <persistence-unit name="GISAppEntity" transaction-type="JTA">
     <jta-data-source>jdbc/GISApp</jta-data-source>
     <class>com.r_terai.gisapp.entity.File</class>
-    <class>com.r_terai.gisapp.entity.ObserverSetting</class>
-    <class>com.r_terai.gisapp.entity.Point</class>
-    <class>com.r_terai.gisapp.entity.PointInformation</class>
-    <class>com.r_terai.gisapp.entity.PostInformationView</class>
-    <class>com.r_terai.gisapp.entity.ShelterInformationView</class>
-    <class>com.r_terai.gisapp.entity.TimerSetting</class>
     <class>com.r_terai.gisapp.entity.GeojsonFileQueue</class>
+    <class>com.r_terai.gisapp.entity.Information</class>
+    <class>com.r_terai.gisapp.entity.LineString</class>
+    <class>com.r_terai.gisapp.entity.LineStringGeometry</class>
+    <class>com.r_terai.gisapp.entity.MultiLineString</class>
+    <class>com.r_terai.gisapp.entity.MultiLineStringGeometry</class>
+    <class>com.r_terai.gisapp.entity.MultiPolygon</class>
+    <class>com.r_terai.gisapp.entity.MultiPolygonGeometry</class>
+    <class>com.r_terai.gisapp.entity.Point</class>
+    <class>com.r_terai.gisapp.entity.Polygon</class>
+    <class>com.r_terai.gisapp.entity.PolygonGeometry</class>
+    <class>com.r_terai.gisapp.entity.PostInformationView</class>
     <class>com.r_terai.gisapp.entity.ShelterInformation</class>
+    <class>com.r_terai.gisapp.entity.ShelterInformationView</class>
   </persistence-unit>
 </persistence>

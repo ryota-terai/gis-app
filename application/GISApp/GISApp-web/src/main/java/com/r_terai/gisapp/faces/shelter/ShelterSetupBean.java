@@ -21,6 +21,25 @@ public class ShelterSetupBean {
     @Inject
     private PointInformationEJB shelterEJB;
 
+    String type;
+    boolean _private;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public boolean isPrivate() {
+        return _private;
+    }
+
+    public void setPrivate(boolean _private) {
+        this._private = _private;
+    }
+
     /**
      * Creates a new instance of ShelterSetupBean
      */
@@ -28,20 +47,20 @@ public class ShelterSetupBean {
     }
 
     public void handleFileUpload(FileUploadEvent event) throws IOException {
-        shelterEJB.setup(event.getFile().getInputStream(), false, "shelter");
+        shelterEJB.setup(event.getFile().getInputStream(), _private, type, false);
 
         FacesMessage message = new FacesMessage("Successful", event.getFile().getFileName() + " is uploaded.");
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
 
     public void handleFileUpload2(FileUploadEvent event) throws IOException {
-        shelterEJB.setupLater(event.getFile().getInputStream(), false, "shelter");
+        shelterEJB.setupLater(event.getFile().getInputStream(), _private, type, false);
 
         FacesMessage message = new FacesMessage("Successful", event.getFile().getFileName() + " is queued.");
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
-    
-    public void release(){
+
+    public void release() {
         shelterEJB.release();
 
         FacesMessage message = new FacesMessage("Successful", "Released.");
@@ -49,9 +68,14 @@ public class ShelterSetupBean {
     }
 
     public void initialize() {
-        shelterEJB.initialize("shelter");
+        shelterEJB.initialize(type);
 
         FacesMessage message = new FacesMessage("Successful", "Initialized.");
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+
+    public void set() {
+        FacesMessage message = new FacesMessage("Successful", "type = " + type + ", private = " + _private);
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
 }

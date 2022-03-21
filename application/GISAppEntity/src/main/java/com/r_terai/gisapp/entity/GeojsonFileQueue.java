@@ -29,7 +29,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "GeojsonFileQueue.findAll", query = "SELECT g FROM GeojsonFileQueue g"),
     @NamedQuery(name = "GeojsonFileQueue.findById", query = "SELECT g FROM GeojsonFileQueue g WHERE g.id = :id"),
     @NamedQuery(name = "GeojsonFileQueue.findByPrivate1", query = "SELECT g FROM GeojsonFileQueue g WHERE g.private1 = :private1"),
-    @NamedQuery(name = "GeojsonFileQueue.findByType", query = "SELECT g FROM GeojsonFileQueue g WHERE g.type = :type")})
+    @NamedQuery(name = "GeojsonFileQueue.findByType", query = "SELECT g FROM GeojsonFileQueue g WHERE g.type = :type"),
+    @NamedQuery(name = "GeojsonFileQueue.findByExpand", query = "SELECT g FROM GeojsonFileQueue g WHERE g.expand = :expand")})
 public class GeojsonFileQueue implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -45,6 +46,9 @@ public class GeojsonFileQueue implements Serializable {
     @Column(name = "TYPE")
     private String type;
     @Basic(optional = false)
+    @Column(name = "EXPAND")
+    private short expand;
+    @Basic(optional = false)
     @Lob
     @Column(name = "GEOJSON")
     private String geojson;
@@ -56,10 +60,11 @@ public class GeojsonFileQueue implements Serializable {
         this.id = id;
     }
 
-    public GeojsonFileQueue(Integer id, short private1, String type, String geojson) {
+    public GeojsonFileQueue(Integer id, short private1, String type, short expand, String geojson) {
         this.id = id;
         this.private1 = private1;
         this.type = type;
+        this.expand = expand;
         this.geojson = geojson;
     }
 
@@ -85,6 +90,14 @@ public class GeojsonFileQueue implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public short getExpand() {
+        return expand;
+    }
+
+    public void setExpand(short expand) {
+        this.expand = expand;
     }
 
     public String getGeojson() {
