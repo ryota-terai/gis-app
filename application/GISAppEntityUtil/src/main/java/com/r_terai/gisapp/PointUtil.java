@@ -5,10 +5,6 @@
  */
 package com.r_terai.gisapp;
 
-import com.google.gson.JsonPrimitive;
-import com.mapbox.geojson.Feature;
-import com.mapbox.geojson.FeatureCollection;
-import com.mapbox.geojson.Geometry;
 import com.r_terai.gisapp.entity.File;
 import com.r_terai.gisapp.entity.Point;
 import com.r_terai.gisapp.entity.Information;

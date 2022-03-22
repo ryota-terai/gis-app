@@ -10,6 +10,10 @@ import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.FeatureCollection;
 import com.mapbox.geojson.Geometry;
 import com.r_terai.gisapp.entity.Information;
+import com.r_terai.gisapp.entity.LineString;
+import com.r_terai.gisapp.entity.LineStringGeometry;
+import com.r_terai.gisapp.entity.MultiLineString;
+import com.r_terai.gisapp.entity.MultiLineStringGeometry;
 import com.r_terai.gisapp.entity.MultiPolygon;
 import com.r_terai.gisapp.entity.MultiPolygonGeometry;
 import com.r_terai.gisapp.entity.Point;
@@ -29,6 +33,8 @@ public class GISAppEntityUtil {
     public static final String ID_TYPE_POINT = "POINT_ID";
     public static final String ID_TYPE_POLYGON = "POLYGON_ID";
     public static final String ID_TYPE_MULTI_POLYGON = "MULTI_POLYGON_ID";
+    public static final String ID_TYPE_LINE_STRING = "LINE_STRING_ID";
+    public static final String ID_TYPE_MULTI_LINE_STRING = "MULTI_LINE_STRING_ID";
 
     public static final String INFORMATION_TYPE_STRING = "String";
     public static final String INFORMATION_TYPE_BOOLEAN = "Boolean";
@@ -55,8 +61,77 @@ public class GISAppEntityUtil {
                 MultiPolygon polygon = persistMultiPolygon(em, geometry, _private, type, expand);
                 persistProperties(em, feature, GISAppEntityUtil.ID_TYPE_MULTI_POLYGON, polygon.getMultiPolygonId());
                 GISAppEntityUtil.logger.log(Logger.Level.INFO, "MultiPolygon={}", polygon.toString());
+            } else if (geometry instanceof com.mapbox.geojson.LineString) {
+                LineString lineString = persistLineString(em, geometry, _private, type, expand);
+                persistProperties(em, feature, GISAppEntityUtil.ID_TYPE_LINE_STRING, lineString.getLineStringId());
+                GISAppEntityUtil.logger.log(Logger.Level.INFO, "LineString={}", lineString.toString());
+            } else if (geometry instanceof com.mapbox.geojson.MultiLineString) {
+                MultiLineString multiLineString = persistMultiLineString(em, geometry, _private, type, expand);
+                persistProperties(em, feature, GISAppEntityUtil.ID_TYPE_MULTI_LINE_STRING, multiLineString.getMultiLineStringId());
+                GISAppEntityUtil.logger.log(Logger.Level.INFO, "MultiLineString={}", multiLineString.toString());
             }
         }
+    }
+
+    private static MultiLineString persistMultiLineString(EntityManager em, Geometry geometry, boolean _private, String type, boolean expand) {
+        MultiLineString multiLineString = new MultiLineString();
+        multiLineString.setPrivate1(_private ? (short) 1 : 0);
+        multiLineString.setType(type);
+        multiLineString.setUpdateTime(new Date());
+        em.persist(multiLineString);
+        em.flush();
+        if (expand) {
+            int multiLineStringId = multiLineString.getMultiLineStringId(), lineStringIndex = 0, pointIndex = 0;
+            for (List<com.mapbox.geojson.Point> lineStringArray : ((com.mapbox.geojson.MultiLineString) geometry).coordinates()) {
+                for (com.mapbox.geojson.Point pointArray : lineStringArray) {
+                    Point point = persistPoint(em, pointArray, _private, type);
+                    GISAppEntityUtil.logger.log(Logger.Level.INFO, "point={}", point.toString());
+
+                    MultiLineStringGeometry multiLineStringGeometry = new MultiLineStringGeometry(multiLineStringId, lineStringIndex, pointIndex);
+                    multiLineStringGeometry.setPointId(point);
+                    multiLineStringGeometry.setUpdateTime(new Date());
+
+                    em.persist(multiLineStringGeometry);
+                    GISAppEntityUtil.logger.log(Logger.Level.INFO, "MultiLineStringGeometry={}", multiLineStringGeometry.toString());
+
+                    pointIndex++;
+                }
+                lineStringIndex++;
+                pointIndex = 0;
+            }
+        } else {
+            multiLineString.setMultiLineString(geometry.toJson());
+            em.merge(multiLineString);
+        }
+        return multiLineString;
+
+    }
+
+    private static LineString persistLineString(EntityManager em, Geometry geometry, boolean _private, String type, boolean expand) {
+        LineString lineString = new LineString();
+        lineString.setPrivate1(_private ? (short) 1 : 0);
+        lineString.setType(type);
+        lineString.setUpdateTime(new Date());
+        em.persist(lineString);
+        em.flush();
+        if (expand) {
+            int lineStringId = lineString.getLineStringId(), pointIndex = 0;
+            for (com.mapbox.geojson.Point lineStringPoint : ((com.mapbox.geojson.LineString) geometry).coordinates()) {
+                Point point = persistPoint(em, lineStringPoint, _private, type);
+                GISAppEntityUtil.logger.log(Logger.Level.INFO, "point={}", point.toString());
+                LineStringGeometry lineStringGeometry = new LineStringGeometry(lineStringId, pointIndex);
+                lineStringGeometry.setPointId(point);
+                lineStringGeometry.setUpdateTime(new Date());
+                em.persist(lineStringGeometry);
+                GISAppEntityUtil.logger.log(Logger.Level.INFO, "lineStringGeometry={}", lineStringGeometry.toString());
+                pointIndex++;
+            }
+        } else {
+            lineString.setLineString(geometry.toJson());
+            em.merge(lineString);
+        }
+        return lineString;
+
     }
 
     private static MultiPolygon persistMultiPolygon(EntityManager em, Geometry geometry, boolean _private, String type, boolean expand) {

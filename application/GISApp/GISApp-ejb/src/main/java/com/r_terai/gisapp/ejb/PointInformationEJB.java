@@ -9,6 +9,8 @@ import com.mapbox.geojson.FeatureCollection;
 import com.r_terai.gisapp.GISAppEntityUtil;
 import com.r_terai.gisapp.GeojsonFileQueueUtil;
 import com.r_terai.gisapp.InformationUtil;
+import com.r_terai.gisapp.LineStringUtility;
+import com.r_terai.gisapp.MultiLineStringUtil;
 import com.r_terai.gisapp.MultiPolygonUtil;
 import com.r_terai.gisapp.PointUtil;
 import com.r_terai.gisapp.PolygonUtil;
@@ -164,6 +166,8 @@ public class PointInformationEJB implements PointrInformationEJBLocal {
     public void initialize(String type) {
         MultiPolygonUtil.initialize(em, type);
         PolygonUtil.initialize(em, type);
+        MultiLineStringUtil.initialize(em, type);
+        LineStringUtility.initialize(em, type);
         PointUtil.initialize(em, type);
     }
 

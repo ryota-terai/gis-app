@@ -24,6 +24,7 @@ public class PolygonUtil {
                 .setParameter("type", type)
                 .getResultList();
         for (Polygon polygon : polygons) {
+            GISAppEntityUtil.logger.log(Logger.Level.INFO, "Polygon={}", polygon.toString());
             remove(em, polygon.getPolygonId());
         }
     }
@@ -42,7 +43,6 @@ public class PolygonUtil {
         for (PolygonGeometry geometry : geometries) {
             Point point = em.find(Point.class, geometry.getPointId().getPointId());
             if (point != null) {
-                GISAppEntityUtil.logger.log(Logger.Level.INFO, "point={}", point.toString());
                 em.remove(point);
             }
             em.remove(geometry);
