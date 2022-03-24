@@ -19,11 +19,15 @@ import com.r_terai.gisapp.ShelterInformationViewUtil;
 import com.r_terai.gisapp.entity.ShelterInformation;
 import com.r_terai.gisapp.entity.ShelterInformationView;
 import com.r_terai.java.ee.common.entity.util.COMMONEntityUtil;
-import com.r_terai.java.ee.LogInterceptor;
+import com.r_terai.java.ee.common.LogInterceptor;
 import com.r_terai.java.util.Logger;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -69,11 +73,18 @@ public class PointInformationEJB implements PointrInformationEJBLocal {
     @Override
     @Interceptors(LogInterceptor.class)
     public void setupLater(InputStream stream, boolean _private, String type, boolean expand) {
-        InputStreamReader inputStreamReader = new InputStreamReader(stream);
-        Stream<String> streamOfString = new BufferedReader(inputStreamReader).lines();
-        String streamToString = streamOfString.collect(Collectors.joining());
+        try {
+//            InputStreamReader inputStreamReader = new InputStreamReader(stream);
+//            Stream<String> streamOfString = new BufferedReader(inputStreamReader).lines();
+//            String streamToString = streamOfString.collect(Collectors.joining());
 
-        GeojsonFileQueueUtil.persist(em, streamToString, _private, type, expand);
+            File file = File.createTempFile("temp", null);
+            Files.copy(stream, file.getAbsoluteFile().toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+            GeojsonFileQueueUtil.persist(em, file.getAbsolutePath(), _private, type, expand);
+        } catch (IOException ex) {
+            logger.log(Logger.Level.SEVERE, null, ex);
+        }
     }
 
     @Override
@@ -175,5 +186,4 @@ public class PointInformationEJB implements PointrInformationEJBLocal {
     public void release() {
         ShelterInformationUtil.copy(em);
     }
-
 }

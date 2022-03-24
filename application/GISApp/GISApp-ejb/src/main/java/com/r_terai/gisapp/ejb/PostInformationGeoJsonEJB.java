@@ -10,7 +10,6 @@ import com.mapbox.geojson.FeatureCollection;
 import com.mapbox.geojson.Point;
 import com.r_terai.gisapp.entity.File;
 import com.r_terai.gisapp.entity.PostInformationView;
-import com.r_terai.gisapp.GISAppEntityUtil;
 import com.r_terai.gisapp.PostInformationViewUtil;
 import com.r_terai.java.util.Logger;
 import java.util.ArrayList;

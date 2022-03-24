@@ -8,6 +8,7 @@ package com.r_terai.gisapp.rest;
 import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.FeatureCollection;
 import com.mapbox.geojson.Point;
+import com.r_terai.gisapp.ejb.GeoJsonEJB;
 import com.r_terai.gisapp.ejb.PostInformationGeoJsonEJB;
 import com.r_terai.gisapp.ejb.PointInformationEJB;
 import com.r_terai.gisapp.entity.ShelterInformation;
@@ -55,6 +56,9 @@ public class GenericResource {
 
     @EJB(name = "ShelterInformationEJB")
     PointInformationEJB shelterInformationGeoJsonBean;
+
+    @EJB(name = "GeoJsonEJB")
+    GeoJsonEJB geoJsonEJB;
 
     private static final Logger LOG = Logger.getLogger(GenericResource.class.getName());
 
@@ -148,5 +152,29 @@ public class GenericResource {
         }
         geoJson = FeatureCollection.fromFeatures(features);
         return geoJson;
+    }
+
+    @GET
+    @Path(value = "/geoJson")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String search(@QueryParam("areaCode") final String areaCode,
+            @QueryParam("type") final String type) {
+        FeatureCollection geoJson = null;
+        try {
+            tx.begin();
+            geoJson = geoJsonEJB.search(type, areaCode);
+
+            tx.commit();
+        } catch (HeuristicMixedException | HeuristicRollbackException | SecurityException | IllegalStateException | NotSupportedException | SystemException | RollbackException ex) {
+            try {
+                tx.rollback();
+                LOG.log(Level.SEVERE, null, ex);
+                return null;
+            } catch (IllegalStateException | SecurityException | SystemException ex1) {
+                LOG.log(Level.SEVERE, null, ex1);
+                return null;
+            }
+        }
+        return geoJson != null ? geoJson.toJson() : null;
     }
 }

@@ -63,7 +63,7 @@ public interface PointrInformationEJBLocal {
     void upatePointInformation(int pointId, boolean open, String comment);
 
     void initialize(String type);
-    
+
     void release();
 
 }
