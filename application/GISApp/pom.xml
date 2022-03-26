@@ -85,5 +85,6 @@
         <module>GISApp-web</module>
         <module>../GISAppEntity</module>
         <module>../GISAppEntityUtil</module>
+        <module>../ksj</module>
     </modules>
 </project>

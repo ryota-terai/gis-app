@@ -10,7 +10,7 @@
     </context-param>
     <context-param>
         <param-name>GISApp_areaCode</param-name>
-        <param-value>42212</param-value>
+        <param-value>141</param-value>
     </context-param>
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>

@@ -9,9 +9,8 @@ import com.google.gson.JsonPrimitive;
 import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.FeatureCollection;
 import com.mapbox.geojson.Geometry;
-import com.r_terai.gisapp.entity.A33LineStringView;
-import com.r_terai.gisapp.entity.A33MultiPolygonView;
-import com.r_terai.gisapp.entity.A33PolygonView;
+import com.r_terai.gisapp.entity.A48MultiPolygonView;
+import com.r_terai.gisapp.entity.A48PolygonView;
 import com.r_terai.gisapp.entity.Information;
 import com.r_terai.gisapp.entity.LineString;
 import com.r_terai.gisapp.entity.LineStringGeometry;
@@ -250,8 +249,11 @@ public class GISAppEntityUtil {
         List<Feature> features = new ArrayList();
 
         switch (type) {
-            case "A33":
-                features.addAll(searchA33(em, type, areaCode));
+//            case "A33":
+//                features.addAll(searchA33(em, type, areaCode));
+//                break;
+            case "A48":
+                features.addAll(searchA48(em, type, areaCode));
                 break;
             default:
                 features.addAll(searchMultiLineString(em, type, areaCode));
@@ -265,80 +267,142 @@ public class GISAppEntityUtil {
         return FeatureCollection.fromFeatures(features);
     }
 
-    private static List<Feature> searchA33(EntityManager em, String type, String areaCode) {
+//    private static List<Feature> searchA33(EntityManager em, String type, String areaCode) {
+//        List<Feature> features = new ArrayList();
+//        List<A33LineStringView> a33LineStringViews = em.createNativeQuery("SELECT * FROM A33_LINE_STRING_VIEW WHERE A33_003 like ?1", A33LineStringView.class)
+//                .setParameter(1, (areaCode == null ? "" : areaCode) + "%")
+//                .getResultList();
+//        GISAppEntityUtil.logger.log(Logger.Level.INFO, "found {} A33LineStringView items", a33LineStringViews.size());
+//        for (A33LineStringView a33LineStringView : a33LineStringViews) {
+//            com.mapbox.geojson.LineString geom;
+//            if (a33LineStringView.getLineString() != null) {
+//                geom = com.mapbox.geojson.LineString.fromJson(a33LineStringView.getLineString());
+//            } else {
+//                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//            }
+//            Feature feature = Feature.fromGeometry(geom);
+//            feature.addStringProperty("A33_001", a33LineStringView.getA33001());
+//            feature.addStringProperty("A33_002", a33LineStringView.getA33002());
+//            feature.addStringProperty("A33_003", a33LineStringView.getA33003());
+//            feature.addStringProperty("A33_004", a33LineStringView.getA33004());
+//            feature.addStringProperty("A33_005", a33LineStringView.getA33005());
+//            feature.addStringProperty("A33_006", a33LineStringView.getA33006());
+//            feature.addStringProperty("A33_007", a33LineStringView.getA33007());
+//            feature.addStringProperty("A33_008", a33LineStringView.getA33008());
+//            features.add(feature);
+//        }
+//
+//        List<A33MultiPolygonView> a33MultiPolygonViews = em.createNativeQuery("SELECT * FROM A33_MULTI_POLYGON_VIEW WHERE A33_003 like ?1", A33MultiPolygonView.class)
+//                .setParameter(1, (areaCode == null ? "" : areaCode) + "%")
+//                .getResultList();
+//        GISAppEntityUtil.logger.log(Logger.Level.INFO, "found {} A33MultiPolygonView items", a33MultiPolygonViews.size());
+//        for (A33MultiPolygonView a33MultiPolygonView : a33MultiPolygonViews) {
+//            com.mapbox.geojson.MultiPolygon geom;
+//            if (a33MultiPolygonView.getMultiPolygon() != null) {
+//                geom = com.mapbox.geojson.MultiPolygon.fromJson(a33MultiPolygonView.getMultiPolygon());
+//            } else {
+//                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//            }
+//            Feature feature = Feature.fromGeometry(geom);
+//            feature.addStringProperty("A33_001", a33MultiPolygonView.getA33001());
+//            feature.addStringProperty("A33_002", a33MultiPolygonView.getA33002());
+//            feature.addStringProperty("A33_003", a33MultiPolygonView.getA33003());
+//            feature.addStringProperty("A33_004", a33MultiPolygonView.getA33004());
+//            feature.addStringProperty("A33_005", a33MultiPolygonView.getA33005());
+//            feature.addStringProperty("A33_006", a33MultiPolygonView.getA33006());
+//            feature.addStringProperty("A33_007", a33MultiPolygonView.getA33007());
+//            feature.addStringProperty("A33_008", a33MultiPolygonView.getA33008());
+//            features.add(feature);
+//        }
+//
+//        List<A33PolygonView> a33PolygonViews = em.createNativeQuery("SELECT * FROM A33_POLYGON_VIEW WHERE A33_003 like ?1", A33PolygonView.class)
+//                .setParameter(1, (areaCode == null ? "" : areaCode) + "%")
+//                .getResultList();
+//        GISAppEntityUtil.logger.log(Logger.Level.INFO, "found {} A33PolygonView items", a33PolygonViews.size());
+//        for (A33PolygonView a33PolygonView : a33PolygonViews) {
+//            com.mapbox.geojson.Polygon geom;
+//            if (a33PolygonView.getPolygon() != null) {
+//                geom = com.mapbox.geojson.Polygon.fromJson(a33PolygonView.getPolygon());
+//            } else {
+//                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//            }
+//            Feature feature = Feature.fromGeometry(geom);
+//            feature.addStringProperty("A33_001", a33PolygonView.getA33001());
+//            feature.addStringProperty("A33_002", a33PolygonView.getA33002());
+//            feature.addStringProperty("A33_003", a33PolygonView.getA33003());
+//            feature.addStringProperty("A33_004", a33PolygonView.getA33004());
+//            feature.addStringProperty("A33_005", a33PolygonView.getA33005());
+//            feature.addStringProperty("A33_006", a33PolygonView.getA33006());
+//            feature.addStringProperty("A33_007", a33PolygonView.getA33007());
+//            feature.addStringProperty("A33_008", a33PolygonView.getA33008());
+//            features.add(feature);
+//        }
+//
+//        return features;
+//    }
+
+    private static List<Feature> searchA48(EntityManager em, String type, String areaCode) {
         List<Feature> features = new ArrayList();
-        List<A33LineStringView> a33LineStringViews = em.createNativeQuery("SELECT * FROM A33_LINE_STRING_VIEW WHERE A33_003 like ?1", A33LineStringView.class)
+        List<A48MultiPolygonView> a48MultiPolygonViews = em.createNativeQuery("SELECT * FROM A48_MULTI_POLYGON_VIEW WHERE A48_003 like ?1", A48MultiPolygonView.class)
                 .setParameter(1, (areaCode == null ? "" : areaCode) + "%")
                 .getResultList();
-        GISAppEntityUtil.logger.log(Logger.Level.INFO, "found {} A33LineStringView items", a33LineStringViews.size());
-        for (A33LineStringView a33LineStringView : a33LineStringViews) {
-            com.mapbox.geojson.LineString geom;
-            if (a33LineStringView.getLineString() != null) {
-                geom = com.mapbox.geojson.LineString.fromJson(a33LineStringView.getLineString());
-            } else {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-            Feature feature = Feature.fromGeometry(geom);
-            feature.addStringProperty("A33_001", a33LineStringView.getA33001());
-            feature.addStringProperty("A33_002", a33LineStringView.getA33002());
-            feature.addStringProperty("A33_003", a33LineStringView.getA33003());
-            feature.addStringProperty("A33_004", a33LineStringView.getA33004());
-            feature.addStringProperty("A33_005", a33LineStringView.getA33005());
-            feature.addStringProperty("A33_006", a33LineStringView.getA33006());
-            feature.addStringProperty("A33_007", a33LineStringView.getA33007());
-            feature.addStringProperty("A33_008", a33LineStringView.getA33008());
-            features.add(feature);
-        }
-
-        List<A33MultiPolygonView> a33MultiPolygonViews = em.createNativeQuery("SELECT * FROM A33_MULTI_POLYGON_VIEW WHERE A33_003 like ?1", A33MultiPolygonView.class)
-                .setParameter(1, (areaCode == null ? "" : areaCode) + "%")
-                .getResultList();
-        GISAppEntityUtil.logger.log(Logger.Level.INFO, "found {} A33MultiPolygonView items", a33MultiPolygonViews.size());
-        for (A33MultiPolygonView a33MultiPolygonView : a33MultiPolygonViews) {
+        GISAppEntityUtil.logger.log(Logger.Level.INFO, "found {} A48MultiPolygonView items", a48MultiPolygonViews.size());
+        for (A48MultiPolygonView a48MultiPolygonView : a48MultiPolygonViews) {
             com.mapbox.geojson.MultiPolygon geom;
-            if (a33MultiPolygonView.getMultiPolygon() != null) {
-                geom = com.mapbox.geojson.MultiPolygon.fromJson(a33MultiPolygonView.getMultiPolygon());
+            if (a48MultiPolygonView.getMultiPolygon() != null) {
+                geom = com.mapbox.geojson.MultiPolygon.fromJson(a48MultiPolygonView.getMultiPolygon());
             } else {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
             Feature feature = Feature.fromGeometry(geom);
-            feature.addStringProperty("A33_001", a33MultiPolygonView.getA33001());
-            feature.addStringProperty("A33_002", a33MultiPolygonView.getA33002());
-            feature.addStringProperty("A33_003", a33MultiPolygonView.getA33003());
-            feature.addStringProperty("A33_004", a33MultiPolygonView.getA33004());
-            feature.addStringProperty("A33_005", a33MultiPolygonView.getA33005());
-            feature.addStringProperty("A33_006", a33MultiPolygonView.getA33006());
-            feature.addStringProperty("A33_007", a33MultiPolygonView.getA33007());
-            feature.addStringProperty("A33_008", a33MultiPolygonView.getA33008());
+            feature.addStringProperty("A48_001", a48MultiPolygonView.getA48001());
+            feature.addStringProperty("A48_002", a48MultiPolygonView.getA48002());
+            feature.addStringProperty("A48_003", a48MultiPolygonView.getA48003());
+            feature.addNumberProperty("A48_004", a48MultiPolygonView.getA48004());
+            feature.addStringProperty("A48_005", a48MultiPolygonView.getA48005());
+            feature.addStringProperty("A48_006", a48MultiPolygonView.getA48006());
+            feature.addNumberProperty("A48_007", a48MultiPolygonView.getA48007());
+            feature.addStringProperty("A48_008", a48MultiPolygonView.getA48008());
+            feature.addStringProperty("A48_009", a48MultiPolygonView.getA48009());
+            feature.addStringProperty("A48_010", a48MultiPolygonView.getA48010());
+            feature.addStringProperty("A48_011", a48MultiPolygonView.getA48011());
+            feature.addNumberProperty("A48_012", a48MultiPolygonView.getA48012());
+            feature.addStringProperty("A48_013", a48MultiPolygonView.getA48013());
+            feature.addStringProperty("A48_014", a48MultiPolygonView.getA48014());
             features.add(feature);
         }
 
-        List<A33PolygonView> a33PolygonViews = em.createNativeQuery("SELECT * FROM A33_POLYGON_VIEW WHERE A33_003 like ?1", A33PolygonView.class)
+        List<A48PolygonView> a48PolygonViews = em.createNativeQuery("SELECT * FROM A48_POLYGON_VIEW WHERE A48_003 like ?1", A48PolygonView.class)
                 .setParameter(1, (areaCode == null ? "" : areaCode) + "%")
                 .getResultList();
-        GISAppEntityUtil.logger.log(Logger.Level.INFO, "found {} A33PolygonView items", a33PolygonViews.size());
-        for (A33PolygonView a33PolygonView : a33PolygonViews) {
+        GISAppEntityUtil.logger.log(Logger.Level.INFO, "found {} A48PolygonView items", a48PolygonViews.size());
+        for (A48PolygonView a48PolygonView : a48PolygonViews) {
             com.mapbox.geojson.Polygon geom;
-            if (a33PolygonView.getPolygon() != null) {
-                geom = com.mapbox.geojson.Polygon.fromJson(a33PolygonView.getPolygon());
+            if (a48PolygonView.getPolygon() != null) {
+                geom = com.mapbox.geojson.Polygon.fromJson(a48PolygonView.getPolygon());
             } else {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
             Feature feature = Feature.fromGeometry(geom);
-            feature.addStringProperty("A33_001", a33PolygonView.getA33001());
-            feature.addStringProperty("A33_002", a33PolygonView.getA33002());
-            feature.addStringProperty("A33_003", a33PolygonView.getA33003());
-            feature.addStringProperty("A33_004", a33PolygonView.getA33004());
-            feature.addStringProperty("A33_005", a33PolygonView.getA33005());
-            feature.addStringProperty("A33_006", a33PolygonView.getA33006());
-            feature.addStringProperty("A33_007", a33PolygonView.getA33007());
-            feature.addStringProperty("A33_008", a33PolygonView.getA33008());
+            feature.addStringProperty("A48_001", a48PolygonView.getA48001());
+            feature.addStringProperty("A48_002", a48PolygonView.getA48002());
+            feature.addStringProperty("A48_003", a48PolygonView.getA48003());
+            feature.addNumberProperty("A48_004", a48PolygonView.getA48004());
+            feature.addStringProperty("A48_005", a48PolygonView.getA48005());
+            feature.addStringProperty("A48_006", a48PolygonView.getA48006());
+            feature.addNumberProperty("A48_007", a48PolygonView.getA48007());
+            feature.addStringProperty("A48_008", a48PolygonView.getA48008());
+            feature.addStringProperty("A48_009", a48PolygonView.getA48009());
+            feature.addStringProperty("A48_010", a48PolygonView.getA48010());
+            feature.addStringProperty("A48_011", a48PolygonView.getA48011());
+            feature.addNumberProperty("A48_012", a48PolygonView.getA48012());
+            feature.addStringProperty("A48_013", a48PolygonView.getA48013());
+            feature.addStringProperty("A48_014", a48PolygonView.getA48014());
             features.add(feature);
         }
 
         return features;
     }
-
     private static List<Feature> searchMultiLineString(EntityManager em, String type, String areaCode) {
         List<Feature> features = new ArrayList();
 

@@ -17,8 +17,7 @@
     <class>com.r_terai.gisapp.entity.PostInformationView</class>
     <class>com.r_terai.gisapp.entity.ShelterInformation</class>
     <class>com.r_terai.gisapp.entity.ShelterInformationView</class>
-    <class>com.r_terai.gisapp.entity.A33PolygonView</class>
-    <class>com.r_terai.gisapp.entity.A33LineStringView</class>
-    <class>com.r_terai.gisapp.entity.A33MultiPolygonView</class>
+    <class>com.r_terai.gisapp.entity.A48MultiPolygonView</class>
+    <class>com.r_terai.gisapp.entity.A48PolygonView</class>
   </persistence-unit>
 </persistence>

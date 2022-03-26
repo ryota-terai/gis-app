@@ -64,8 +64,8 @@
         <managed-bean-scope>view</managed-bean-scope></managed-bean>
     <!-- /shelter -->
     <managed-bean>
-        <managed-bean-name>shelterSetupBean</managed-bean-name>
-        <managed-bean-class>com.r_terai.gisapp.faces.shelter.ShelterSetupBean</managed-bean-class>
+        <managed-bean-name>setupBean</managed-bean-name>
+        <managed-bean-class>com.r_terai.gisapp.faces.SetupBean</managed-bean-class>
     
         <managed-bean-scope>view</managed-bean-scope></managed-bean>
     <managed-bean>

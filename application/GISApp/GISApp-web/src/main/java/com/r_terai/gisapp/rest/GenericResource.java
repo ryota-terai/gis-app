@@ -42,7 +42,7 @@ import javax.ws.rs.core.MediaType;
  */
 @RequestScoped
 @TransactionManagement(TransactionManagementType.BEAN)
-@Path("rest")
+@Path("gisapp")
 public class GenericResource {
 
     @Context
@@ -152,29 +152,5 @@ public class GenericResource {
         }
         geoJson = FeatureCollection.fromFeatures(features);
         return geoJson;
-    }
-
-    @GET
-    @Path(value = "/geoJson")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String search(@QueryParam("areaCode") final String areaCode,
-            @QueryParam("type") final String type) {
-        FeatureCollection geoJson = null;
-        try {
-            tx.begin();
-            geoJson = geoJsonEJB.search(type, areaCode);
-
-            tx.commit();
-        } catch (HeuristicMixedException | HeuristicRollbackException | SecurityException | IllegalStateException | NotSupportedException | SystemException | RollbackException ex) {
-            try {
-                tx.rollback();
-                LOG.log(Level.SEVERE, null, ex);
-                return null;
-            } catch (IllegalStateException | SecurityException | SystemException ex1) {
-                LOG.log(Level.SEVERE, null, ex1);
-                return null;
-            }
-        }
-        return geoJson != null ? geoJson.toJson() : null;
     }
 }
