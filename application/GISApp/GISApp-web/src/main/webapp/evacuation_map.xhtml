@@ -28,23 +28,18 @@
                         <div class="ui icon message" id="shelter-info-textarea">
                             <i class="bullhorn icon"></i>
                             <div class="content">
-                                <div class="header"><span id="shelter-info-title">西海市からのお知らせ</span></div>
-                                <p id="shelter-info-comment">この近くの避難所は、「<span id="shelter-name"></span>」です。こちらの避難所に避難してください！</p>
-                                <div style="font-size: 18px;">
-                                    こちらは
-                                    <h:outputText value="#{topPageBean.now}">
-                                        <f:convertDateTime type="date" pattern="yyyy年MM月dd日 HH時mm分" timeZone="Asia/Tokyo"/>
-                                    </h:outputText>
-                                    時点での情報です。
-                                </div>
+                                <div class="header"><span id="shelter-info-title">情報</span></div>
+                                <p id="shelter-name"></p>
+                                <div id="shelter-info-comment"></div>
+                                <p>「国土数値情報（国土交通省）」を加工して作成</p>
                             </div>
                         </div>
                     </div>
-                    <div class="wrap">
-                        <div class="hanrei"><h:graphicImage name="img/gake.png" width="100" height="150" alt="土砂災害警戒区域急傾斜地の崩壊"/></div>
-                        <div class="hanrei"><h:graphicImage name="img/dosekiryu.png" width="100" height="150" alt="土砂災害特別警戒区域土石流"/></div>
-                        <div class="hanrei"><h:graphicImage name="img/zisuberi.png" width="100" height="150" alt="土砂災害特別警戒区域地滑り"/> </div>
-                        <div class="hanrei"><h:graphicImage name="img/shinsui.png" width="100" height="150" alt="洪水浸水想定区域の深さ"/></div>
+                    <div id="hanrei-info">
+                        <h:graphicImage class="hanrei-image" name="img/gake.png" width="100" height="150" alt="土砂災害警戒区域急傾斜地の崩壊"/>
+                        <h:graphicImage class="hanrei-image" name="img/dosekiryu.png" width="100" height="150" alt="土砂災害特別警戒区域土石流"/>
+                        <h:graphicImage class="hanrei-image" name="img/zisuberi.png" width="100" height="150" alt="土砂災害特別警戒区域地滑り"/>
+                        <h:graphicImage class="hanrei-image" name="img/shinsui.png" width="100" height="150" alt="洪水浸水想定区域の深さ"/>
                     </div>
                 </div>
                 <h:outputScript name="js/index.js" />

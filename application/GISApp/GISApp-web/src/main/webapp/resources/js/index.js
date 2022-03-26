@@ -30,99 +30,127 @@ const areaCode = params.get('areaCode');
 // 画面がロードされたら地図にレイヤを追加する
 map.on('load', function () {
     // 避難所情報レイヤを追加
-    map.addSource('shelter_point', {
-        type: 'geojson',
-        data: '/GISApp/rest/gisapp/shelterInfo?areaCode=' + areaCode + '&P20_007=true&P20_008=true&P20_009=true&P20_010=true&P20_011=true&open=false'
-    });
-    map.loadImage(
-            './img/shelter.png',
-            function (error, image) {
-                if (error)
-                    throw error;
-                map.addImage('shelter_icon', image);
-            }
-    );
+    $.getJSON('/GISApp/rest/gisapp/shelterInfo?areaCode=' + areaCode + '&P20_007=true&P20_008=true&P20_009=true&P20_010=true&P20_011=true&open=false', {},
+            function (json) {
+                var features = json.features;
+                var filtered = features.filter(function (feature) {
+                    return areaCode === null || areaCode === '' || feature.properties.P20_001.startsWith(areaCode);
+                });
+                json.features = filtered;
 
-    map.addLayer({
-        'id': 'shelter_point',
-        'type': 'symbol',
-        'source': 'shelter_point',
-        'layout': {
-            'icon-image': 'shelter_icon',
-            'icon-size': 0.1
-        }
-    });
+                map.addSource('shelter_point', {
+                    type: 'geojson',
+                    data: json
+                });
+                map.loadImage(
+                        './img/shelter.png',
+                        function (error, image) {
+                            if (error)
+                                throw error;
+                            map.addImage('shelter_icon', image);
+                        }
+                );
 
-    map.addSource('shelter_open_point', {
-        type: 'geojson',
-        data: '/GISApp/rest/gisapp/shelterInfo?areaCode=' + areaCode + '&P20_007=true&P20_008=true&P20_009=true&P20_010=true&P20_011=true&open=true'
-    });
-    map.loadImage(
-            './img/shelter_open.png',
-            function (error, image) {
-                if (error)
-                    throw error;
-                map.addImage('shelter_open_icon', image);
-            }
-    );
+                map.addLayer({
+                    'id': 'shelter_point',
+                    'type': 'symbol',
+                    'source': 'shelter_point',
+                    'layout': {
+                        'icon-image': 'shelter_icon',
+                        'icon-size': 0.1
+                    }
+                });
+            });
 
-    map.addLayer({
-        'id': 'shelter_open_point',
-        'type': 'symbol',
-        'source': 'shelter_open_point',
-        'layout': {
-            'icon-image': 'shelter_open_icon',
-            'icon-size': 0.1
-        }
-    });
+    $.getJSON('/GISApp/rest/gisapp/shelterInfo?areaCode=' + areaCode + '&P20_007=true&P20_008=true&P20_009=true&P20_010=true&P20_011=true&open=true', {},
+            function (json) {
+                var features = json.features;
+                var filtered = features.filter(function (feature) {
+                    return areaCode === null || areaCode === '' || feature.properties.P20_001.startsWith(areaCode);
+                });
+                json.features = filtered;
+
+                map.addSource('shelter_open_point', {
+                    type: 'geojson',
+                    data: json
+                });
+                map.loadImage(
+                        './img/shelter_open.png',
+                        function (error, image) {
+                            if (error)
+                                throw error;
+                            map.addImage('shelter_open_icon', image);
+                        }
+                );
+
+                map.addLayer({
+                    'id': 'shelter_open_point',
+                    'type': 'symbol',
+                    'source': 'shelter_open_point',
+                    'layout': {
+                        'icon-image': 'shelter_open_icon',
+                        'icon-size': 0.1
+                    }
+                });
+            });
 
     // 災害危険区域レイヤを追加
-    map.addSource('a48', {
-        type: 'geojson',
-        data: '/ksj/rest/gml/geoJson?areaCode=' + areaCode + '&type=A48'
-    });
-    map.addLayer({
-        'id': 'a48',
-        'type': 'fill',
-        'source': 'a48',
-        "paint": {
-            "fill-antialias": false,
-            "fill-color": "rgba(255, 0, 0, 1)",
-            "fill-opacity": 0.3
-        }
-    });
+    $.getJSON('/ksj/rest/gml/geoJson?areaCode=' + areaCode + '&type=A48', {},
+            function (json) {
+                var features = json.features;
+                var filtered = features.filter(function (feature) {
+                    return areaCode === null || areaCode === '' || feature.properties.A48_003.startsWith(areaCode);
+                });
+                json.features = filtered;
+
+                map.addSource('a48', {
+                    type: 'geojson',
+                    data: json
+                });
+                map.addLayer({
+                    'id': 'a48',
+                    'type': 'fill',
+                    'source': 'a48',
+                    "paint": {
+                        "fill-antialias": false,
+                        "fill-color": "rgba(255, 0, 0, 1)",
+                        "fill-opacity": 0.3
+                    }
+                });
+            });
 
     // 投稿情報レイヤを追加
-    map.addSource('disaster', {
-        type: 'geojson',
-        data: '/GISApp/rest/gisapp/disasterInfo'
-    });
+    $.getJSON('/GISApp/rest/gisapp/disasterInfo', {},
+            function (json) {
+                map.addSource('disaster', {
+                    type: 'geojson',
+                    data: json
+                });
 
-    map.loadImage(
-            './img/comment.png',
-            function (error, image) {
-                if (error)
-                    throw error;
-                map.addImage('comment_icon', image);
-            }
-    );
+                map.loadImage(
+                        './img/comment.png',
+                        function (error, image) {
+                            if (error)
+                                throw error;
+                            map.addImage('comment_icon', image);
+                        }
+                );
 
-    // スタイルを設定
-    map.addLayer({
-        'id': 'disaster',
-        'type': 'symbol',
-        'source': 'disaster',
-        'layout': {
-            'icon-image': 'comment_icon',
-            'icon-size': 0.1
-        }
-    });
+                // スタイルを設定
+                map.addLayer({
+                    'id': 'disaster',
+                    'type': 'symbol',
+                    'source': 'disaster',
+                    'layout': {
+                        'icon-image': 'comment_icon',
+                        'icon-size': 0.1
+                    }
+                });
+            });
 });
 
 // 避難所情報の地物をクリックしたときに、コメントを表示する
 map.on('click', 'shelter_point', function (e) {
-    console.log("click")
-
     var coordinates = e.features[0].geometry.coordinates.slice();
     var name = e.features[0].properties.P20_002;
     var comment = e.features[0].properties.comment;
@@ -143,6 +171,17 @@ map.on('click', 'shelter_point', function (e) {
     // 避難所情報欄に避難所名を記載する
     var shelterName = $("#shelter-name")[0];
     shelterName.innerHTML = name;
+
+    var shelterInfo = $("#shelter-info-comment")[0];
+    var shelterInfoComment = '<table><tr><td>' + '施設の種類</td><td>' + e.features[0].properties.P20_004 + '</td></tr>'
+            + '<tr><td>地震災害</td><td>' + (e.features[0].properties.P20_007 === 1 ? '〇' : '×') + '</td></tr>'
+            + '<tr><td>津波災害</td><td>' + (e.features[0].properties.P20_008 === 1 ? '〇' : '×') + '</td></tr>'
+            + '<tr><td>水害</td><td>' + (e.features[0].properties.P20_009 === 1 ? '〇' : '×') + '</td></tr>'
+            + '<tr><td>火山災害</td><td>' + (e.features[0].properties.P20_010 === 1 ? '〇' : '×') + '</td></tr>'
+            + '<tr><td>その他</td><td>' + (e.features[0].properties.P20_011 === 1 ? '〇' : '×') + '</td></tr>'
+            + '<tr><td>指定なし</td><td>' + (e.features[0].properties.P20_012 === 1 ? '〇' : '×') + '</td></tr>'
+            + '</table>';
+    shelterInfo.innerHTML = shelterInfoComment;
 });
 
 map.on('click', 'shelter_open_point', function (e) {
@@ -158,7 +197,6 @@ map.on('click', 'shelter_open_point', function (e) {
             + e.features[0].geometry.coordinates.slice()[0]
             + '\" target=\"_blank\">'
             + '避難所迄のルートを検索</a>';
-
     if (comment != null) {
         name += '<br>' + comment;
     }
@@ -176,7 +214,20 @@ map.on('click', 'shelter_open_point', function (e) {
     // 避難所情報欄に避難所名を記載する
     var shelterName = $("#shelter-name")[0];
     shelterName.innerHTML = e.features[0].properties.P20_002;
+
+    var shelterInfo = $("#shelter-info-comment")[0];
+    var shelterInfoComment = '<table><tr><td>' + '施設の種類</td><td>' + e.features[0].properties.P20_004 + '</td></tr>'
+            + '<tr><td>地震災害</td><td>' + (e.features[0].properties.P20_007 === 1 ? '〇' : '×') + '</td></tr>'
+            + '<tr><td>津波災害</td><td>' + (e.features[0].properties.P20_008 === 1 ? '〇' : '×') + '</td></tr>'
+            + '<tr><td>水害</td><td>' + (e.features[0].properties.P20_009 === 1 ? '〇' : '×') + '</td></tr>'
+            + '<tr><td>火山災害</td><td>' + (e.features[0].properties.P20_010 === 1 ? '〇' : '×') + '</td></tr>'
+            + '<tr><td>その他</td><td>' + (e.features[0].properties.P20_011 === 1 ? '〇' : '×') + '</td></tr>'
+            + '<tr><td>指定なし</td><td>' + (e.features[0].properties.P20_012 === 1 ? '〇' : '×') + '</td></tr>'
+            + '</table>';
+    shelterInfo.innerHTML = shelterInfoComment;
+
 });
+
 // 災害危険区域レイヤを追加
 map.on('click', 'a48', function (e) {
     console.log("click")
@@ -187,9 +238,24 @@ map.on('click', 'a48', function (e) {
     } else if (e.features[0].geometry.type === 'MultiPolygon') {
         coordinates = e.features[0].geometry.coordinates[0][0][0].slice();
     }
-    var html = '<h2>' + e.features[0].properties.A48_005 + '</h2>';
-    html += '<hr>'
-            + '<table>'
+    var html = e.features[0].properties.A48_005;
+
+    while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+    }
+
+    // ポップアップを表示する
+    new maplibregl.Popup()
+            .setLngLat(coordinates)
+            .setHTML(html)
+            .addTo(map);
+
+
+    var shelterName = $("#shelter-name")[0];
+    shelterName.innerHTML = e.features[0].properties.A48_005;
+
+    var shelterInfo = $("#shelter-info-comment")[0];
+    var shelterInfoComment = '<table>'
             + '<tr><td>' + '都道府県名</td><td>' + e.features[0].properties.A48_001 + '</td></tr>'
             + '<tr><td>' + '市町村名</td><td>' + e.features[0].properties.A48_002 + '</td></tr>'
             + '<tr><td>' + '代表行政コード</td><td>' + e.features[0].properties.A48_003 + '</td></tr>'
@@ -223,16 +289,7 @@ map.on('click', 'a48', function (e) {
             + '<tr><td>' + '縮尺</td><td>' + e.features[0].properties.A48_013 + '</td></tr>'
             + '<tr><td>' + 'その他</td><td>' + e.features[0].properties.A48_014 + '</td></tr>'
             + '</table>';
-
-    while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-    }
-
-    // ポップアップを表示する
-    new maplibregl.Popup()
-            .setLngLat(coordinates)
-            .setHTML(html)
-            .addTo(map);
+    shelterInfo.innerHTML = shelterInfoComment;
 });
 
 // 投稿情報の地物をクリックしたときに、コメントを表示する
