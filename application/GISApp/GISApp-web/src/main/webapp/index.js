@@ -119,7 +119,7 @@ map.on('click', 'shelter_point', function (e) {
     infoName.innerHTML = e.features[0].properties.P20_002;
 
     var info = $("#info-comment")[0];
-    var infoComment = '<table><tr><td>' + '施設の種類</td><td>' + e.features[0].properties.P20_004 + '</td></tr>'
+    var infoComment = '<table><tr><td>施設の種類</td><td>' + e.features[0].properties.P20_004 + '</td></tr>'
             + '<tr><td>地震災害</td><td>' + (e.features[0].properties.P20_007 === 1 ? '〇' : '×') + '</td></tr>'
             + '<tr><td>津波災害</td><td>' + (e.features[0].properties.P20_008 === 1 ? '〇' : '×') + '</td></tr>'
             + '<tr><td>水害</td><td>' + (e.features[0].properties.P20_009 === 1 ? '〇' : '×') + '</td></tr>'
@@ -159,17 +159,17 @@ map.on('click', 'a48', function (e) {
 
     var info = $("#info-comment")[0];
     var infoComment = '<table>'
-            + '<tr><td>' + '都道府県名</td><td>' + e.features[0].properties.A48_001 + '</td></tr>'
-            + '<tr><td>' + '市町村名</td><td>' + e.features[0].properties.A48_002 + '</td></tr>'
-            + '<tr><td>' + '代表行政コード</td><td>' + e.features[0].properties.A48_003 + '</td></tr>'
-            + '<tr><td>' + '指定主体区分</td><td>' + e.features[0].properties.A48_004 + '('
+            + '<tr><td>都道府県名</td><td>' + e.features[0].properties.A48_001 + '</td></tr>'
+            + '<tr><td>市町村名</td><td>' + e.features[0].properties.A48_002 + '</td></tr>'
+            + '<tr><td>代表行政コード</td><td>' + e.features[0].properties.A48_003 + '</td></tr>'
+            + '<tr><td>指定主体区分</td><td>' + e.features[0].properties.A48_004 + '('
             + (e.features[0].properties.A48_004 === 1 ? '都道府県' :
                     (e.features[0].properties.A48_004 === 2 ? '市町村' : '')
                     )
             + ')</td></tr>'
-            + '<tr><td>' + '区域名</td><td>' + e.features[0].properties.A48_005 + '</td></tr>'
-            + '<tr><td>' + '所在地</td><td>' + e.features[0].properties.A48_006 + '</td></tr>'
-            + '<tr><td>' + '指定理由コード</td><td>' + e.features[0].properties.A48_007 + '('
+            + '<tr><td>区域名</td><td>' + e.features[0].properties.A48_005 + '</td></tr>'
+            + '<tr><td>所在地</td><td>' + e.features[0].properties.A48_006 + '</td></tr>'
+            + '<tr><td>指定理由コード</td><td>' + e.features[0].properties.A48_007 + '('
             + (e.features[0].properties.A48_007 === 1 ? '水害(河川)' :
                     (e.features[0].properties.A48_007 === 2 ? '水害(海)' :
                             (e.features[0].properties.A48_007 === 3 ? '水害(河川・海)' :
@@ -184,13 +184,13 @@ map.on('click', 'a48', function (e) {
                             )
                     )
             + ')</td></tr>'
-            + '<tr><td>' + '指定理由詳細</td><td>' + e.features[0].properties.A48_008 + '</td></tr>'
-            + '<tr><td>' + '告示年月日</td><td>' + e.features[0].properties.A48_009 + '</td></tr>'
-            + '<tr><td>' + '告示番号</td><td>' + e.features[0].properties.A48_010 + '</td></tr>'
-            + '<tr><td>' + '根拠条例</td><td>' + e.features[0].properties.A48_011 + '</td></tr>'
-            + '<tr><td>' + '面積</td><td>' + e.features[0].properties.A48_012 + 'ha</td></tr>'
-            + '<tr><td>' + '縮尺</td><td>' + e.features[0].properties.A48_013 + '</td></tr>'
-            + '<tr><td>' + 'その他</td><td>' + e.features[0].properties.A48_014 + '</td></tr>'
+            + '<tr><td>指定理由詳細</td><td>' + e.features[0].properties.A48_008 + '</td></tr>'
+            + '<tr><td>告示年月日</td><td>' + e.features[0].properties.A48_009 + '</td></tr>'
+            + '<tr><td>告示番号</td><td>' + e.features[0].properties.A48_010 + '</td></tr>'
+            + '<tr><td>根拠条例</td><td>' + e.features[0].properties.A48_011 + '</td></tr>'
+            + '<tr><td>面積</td><td>' + e.features[0].properties.A48_012 + 'ha</td></tr>'
+            + '<tr><td>縮尺</td><td>' + e.features[0].properties.A48_013 + '</td></tr>'
+            + '<tr><td>その他</td><td>' + e.features[0].properties.A48_014 + '</td></tr>'
             + '</table>';
     info.innerHTML = infoComment;
 });

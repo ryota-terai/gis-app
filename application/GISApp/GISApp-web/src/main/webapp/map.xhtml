@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:body>
+        <ui:composition template="/WEB-INF/template/template.xhtml">
+            <ui:define name="content">
+                <h:outputStylesheet name="css/style.css"/>
+                <!-- MapLibre -->
+                <link href="https://unpkg.com/maplibre-gl@2.1.1/dist/maplibre-gl.css" rel="stylesheet" />
+                <script src="https://unpkg.com/maplibre-gl@2.1.1/dist/maplibre-gl.js"/>
+                <!-- Semantic-UI  -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"/>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"/>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"/>
+                <!-- ヘッダー -->
+                <div id="header">
+                    <h2 id="header-title">オープンデータを活用した地図</h2>
+                    <h:form id="frm">
+                        <p:outputLabel for="@next" value="都道府県"/>
+                        <p:selectOneMenu id="option" value="#{mapBean.areaCode}">
+                            <f:selectItems value="#{mapBean.prefectures}"/>
+                        </p:selectOneMenu>
+                        <p:commandButton value="移動" id="go" action="#{mapBean.go}" ajax="false" />
+                    </h:form>
+                </div>
+                <!-- 地図 -->
+                <div id="map" style="width:100%;height:800px;"/>
+                <!-- 避難所情報 -->
+                <div id="bottom-area" >
+                    <div id="info">
+                        <div class="ui icon message" id="info-textarea">
+                            <i class="bullhorn icon"></i>
+                            <div class="content">
+                                <div class="header"><span id="info-title">情報</span></div>
+                                <p id="info-name"></p>
+                                <div id="info-comment"></div>
+                                <p>「国土数値情報（国土交通省）」を加工して作成</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="hanrei-info">
+                        <h:graphicImage class="hanrei-image" name="img/gake.png" width="100" height="150" alt="土砂災害警戒区域急傾斜地の崩壊"/>
+                        <h:graphicImage class="hanrei-image" name="img/dosekiryu.png" width="100" height="150" alt="土砂災害特別警戒区域土石流"/>
+                        <h:graphicImage class="hanrei-image" name="img/zisuberi.png" width="100" height="150" alt="土砂災害特別警戒区域地滑り"/>
+                        <h:graphicImage class="hanrei-image" name="img/shinsui.png" width="100" height="150" alt="洪水浸水想定区域の深さ"/>
+                    </div>
+                </div>
+                <h:outputScript name="js/index.js" />
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

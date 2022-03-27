@@ -28,6 +28,12 @@ const params = url.searchParams;
 
 // getメソッド
 const areaCode = params.get('areaCode');
+const lat = params.get('lat');
+const lon = params.get('lon');
+
+if (lat !== null && lon !== null) {
+    map.setCenter([lon, lat]);
+}
 
 // 画面がロードされたら地図にレイヤを追加する
 map.on('load', function () {
@@ -343,6 +349,29 @@ map.on('load', function () {
                 });
             });
 
+    // 地価公示データを追加
+    $.getJSON('/ksj/rest/gml/geoJson?areaCode=' + areaCode.substring(0, 2) + '&type=L01', {},
+            function (json) {
+//                var features = json.features;
+//                var filtered = features.filter(function (feature) {
+//                    return feature.properties.A48_003.startsWith(areaCode);
+//                });
+//                json.features = filtered;
+
+                map.addSource('l01', {
+                    type: 'geojson',
+                    data: json
+                });
+                map.addLayer({
+                    'id': 'l01',
+                    'type': 'circle',
+                    'source': 'l01',
+                    "paint": {
+                        "circle-color": "rgba(255, 0, 0, 1)"
+                    }
+                });
+            });
+
     // 避難所情報レイヤを追加
     $.getJSON('/GISApp/rest/gisapp/shelterInfo?areaCode=' + areaCode + '&P20_007=true&P20_008=true&P20_009=true&P20_010=true&P20_011=true&open=false', {},
             function (json) {
@@ -463,7 +492,7 @@ map.on('click', 'shelter_point', function (e) {
     infoName.innerHTML = name;
 
     var info = $("#info-comment")[0];
-    var infoComment = '<table><tr><td>' + '施設の種類</td><td>' + e.features[0].properties.P20_004 + '</td></tr>'
+    var infoComment = '<table><tr><td>施設の種類</td><td>' + e.features[0].properties.P20_004 + '</td></tr>'
             + '<tr><td>地震災害</td><td>' + (e.features[0].properties.P20_007 === 1 ? '〇' : '×') + '</td></tr>'
             + '<tr><td>津波災害</td><td>' + (e.features[0].properties.P20_008 === 1 ? '〇' : '×') + '</td></tr>'
             + '<tr><td>水害</td><td>' + (e.features[0].properties.P20_009 === 1 ? '〇' : '×') + '</td></tr>'
@@ -506,7 +535,7 @@ map.on('click', 'shelter_open_point', function (e) {
     infoName.innerHTML = e.features[0].properties.P20_002;
 
     var info = $("#info-comment")[0];
-    var infoComment = '<table><tr><td>' + '施設の種類</td><td>' + e.features[0].properties.P20_004 + '</td></tr>'
+    var infoComment = '<table><tr><td>施設の種類</td><td>' + e.features[0].properties.P20_004 + '</td></tr>'
             + '<tr><td>地震災害</td><td>' + (e.features[0].properties.P20_007 === 1 ? '〇' : '×') + '</td></tr>'
             + '<tr><td>津波災害</td><td>' + (e.features[0].properties.P20_008 === 1 ? '〇' : '×') + '</td></tr>'
             + '<tr><td>水害</td><td>' + (e.features[0].properties.P20_009 === 1 ? '〇' : '×') + '</td></tr>'
@@ -574,17 +603,17 @@ map.on('click', 'a48', function (e) {
 
     var info = $("#info-comment")[0];
     var infoComment = '<table>'
-            + '<tr><td>' + '都道府県名</td><td>' + e.features[0].properties.A48_001 + '</td></tr>'
-            + '<tr><td>' + '市町村名</td><td>' + e.features[0].properties.A48_002 + '</td></tr>'
-            + '<tr><td>' + '代表行政コード</td><td>' + e.features[0].properties.A48_003 + '</td></tr>'
-            + '<tr><td>' + '指定主体区分</td><td>' + e.features[0].properties.A48_004 + '('
+            + '<tr><td>都道府県名</td><td>' + e.features[0].properties.A48_001 + '</td></tr>'
+            + '<tr><td>市町村名</td><td>' + e.features[0].properties.A48_002 + '</td></tr>'
+            + '<tr><td>代表行政コード</td><td>' + e.features[0].properties.A48_003 + '</td></tr>'
+            + '<tr><td>指定主体区分</td><td>' + e.features[0].properties.A48_004 + '('
             + (e.features[0].properties.A48_004 === 1 ? '都道府県' :
                     (e.features[0].properties.A48_004 === 2 ? '市町村' : '')
                     )
             + ')</td></tr>'
-            + '<tr><td>' + '区域名</td><td>' + e.features[0].properties.A48_005 + '</td></tr>'
-            + '<tr><td>' + '所在地</td><td>' + e.features[0].properties.A48_006 + '</td></tr>'
-            + '<tr><td>' + '指定理由コード</td><td>' + e.features[0].properties.A48_007 + '('
+            + '<tr><td>区域名</td><td>' + e.features[0].properties.A48_005 + '</td></tr>'
+            + '<tr><td>所在地</td><td>' + e.features[0].properties.A48_006 + '</td></tr>'
+            + '<tr><td>指定理由コード</td><td>' + e.features[0].properties.A48_007 + '('
             + (e.features[0].properties.A48_007 === 1 ? '水害(河川)' :
                     (e.features[0].properties.A48_007 === 2 ? '水害(海)' :
                             (e.features[0].properties.A48_007 === 3 ? '水害(河川・海)' :
@@ -599,13 +628,13 @@ map.on('click', 'a48', function (e) {
                             )
                     )
             + ')</td></tr>'
-            + '<tr><td>' + '指定理由詳細</td><td>' + e.features[0].properties.A48_008 + '</td></tr>'
-            + '<tr><td>' + '告示年月日</td><td>' + e.features[0].properties.A48_009 + '</td></tr>'
-            + '<tr><td>' + '告示番号</td><td>' + e.features[0].properties.A48_010 + '</td></tr>'
-            + '<tr><td>' + '根拠条例</td><td>' + e.features[0].properties.A48_011 + '</td></tr>'
-            + '<tr><td>' + '面積</td><td>' + e.features[0].properties.A48_012 + 'ha</td></tr>'
-            + '<tr><td>' + '縮尺</td><td>' + e.features[0].properties.A48_013 + '</td></tr>'
-            + '<tr><td>' + 'その他</td><td>' + e.features[0].properties.A48_014 + '</td></tr>'
+            + '<tr><td>指定理由詳細</td><td>' + e.features[0].properties.A48_008 + '</td></tr>'
+            + '<tr><td>告示年月日</td><td>' + e.features[0].properties.A48_009 + '</td></tr>'
+            + '<tr><td>告示番号</td><td>' + e.features[0].properties.A48_010 + '</td></tr>'
+            + '<tr><td>根拠条例</td><td>' + e.features[0].properties.A48_011 + '</td></tr>'
+            + '<tr><td>面積</td><td>' + e.features[0].properties.A48_012 + 'ha</td></tr>'
+            + '<tr><td>縮尺</td><td>' + e.features[0].properties.A48_013 + '</td></tr>'
+            + '<tr><td>その他</td><td>' + e.features[0].properties.A48_014 + '</td></tr>'
             + '</table>';
     info.innerHTML = infoComment;
 });
@@ -675,7 +704,7 @@ function setA33PopupAndComment(e) {
 
     var info = $("#info-comment")[0];
     var infoComment = '<table>'
-            + '<tr><td>' + '現象の種類</td><td>' + e.features[0].properties.A33_001 + '('
+            + '<tr><td>現象の種類</td><td>' + e.features[0].properties.A33_001 + '('
             + (e.features[0].properties.A33_001 === '1' ? '急傾斜地の崩壊' :
                     (e.features[0].properties.A33_001 === '2' ? '土石流' :
                             (e.features[0].properties.A33_001 === '3' ? '地滑り' : ''
@@ -683,7 +712,7 @@ function setA33PopupAndComment(e) {
                             )
                     )
             + ')</td></tr>'
-            + '<tr><td>' + '区域区分</td><td>' + e.features[0].properties.A33_002 + '('
+            + '<tr><td>区域区分</td><td>' + e.features[0].properties.A33_002 + '('
             + (e.features[0].properties.A33_002 === '1' ? '土砂災害警戒区域(指定済)' :
                     (e.features[0].properties.A33_002 === '2' ? '土砂災害特別警戒区域(指定済)' :
                             (e.features[0].properties.A33_002 === '3' ? '土砂災害警戒区域(指定前)' :
@@ -692,12 +721,12 @@ function setA33PopupAndComment(e) {
                             )
                     )
             + ')</td></tr>'
-            + '<tr><td>' + '都道府県コード</td><td>' + e.features[0].properties.A33_003 + '</td></tr>'
-            + '<tr><td>' + '区域番号</td><td>' + e.features[0].properties.A33_004 + '</td></tr>'
-            + '<tr><td>' + '区域名</td><td>' + e.features[0].properties.A33_005 + '</td></tr>'
-            + '<tr><td>' + '所在地</td><td>' + e.features[0].properties.A33_006 + '</td></tr>'
-            + '<tr><td>' + '告示日</td><td>' + e.features[0].properties.A33_007 + '</td></tr>'
-            + '<tr><td>' + '特別警戒未指定フラグ</td><td>' + e.features[0].properties.A33_008 + '('
+            + '<tr><td>都道府県コード</td><td>' + e.features[0].properties.A33_003 + '</td></tr>'
+            + '<tr><td>区域番号</td><td>' + e.features[0].properties.A33_004 + '</td></tr>'
+            + '<tr><td>区域名</td><td>' + e.features[0].properties.A33_005 + '</td></tr>'
+            + '<tr><td>所在地</td><td>' + e.features[0].properties.A33_006 + '</td></tr>'
+            + '<tr><td>告示日</td><td>' + e.features[0].properties.A33_007 + '</td></tr>'
+            + '<tr><td>特別警戒未指定フラグ</td><td>' + e.features[0].properties.A33_008 + '('
             + (e.features[0].properties.A33_008 === '0' ? '特別警戒区域指定済み' :
                     (e.features[0].properties.A33_008 === '1' ? '特別警戒区域未指定' : '')
                     )
@@ -705,6 +734,90 @@ function setA33PopupAndComment(e) {
             + '</table>';
     info.innerHTML = infoComment;
 }
+
+// 地価公示データを追加
+map.on('click', 'l01', function (e) {
+    console.log("click")
+
+    var coordinates = e.features[0].geometry.coordinates.slice();
+    var html = e.features[0].properties.L01_024;
+
+    while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+    }
+
+    // ポップアップを表示する
+    new maplibregl.Popup()
+            .setLngLat(coordinates)
+            .setHTML(html)
+            .addTo(map);
+
+
+    var infoName = $("#info-name")[0];
+    infoName.innerHTML = e.features[0].properties.L01_024;
+
+    var info = $("#info-comment")[0];
+    var infoComment = '<table>'
+            + '<tr><td>見出し番号</td><td>' + e.features[0].properties.L01_001 + '('
+            + (e.features[0].properties.L01_001 === '000' ? '住宅地' :
+                    (e.features[0].properties.L01_001 === '003' ? '宅地見込地' :
+                            (e.features[0].properties.L01_001 === '005' ? '商業地' :
+                                    (e.features[0].properties.L01_001 === '007' ? '準工業地' :
+                                            (e.features[0].properties.L01_001 === '009' ? '工業地' :
+                                                    (e.features[0].properties.L01_001 === '010' ? '市街化調整区域内の現況宅地' :
+                                                            (e.features[0].properties.L01_001 === '013' ? '市街化調整区域内の現況林地' : '')
+                                                            )
+                                                    )
+                                            )
+                                    )
+                            )
+                    )
+            + ')</td></tr>'
+            + '<tr><td>一連番号</td><td>' + e.features[0].properties.L01_002 + '</td></tr>'
+            + '<tr><td>年度</td><td>' + e.features[0].properties.L01_005 + '</td></tr>'
+            + '<tr><td>公示価格</td><td>' + e.features[0].properties.L01_006.toLocaleString() + '円/m2</td></tr>'
+            + '<tr><td>対前年変動率</td><td>' + e.features[0].properties.L01_007.toLocaleString() + '円/m2</td></tr>'
+            + '<tr><td>標準地行政区域コード</td><td>' + e.features[0].properties.L01_022 + '</td></tr>'
+            + '<tr><td>標準地市区町村名称</td><td>' + e.features[0].properties.L01_023 + '</td></tr>'
+            + '<tr><td>所在並びに地番</td><td>' + e.features[0].properties.L01_024 + '</td></tr>'
+            + '<tr><td>住居表示</td><td>' + e.features[0].properties.L01_025 + '</td></tr>'
+            + '<tr><td>地積</td><td>' + e.features[0].properties.L01_026 + 'm2</td></tr>'
+            + '<tr><td>利用現況</td><td>' + e.features[0].properties.L01_027 + '</td></tr>'
+            + '<tr><td>利用状況表示</td><td>' + e.features[0].properties.L01_028 + '</td></tr>'
+            + '<tr><td>利用区分</td><td>' + e.features[0].properties.L01_029 + '</td></tr>'
+            + '<tr><td>建物構造</td><td>' + e.features[0].properties.L01_030 + '</td></tr>'
+            + '<tr><td>供給施設有無（水道）</td><td>' + e.features[0].properties.L01_031 + '</td></tr>'
+            + '<tr><td>供給施設有無（ガス）</td><td>' + e.features[0].properties.L01_032 + '</td></tr>'
+            + '<tr><td>供給施設有無（下水）</td><td>' + e.features[0].properties.L01_033 + '</td></tr>'
+            + '<tr><td>形状</td><td>' + e.features[0].properties.L01_034 + '</td></tr>'
+            + '<tr><td>間口比率</td><td>' + e.features[0].properties.L01_035 + '</td></tr>'
+            + '<tr><td>奥行比率</td><td>' + e.features[0].properties.L01_036 + '</td></tr>'
+            + '<tr><td>地上階層</td><td>' + e.features[0].properties.L01_037 + '</td></tr>'
+            + '<tr><td>地下階層</td><td>' + e.features[0].properties.L01_038 + '</td></tr>'
+            + '<tr><td>前面道路状況</td><td>' + e.features[0].properties.L01_039 + '</td></tr>'
+            + '<tr><td>前面道路の方位</td><td>' + e.features[0].properties.L01_040 + '</td></tr>'
+            + '<tr><td>前面道路の幅員</td><td>' + e.features[0].properties.L01_041 + '</td></tr>'
+            + '<tr><td>前面道路の駅前状況</td><td>' + e.features[0].properties.L01_042 + '</td></tr>'
+            + '<tr><td>前面道路の舗装状況</td><td>' + e.features[0].properties.L01_043 + '</td></tr>'
+            + '<tr><td>側道状況</td><td>' + e.features[0].properties.L01_044 + '</td></tr>'
+            + '<tr><td>側道の方位</td><td>' + e.features[0].properties.L01_045 + '</td></tr>'
+            + '<tr><td>交通施設との近接状況</td><td>' + e.features[0].properties.L01_046 + '</td></tr>'
+            + '<tr><td>周辺の土地利用の状況</td><td>' + e.features[0].properties.L01_047 + '</td></tr>'
+            + '<tr><td>駅名</td><td>' + e.features[0].properties.L01_048 + '</td></tr>'
+            + '<tr><td>駅からの距離</td><td>' + e.features[0].properties.L01_049 + 'm</td></tr>'
+            + '<tr><td>用途区分</td><td>' + e.features[0].properties.L01_050 + '</td></tr>'
+            + '<tr><td>防火区分</td><td>' + e.features[0].properties.L01_051 + '</td></tr>'
+            + '<tr><td>都市計画区分</td><td>' + e.features[0].properties.L01_052 + '</td></tr>'
+            + '<tr><td>高度地区</td><td>' + e.features[0].properties.L01_053 + '</td></tr>'
+            + '<tr><td>森林区分</td><td>' + e.features[0].properties.L01_054 + '</td></tr>'
+            + '<tr><td>公園区分</td><td>' + e.features[0].properties.L01_055 + '</td></tr>'
+            + '<tr><td>建蔽率</td><td>' + e.features[0].properties.L01_056 + '%</td></tr>'
+            + '<tr><td>容積率</td><td>' + e.features[0].properties.L01_057 + '%</td></tr>'
+            + '<tr><td>割増容積率</td><td>' + e.features[0].properties.L01_058 + '</td></tr>'
+            + '<tr><td>共通地点</td><td>' + e.features[0].properties.L01_059 + '</td></tr>'
+            + '</table>';
+    info.innerHTML = infoComment;
+});
 
 // Change the cursor to a pointer when the mouse is over the places layer.
 map.on('mouseenter', 'shelter_point', function () {

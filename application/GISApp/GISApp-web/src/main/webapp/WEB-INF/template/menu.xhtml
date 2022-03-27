@@ -19,10 +19,10 @@ and open the template in the editor.
                         <!--<p:menuitem value="わかりやすい避難地図" icon="pi pi-fw pi-map" url="#{request.contextPath}/index.html?areaCode=#{initParam.GHP2021App_areaCode}"/>-->
                         <p:menuitem value="トップ" icon="pi pi-fw pi-map" url="#{request.contextPath}/faces/index.xhtml"/>
                         <p:menuitem value="設定" icon="pi pi-fw pi-database" url="#{request.contextPath}/faces/setup.xhtml"/>
+                        <p:menuitem value="地図" icon="pi pi-fw pi-map" url="#{request.contextPath}/faces/map.xhtml?areaCode=#{initParam.GISApp_areaCode}"/>
                         <p:divider layout="vertical"/>
                         <p:submenu label="災害対策" icon="pi pi-fw pi-home">
                             <p:submenu label="避難地図" icon="pi pi-fw pi-home">
-                                <p:menuitem value="避難地図" icon="pi pi-fw pi-map" url="#{request.contextPath}/faces/evacuation_map.xhtml?areaCode=#{initParam.GISApp_areaCode}"/>
                                 <p:menuitem value="避難地図(HTML)" icon="pi pi-fw pi-map" url="#{request.contextPath}/index.html?areaCode=#{initParam.GISApp_areaCode}"/>
                             </p:submenu>
                             <p:submenu label="避難所" icon="pi pi-fw pi-home">

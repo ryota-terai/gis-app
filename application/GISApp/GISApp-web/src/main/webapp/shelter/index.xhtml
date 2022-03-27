@@ -54,7 +54,7 @@
                             <f:facet name="header">
                                 <h:outputText value="名称" />
                             </f:facet>
-                            <a href="#{request.contextPath}/faces/evacuation_map.xhtml?areaCode=#{shelterSearchBean.administrativeAreaCode}#15/#{shelter.latitude}/#{shelter.longitude}/0/30"><h:outputText value="#{shelter.name}" /></a>
+                            <a href="#{request.contextPath}/faces/map.xhtml?areaCode=#{shelterSearchBean.administrativeAreaCode}#15/#{shelter.latitude}/#{shelter.longitude}/0/30"><h:outputText value="#{shelter.name}" /></a>
                         </p:column>
 
                         <p:column sortBy="#{shelter.address}">
