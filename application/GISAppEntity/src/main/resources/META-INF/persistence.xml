@@ -19,5 +19,6 @@
     <class>com.r_terai.gisapp.entity.ShelterInformationView</class>
     <class>com.r_terai.gisapp.entity.A48MultiPolygonView</class>
     <class>com.r_terai.gisapp.entity.A48PolygonView</class>
+    <class>com.r_terai.gisapp.entity.GeojsonFileLocation</class>
   </persistence-unit>
 </persistence>

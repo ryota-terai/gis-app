@@ -7,6 +7,8 @@ package com.r_terai.gisapp.ejb;
 
 import com.mapbox.geojson.FeatureCollection;
 import com.r_terai.gisapp.GISAppEntityUtil;
+import com.r_terai.gisapp.GeojsonFileLocationUtil;
+import com.r_terai.gisapp.entity.GeojsonFileLocation;
 import com.r_terai.java.util.Logger;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -32,5 +34,10 @@ public class GeoJsonEJB implements GeoJsonEJBLocal {
     @Override
     public FeatureCollection search(String type, String areaCode) {
         return GISAppEntityUtil.search(em, type, areaCode);
+    }
+
+    @Override
+    public GeojsonFileLocation searchStoredGeoJson(String type, String areaCode) {
+        return GeojsonFileLocationUtil.searchStoredGeoJson(em, type, areaCode);
     }
 }

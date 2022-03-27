@@ -6,8 +6,11 @@
 package com.rterai.ksj.rest;
 
 import com.mapbox.geojson.FeatureCollection;
+import com.r_terai.gisapp.GeojsonFileLocationUtil;
 import com.r_terai.gisapp.ejb.GeoJsonEJB;
+import com.r_terai.gisapp.entity.GeojsonFileLocation;
 import com.r_terai.java.util.Logger;
+import java.net.URI;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.TransactionManagement;
@@ -62,6 +65,27 @@ public class GmlResource {
     public Response search(@QueryParam("areaCode") final String areaCode,
             @QueryParam("type") final String type) {
         FeatureCollection geoJson = null;
+
+        GeojsonFileLocation location = null;
+
+        try {
+            tx.begin();
+            location = geoJsonEJB.searchStoredGeoJson(type, areaCode);
+            tx.commit();
+        } catch (HeuristicMixedException | HeuristicRollbackException | SecurityException | IllegalStateException | NotSupportedException | SystemException | RollbackException ex) {
+            try {
+                tx.rollback();
+                LOG.log(Logger.Level.SEVERE, null, ex);
+                throw new WebApplicationException();
+            } catch (IllegalStateException | SecurityException | SystemException ex1) {
+                LOG.log(Logger.Level.SEVERE, null, ex1);
+                throw new WebApplicationException();
+            }
+        }
+        if (location != null) {
+            return Response.seeOther(URI.create(location.getLocation())).build();
+        }
+
         try {
             tx.begin();
             geoJson = geoJsonEJB.search(type, areaCode);
@@ -80,26 +104,4 @@ public class GmlResource {
         return Response.ok(geoJson != null ? geoJson.toJson() : null, MediaType.APPLICATION_JSON_TYPE).build();
     }
 
-    /**
-     * Retrieves representation of an instance of
-     * com.rterai.java.ksj.GmlResource
-     *
-     * @return an instance of java.lang.String
-     */
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getJson() {
-        //TODO return proper representation object
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * PUT method for updating or creating an instance of GmlResource
-     *
-     * @param content representation for the resource
-     */
-    @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void putJson(String content) {
-    }
 }

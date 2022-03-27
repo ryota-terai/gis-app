@@ -9,7 +9,6 @@ import com.mapbox.geojson.FeatureCollection;
 import com.r_terai.gisapp.GISAppEntityUtil;
 import com.r_terai.gisapp.GeojsonFileQueueUtil;
 import com.r_terai.gisapp.entity.GeojsonFileQueue;
-import com.r_terai.java.ee.common.LogInterceptor;
 import com.r_terai.java.ee.common.entity.util.COMMONEntityUtil;
 import com.r_terai.java.util.Logger;
 import com.r_terai.java.ee.common.TimerEJB;
@@ -26,7 +25,6 @@ import java.util.stream.Stream;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.ejb.Timer;
-import javax.interceptor.Interceptors;
 import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -43,7 +41,6 @@ public class GeoJsonSetupTimer extends TimerEJB {
     private EntityManager gis;
 
     @Override
-    @Interceptors(LogInterceptor.class)
     public void timeout(Timer timer) {
         try {
             COMMONEntityUtil.ObserverTargetUtil.kick(super.em, 200, (new Date()).toString(), false);

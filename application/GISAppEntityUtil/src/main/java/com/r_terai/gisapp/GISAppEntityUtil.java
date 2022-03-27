@@ -11,6 +11,7 @@ import com.mapbox.geojson.FeatureCollection;
 import com.mapbox.geojson.Geometry;
 import com.r_terai.gisapp.entity.A48MultiPolygonView;
 import com.r_terai.gisapp.entity.A48PolygonView;
+import com.r_terai.gisapp.entity.GeojsonFileLocation;
 import com.r_terai.gisapp.entity.Information;
 import com.r_terai.gisapp.entity.LineString;
 import com.r_terai.gisapp.entity.LineStringGeometry;
@@ -22,9 +23,18 @@ import com.r_terai.gisapp.entity.Point;
 import com.r_terai.gisapp.entity.Polygon;
 import com.r_terai.gisapp.entity.PolygonGeometry;
 import com.r_terai.java.util.Logger;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import javax.persistence.EntityManager;
 
 /**
@@ -340,7 +350,6 @@ public class GISAppEntityUtil {
 //
 //        return features;
 //    }
-
     private static List<Feature> searchA48(EntityManager em, String type, String areaCode) {
         List<Feature> features = new ArrayList();
         List<A48MultiPolygonView> a48MultiPolygonViews = em.createNativeQuery("SELECT * FROM A48_MULTI_POLYGON_VIEW WHERE A48_003 like ?1", A48MultiPolygonView.class)
@@ -403,6 +412,7 @@ public class GISAppEntityUtil {
 
         return features;
     }
+
     private static List<Feature> searchMultiLineString(EntityManager em, String type, String areaCode) {
         List<Feature> features = new ArrayList();
 

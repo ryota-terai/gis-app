@@ -6,6 +6,7 @@
 package com.r_terai.gisapp.ejb;
 
 import com.mapbox.geojson.FeatureCollection;
+import com.r_terai.gisapp.entity.GeojsonFileLocation;
 import javax.ejb.Local;
 
 /**
@@ -16,4 +17,6 @@ import javax.ejb.Local;
 public interface GeoJsonEJBLocal {
 
     public FeatureCollection search(String type, String areaCode);
+
+    public GeojsonFileLocation searchStoredGeoJson(String type, String areaCode);
 }
