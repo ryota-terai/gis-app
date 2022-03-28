@@ -6,7 +6,7 @@ var map = new maplibregl.Map({
     container: 'map',
     style: readDisaportaldata ? 'style.json' : 'style_normal.json',
     center: [139.61967, 35.55645],
-    zoom: 19,
+    zoom: 15,
     hash: true,
     pitch: 30,
     localIdeographFontFamily: false
