@@ -18,7 +18,7 @@ public class GeojsonFileLocationUtil {
     public static GeojsonFileLocation searchStoredGeoJson(EntityManager em, String type, String areaCode) {
         GeojsonFileLocation location;
         try {
-            location = (GeojsonFileLocation) em.createNativeQuery("SELECT * FROM GEOJSON_FILE_LOCATION WHERE TYPE = ?1 AND AREA_CODE like ?2", GeojsonFileLocation.class)
+            location = (GeojsonFileLocation) em.createNativeQuery("SELECT * FROM GEOJSON_FILE_LOCATION WHERE TYPE = ?1 AND (AREA_CODE like ?2 OR AREA_CODE IS NULL)", GeojsonFileLocation.class)
                     .setParameter(1, type)
                     .setParameter(2, (areaCode == null ? "" : areaCode) + "%")
                     .getSingleResult();
