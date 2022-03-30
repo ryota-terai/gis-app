@@ -25,6 +25,20 @@
                             <f:selectItems value="#{mapBean.prefectures}"/>
                         </p:selectOneMenu>
                         <p:commandButton value="移動" id="go" action="#{mapBean.go}" ajax="false" />
+                        <input type="checkbox" id="shelter" name="shelter" value="on"/>
+                        <label for="shelter">避難所情報</label>
+                        <input type="checkbox" id="disasterInfo" name="disasterInfo" value="on"/>
+                        <label for="disasterInfo">投稿情報</label>
+                        <input type="checkbox" id="a48" name="a48" value="on"/>
+                        <label for="a48">災害危険区域</label>
+                        <input type="checkbox" id="p28" name="p28" value="on"/>
+                        <label for="p28">国・都道府県の機関データ</label>
+                        <input type="checkbox" id="n02" name="n02" value="on"/>
+                        <label for="n02">鉄道データ</label>
+                        <input type="checkbox" id="mesh500h30" name="mesh500h30" value="on"/>
+                        <label for="mesh500h30">500mメッシュ別将来推計人口データ</label>
+                        <input type="checkbox" id="l01" name="l01" value="on"/>
+                        <label for="l01">地価公示データ</label>
                     </h:form>
                 </div>
                 <!-- 地図 -->
