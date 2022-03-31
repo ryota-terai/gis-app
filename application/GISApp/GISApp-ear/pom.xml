@@ -35,12 +35,6 @@
             <type>war</type>
         </dependency>
         <dependency>
-            <groupId>com.r-terai.ksj</groupId>
-            <artifactId>ksj</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <type>war</type>
-        </dependency>
-        <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
             <version>${jakartaee}</version>
@@ -118,11 +112,6 @@
                             <groupId>com.r-terai.gis-app</groupId>
                             <artifactId>GISApp-web</artifactId>
                             <contextRoot>/GISApp</contextRoot>
-                        </webModule>
-                        <webModule>
-                            <groupId>com.r-terai.ksj</groupId>
-                            <artifactId>ksj</artifactId>
-                            <contextRoot>/ksj</contextRoot>
                         </webModule>
                     </modules>
                 </configuration>
