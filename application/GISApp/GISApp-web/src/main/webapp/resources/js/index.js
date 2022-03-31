@@ -196,7 +196,7 @@ check.onchange = function () {
 }
 
 var disasterInfoLoaded = false;
-var check = document.getElementById('disasterInfo');
+check = document.getElementById('disasterInfo');
 check.onchange = function () {
     var value = this.checked;
     if (value === true && disasterInfoLoaded === false) {
@@ -1165,7 +1165,7 @@ check.onchange = function () {
                                 + '</table>';
                         info.innerHTML = infoComment;
                     });
-                    $.getJSON('./data/gml/datalist/N02/N02-20_Station.geojson', {},
+                    $.getJSON(context + '/N02/N02-20_Station.geojson', {},
                             function (json) {
                                 n02Loaded = true;
 //                var features = json.features;
@@ -1557,15 +1557,15 @@ check.onchange = function () {
 //    window.location.href = "index.html?areaCode=" + areaCode + positionUrl;
 //}
 
-var updateButton = document.getElementById('updateDetails');
-var dialog = document.getElementById('dialog');
-updateButton.addEventListener('click', function onOpen() {
-    if (typeof dialog.showModal === "function") {
-        dialog.showModal();
-    } else {
-        alert("The <dialog> API is not supported by this browser");
-    }
-});
+//var updateButton = document.getElementById('updateDetails');
+//var dialog = document.getElementById('dialog');
+//updateButton.addEventListener('click', function onOpen() {
+//    if (typeof dialog.showModal === "function") {
+//        dialog.showModal();
+//    } else {
+//        alert("The <dialog> API is not supported by this browser");
+//    }
+//});
 
 // Change the cursor to a pointer when the mouse is over the places layer.
 map.on('mouseenter', 'shelter_point', function () {
