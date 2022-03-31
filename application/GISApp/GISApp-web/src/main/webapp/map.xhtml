@@ -13,42 +13,43 @@
                 <link href="https://unpkg.com/maplibre-gl@2.1.1/dist/maplibre-gl.css" rel="stylesheet" />
                 <script src="https://unpkg.com/maplibre-gl@2.1.1/dist/maplibre-gl.js"/>
                 <!-- Semantic-UI  -->
-                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"/>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"/>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"/>
+                <!--                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"/>
+                                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"/>
+                                <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"/>-->
                 <!-- ヘッダー -->
                 <div id="header">
                     <h2 id="header-title">オープンデータを活用した地図</h2>
                     <h:form id="frm">
                         <p:outputLabel for="@next" value="都道府県"/>
-                        <p:selectOneMenu id="option" value="#{mapBean.areaCode}">
+                        <p:selectOneMenu id="option" value="#{mapBean.areaCode}" style="margin-right:20px;">
                             <f:selectItems value="#{mapBean.prefectures}"/>
                         </p:selectOneMenu>
-                        <p:commandButton value="移動" id="go" action="#{mapBean.go}" ajax="false" />
-                        <!--                        <p:commandButton value="表示の選択" type="button" icon="pi pi-external-link" onclick="PF('dlg').show()"/>
-                                                <p:dialog widgetVar="dlg" showEffect="fade" modal="true">
-                                                    <p>-->
-                        <input type="checkbox" id="shelter" name="shelter" value="on"/>
-                        <label for="shelter">避難所情報</label>
-                        <br/>
-                        <input type="checkbox" id="a48" name="a48" value="on"/>
-                        <label for="a48">災害危険区域</label>
-                        <br/>
-                        <input type="checkbox" id="p28" name="p28" value="on"/>
-                        <label for="p28">国・都道府県の機関データ</label>
-                        <br/>
-                        <input type="checkbox" id="n02" name="n02" value="on"/>
-                        <label for="n02">鉄道データ</label>
-                        <br/>
-                        <input type="checkbox" id="mesh500h30" name="mesh500h30" value="on"/>
-                        <label for="mesh500h30">500mメッシュ別将来推計人口データ</label>
-                        <br/>
-                        <!--<button id="close" value="default">Close</button>-->
-                        <!--                            </p>
-                                                </p:dialog>                -->
+                        <p:commandButton value="移動" id="go" action="#{mapBean.go}" ajax="false" style="margin-right:20px;" />
                     </h:form>
-
+                    <p:commandButton value="表示の選択" type="button" icon="pi pi-external-link" onclick="PF('dlg').show()" style="margin-right:20px;"/>
                 </div>
+                <p:dialog widgetVar="dlg" showEffect="fade" modal="true">
+                    <input type="checkbox" id="shelter" name="shelter" value="on"/>
+                    <label for="shelter">避難所情報</label>
+                    <br/>
+                    <input type="checkbox" id="disasterInfo" name="disasterInfo" value="on"/>
+                    <label for="disasterInfo">投稿情報</label>
+                    <br/>
+                    <input type="checkbox" id="a48" name="a48" value="on"/>
+                    <label for="a48">災害危険区域</label>
+                    <br/>
+                    <input type="checkbox" id="p28" name="p28" value="on"/>
+                    <label for="p28">国・都道府県の機関データ</label>
+                    <br/>
+                    <input type="checkbox" id="n02" name="n02" value="on"/>
+                    <label for="n02">鉄道データ</label>
+                    <br/>
+                    <input type="checkbox" id="l01" name="l01" value="on"/>
+                    <label for="l01">地価公示データ</label>
+                    <br/>
+                    <input type="checkbox" id="mesh500h30" name="mesh500h30" value="on"/>
+                    <label for="mesh500h30">500mメッシュ別将来推計人口データ</label>
+                </p:dialog>                
                 <!-- 地図 -->
                 <div id="map" style="width:100%;height:800px;"/>
                 <!-- 避難所情報 -->
