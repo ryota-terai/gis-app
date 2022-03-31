@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.rterai.ksj.rest;
+package com.r_terai.gisapp.rest;
 
 import com.mapbox.geojson.FeatureCollection;
-import com.r_terai.gisapp.GeojsonFileLocationUtil;
 import com.r_terai.gisapp.ejb.GeoJsonEJB;
 import com.r_terai.gisapp.entity.GeojsonFileLocation;
 import com.r_terai.java.util.Logger;
@@ -24,10 +23,8 @@ import javax.transaction.UserTransaction;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PUT;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;

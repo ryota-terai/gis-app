@@ -30,6 +30,7 @@ public class ApplicationConfig extends Application {
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(com.r_terai.gisapp.rest.GenericResource.class);
+        resources.add(com.r_terai.gisapp.rest.GmlResource.class);
     }
     
 }
