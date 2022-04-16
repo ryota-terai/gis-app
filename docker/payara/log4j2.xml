@@ -14,8 +14,8 @@
                   %mはログメッセージ
                   %nは改行
         -->
-        <Property name="logfile">/opt/payara/logs/GISApp.log</Property>
-        <Property name="logfile-archive">/opt/payara/logs/GISApp_%d{yyyy-MM-dd}-%i.log</Property>
+        <Property name="logfile">/opt/payara/logs/payara.log</Property>
+        <Property name="logfile-archive">/opt/payara/logs/payara_%d{yyyy-MM-dd}-%i.log</Property>
     </Properties>
     
     <Appenders>
@@ -34,7 +34,7 @@
             <Policies>
                 <SizeBasedTriggeringPolicy size="10MB"/>
             </Policies>
-            <DefaultRolloverStrategy max="3"/>
+            <DefaultRolloverStrategy max="10"/>
         </RollingFile>
     </Appenders>
 	
