@@ -4,6 +4,10 @@ services:
     image: httpd:2.4
     ports:
      - "80:80"
+    networks:
+      payara_network:
+        aliases:
+          - httpd
     volumes:
      - ./htdocs:/usr/local/apache2/htdocs
      - ./conf:/usr/local/apache2/conf     

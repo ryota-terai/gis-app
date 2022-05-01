@@ -269,7 +269,7 @@ check = document.getElementById('a48');
 check.onchange = function () {
     var value = this.checked;
     if (value === true && a48Loaded === false) {
-        $.getJSON('/GISApp/rest/gml/geoJson?areaCode=' + areaCode + '&type=A48', {},
+        $.getJSON(context + '/A48/a48.json', {},
                 function (json) {
                     a48Loaded = true;
                     var features = json.features;
@@ -882,7 +882,7 @@ check.onchange = function () {
     var value = this.checked;
     if (value === true && p28Loaded === false) {
         // 国・都道府県の機関データを追加
-        $.getJSON('/GISApp/rest/gml/geoJson?areaCode=' + (areaCode === null ? '' : areaCode.substring(0, 2)) + '&type=P28', {},
+        $.getJSON(context + '/P28/P28-13.geojson', {},
                 function (json) {
                     p28Loaded = true;
                     var features = json.features;
