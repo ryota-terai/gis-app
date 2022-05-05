@@ -770,7 +770,7 @@ check = document.getElementById('l01');
 check.onchange = function () {
     var value = this.checked;
     if (value === true && l01Loaded === false) {
-        $.getJSON('/GISApp/rest/gml/geoJson?areaCode=' + areaCode.substring(0, 2) + '&type=L01', {},
+        $.getJSON(context+'/L01/L01-22_' + areaCode.substring(0, 2) + '.geojson', {},
                 function (json) {
                     l01Loaded = true;
 //                var features = json.features;
